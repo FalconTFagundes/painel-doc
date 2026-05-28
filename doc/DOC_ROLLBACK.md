@@ -1,141 +1,121 @@
 # 🔄 Central de Validações — Documentação de Rollback / Recriação
 
-**Uso:** Este documento permite recriar o sistema do zero em qualquer IA generativa (ChatGPT, Gemini, Copilot, etc.) caso o código original seja perdido.
+**Uso:** Permite recriar o sistema do zero em qualquer IA generativa (ChatGPT, Gemini, Copilot, etc.) caso o código original seja perdido.
 
 ---
 
-## Prompt de Recriação — Versão Completa
+## Prompt de recriação completo
 
-Copie e cole o prompt abaixo integralmente na IA desejada:
+Copie e cole integralmente na IA desejada:
 
 ---
 
-> **Prompt:**
->
-> Crie um sistema web de página única (SPA) chamado **"Central de Validações"** para controle de protocolos de ajustes em ambientes de homologação e produção, usando **HTML + CSS + JavaScript puro** (sem frameworks, sem backend).
+> Crie um sistema web de página única (SPA) chamado **"Central de Validações"** para controle de protocolos de ajuste em ambientes de homologação e produção, usando **HTML + CSS + JavaScript puro** (sem frameworks, sem backend).
 >
 > ### Visual
-> - Tema escuro corporativo. Fundo `#0d0f14`. Sidebar lateral escura. Header fixo.
-> - Fontes: IBM Plex Sans + IBM Plex Mono (via Google Fonts).
-> - Cores: azul `#3d8ef0` (accent), verde `#27c483` (validado), amarelo `#f5a623` (pendente), vermelho `#e8455a` (não validado), roxo `#9b72f5` (aguardando).
-> - Cards com borda colorida no topo por categoria. Badges coloridas para status. Tabela com hover escuro.
+> Tema escuro corporativo. Fundo `#0d0f14`. Sidebar lateral escura. Header fixo.
+> Fontes: IBM Plex Sans + IBM Plex Mono (Google Fonts).
+> Cores: azul `#3d8ef0` (accent), verde `#27c483` (aprovado), amarelo `#f5a623` (pendente/retorno), vermelho `#e8455a` (reprovado), roxo `#9b72f5` (em produção).
 >
-> ### Estrutura de Views (navegação por JS, sem reload)
-> 1. **Dashboard** — 5 cards KPI (total, pendentes, validados, aguardando prod., não validados) + donut chart SVG + bar chart por sistema + lista de atividade recente.
-> 2. **Protocolos** — tabela com colunas: Protocolo, Sistema, Ambiente, Data, Status Hom., Status Prod., Responsável, Ações. Filtros por sistema/ambiente/status. Busca global. Paginação (10/página). Exportação CSV.
-> 3. **Novo Protocolo** — formulário para criar protocolo (sistema, responsável, descrição, ajustes, data, observações). WebRepresentantes desabilita campo de homologação automaticamente.
-> 4. **Exportar Relatório** — seleciona protocolo + tipo (hom/prod/completo) + exporta .doc (HTML MSWord).
+> ### Estrutura crítica de posicionamento
+> O `#app` tem `display:none` até o login. O `<div class="modal-overlay">` e `<div class="toast-container">` DEVEM ficar fora do `#app`, diretamente no `<body>`, caso contrário o modal não abrirá.
 >
-> ### Modal de Detalhe
-> Ao clicar em protocolo: modal com todas as informações + linha do tempo (Ajuste Criado → Homologação → Publicação → Validação Final) com dots coloridos por status.
+> ### Views (navegação JS sem reload)
+> 1. **Dashboard** — 5 KPIs (Total, Em Homologação, Em Produção, Aprovados, Reprovados) + donut SVG + barras por sistema + feed recente
+> 2. **Protocolos** — tabela com colunas: Protocolo, Sistema (só URL), Data, Responsável, Retornos, Fase·Status, Ações. Filtros por sistema e fase. Busca global. Paginação 10/página.
+> 3. **Novo Registro** — campos: Sistema (select), Responsável (texto), Anotação (textarea grande para colar texto do sistema externo), Obs. internas, Data
+> 4. **Exportar Relatório** — select de protocolo + tipo (hom/prod/completo) + botão exportar .doc
 >
-> ### Sistemas Cadastrados
-> ```
-> webempresas: prod=webempresas.bigcard.com.br, hom=homempresas.bigcard.com.br
-> webcartoes: prod=webcartoes.bigcard.com.br, hom=homwebcartoes.bigcard.com.br (Novo App WebView)
-> bigcash: prod=web.bigcash.com.br, hom=homweb.bigcash.com.br
-> webusuarios: prod=webusuarios.bigcard.com.br, hom=homusuarios.bigcard.com.br
-> webredes: prod=webredes.bigcard.com.br, hom=homredes.bigcard.com.br
-> webrepresentantes: prod=webrepresentantes.bigcard.com.br, hom=null (SEM homologação)
-> websuporte: prod=websuporte.bigcard.com.br, hom=homsuporte.bigcard.com.br
-> ```
+> ### Modal de detalhes (fora do #app!)
+> Ao clicar em uma linha da tabela: modal com editor de retornos (− valor +), editor de status HOM→PROD (selects com seta entre eles), textarea editável da anotação, linha do tempo, botão Salvar e botão Exportar .docx. Click delegado nas linhas — nunca `onclick` inline no `<tr>`.
 >
-> ### Schema de cada Protocolo
+> ### Schema de cada protocolo
 > ```js
-> { id, sistema, ambiente, data, responsavel,
->   statusHom, statusProd, desc, ajustes,
->   obsHom, obsProd, obs }
+> { id, sistema, data, responsavel,
+>   statusHom:  'Pendente'|'Aprovado'|'Reprovado',
+>   statusProd: 'Pendente'|'EmProducao'|'Aprovado'|'Reprovado',
+>   retornos: number,
+>   anotacao: string,  // texto livre — não desestruturar em campos
+>   obs: string }
 > ```
-> Status Hom: `Validado | Não validado | —`
-> Status Prod: `Validado | Não validado | Aguardando validação | Pendente`
-> Ambiente: `HOM | PROD | AMBOS`
 >
-> ### Dados Mockados
-> Crie ao menos 20 protocolos fictícios espalhados pelos sistemas acima, com datas variadas de abril a maio de 2025, cobindo todos os status possíveis.
+> ### Função getFase(p) — obrigatória
+> ```js
+> function getFase(p) {
+>   if (p.statusProd === 'Aprovado') return 'done';
+>   if (p.statusHom === 'Aprovado' && (p.statusProd === 'Pendente' || p.statusProd === 'EmProducao')) return 'prod';
+>   if (p.statusHom === 'Reprovado' || p.statusProd === 'Reprovado') return 'rep';
+>   return 'hom';
+> }
+> ```
 >
-> ### Exportação Word
-> Ao exportar, gere um arquivo `.doc` (HTML com namespace MSWord) com o layout:
-> DATA: | PROTOCOLO: | SISTEMA: | AMBIENTE: ☐HOM ☐PROD | AJUSTES REALIZADOS: | RESULTADO: ☐VALIDADO ☐VALIDADO COM RESSALVAS ☐NÃO VALIDADO | OBSERVAÇÕES: | e bloco separado para VALIDAÇÃO EM PRODUÇÃO.
+> ### Regras de negócio
+> - Select de PROD bloqueado enquanto HOM !== 'Aprovado'
+> - Botão "↑ Copiar para Prod." aparece só quando statusHom==='Aprovado' && statusProd==='Pendente' — define statusProd='EmProducao'
+> - Ao salvar: se novo status for 'Reprovado' e o anterior não era → retornos++ automático
+> - Coluna Fase·Status: mostrar APENAS o status da fase atual (sem rótulo de fase), dot colorido + texto. Dot vermelho tem box-shadow
+> - ID no formato AA.MM.DD.SEQ.RND (ex: 25.05.28.32.14)
 >
-> ### Sidebar
-> Menu: Dashboard, Protocolos (com badge de pendentes), Novo Protocolo, Homologação (filtro rápido), Produção (filtro rápido), sistemas individuais (filtro rápido), Exportar Relatório.
+> ### Sistemas cadastrados
+> ```
+> webempresas:       prod=webempresas.bigcard.com.br,       hom=homempresas.bigcard.com.br
+> webcartoes:        prod=webcartoes.bigcard.com.br,        hom=homwebcartoes.bigcard.com.br  (WebView)
+> bigcash:           prod=web.bigcash.com.br,               hom=homweb.bigcash.com.br
+> webusuarios:       prod=webusuarios.bigcard.com.br,       hom=homusuarios.bigcard.com.br
+> webredes:          prod=webredes.bigcard.com.br,          hom=homredes.bigcard.com.br
+> webrepresentantes: prod=webrepresentantes.bigcard.com.br, hom=null  (sem homologação)
+> websuporte:        prod=websuporte.bigcard.com.br,        hom=homsuporte.bigcard.com.br
+> ```
 >
-> ### Toast Notifications
-> Notificações animadas no canto inferior direito para confirmações de ações.
+> ### Login
+> Tela de login com usuários mockados (senha `bigcard`): rafael, patrick, carla, marcos, renan, ana. Exibir só o primeiro nome no header (sem setor).
+>
+> ### Dados mockados
+> Criar ~16 protocolos fictícios cobrindo todos os sistemas, todos os status e todas as fases. Incluir ao menos 2 com retornos > 0 e 2 com status Reprovado.
+>
+> ### Toast notifications
+> Animação slide da direita, canto inferior direito. Desaparecem após 3s.
+>
+> ### Exportação
+> `.doc` via Blob MSWord com anotação em `<pre>` (texto preservado) + blocos HOM/PROD com checkboxes ☑/☐.
 
 ---
 
-## Especificações Técnicas para Recriação Fiel
+## Checklist de verificação pós-recriação
 
-Caso a IA precise de mais contexto para manter a fidelidade visual, forneça também:
-
-### Paleta de cores exata
-```
---bg:        #0d0f14
---bg2:       #12151c
---bg3:       #181c26
---bg4:       #1e2330
---border:    #252c3d
---border2:   #2e3750
---accent:    #3d8ef0
---accent2:   #5aa3ff
---green:     #27c483
---yellow:    #f5a623
---red:       #e8455a
---purple:    #9b72f5
---text:      #e2e8f7
---text2:     #8a95b0
---text3:     #5a6480
-```
-
-### Dimensões de layout
-```
---sidebar-w:  240px
---header-h:   56px
---radius:     8px
---radius2:    12px
-```
-
-### Comportamentos obrigatórios
-1. Clicar em card KPI → navega para lista com filtro aplicado
-2. Clicar em item da sidebar de sistemas → filtra por sistema
-3. Formulário de novo protocolo → sistema WebRepresentantes desabilita campo hom.
-4. Modal fecha ao clicar fora ou no botão ✕
-5. Busca global funciona em tempo real (oninput)
-6. Paginação recalcula a cada filtro aplicado
+- [ ] Modal abre ao clicar em qualquer linha da tabela
+- [ ] Modal e toast estão fora do `#app` no HTML
+- [ ] Botões da linha não disparam abertura do modal
+- [ ] Contador − / + de retornos funciona e atualiza visualmente
+- [ ] Select de PROD bloqueado enquanto HOM não estiver Aprovado
+- [ ] "Copiar para Prod." aparece só quando aplicável e desaparece depois
+- [ ] Marcar Reprovado → retornos incrementa automaticamente com toast
+- [ ] getFase() calcula fase corretamente para os 4 cenários
+- [ ] Coluna Fase·Status não exibe chip de fase — só dot + label
+- [ ] Filtro por fase na sidebar e nos dropdowns funciona
+- [ ] Busca global funciona em tempo real
+- [ ] Paginação funciona e recalcula após filtros
+- [ ] Login exibe nome sem setor no header
+- [ ] Logout funciona (clique no nome/avatar)
+- [ ] Novo Registro cria protocolo e vai para a lista
+- [ ] Anotação é textarea livre sem campos estruturados no formulário
+- [ ] Exportação .doc baixa arquivo e abre no Word
+- [ ] Exportação CSV baixa com filtros aplicados
 
 ---
 
-## Checklist de Verificação Pós-Recriação
+## Informações do projeto
 
-Após recriar, verifique:
-
-- [ ] Dashboard exibe 5 cards KPI com números corretos
-- [ ] Donut chart SVG renderiza visualmente (não precisa ser dinâmico)
-- [ ] Tabela exibe todos os protocolos mockados
-- [ ] Filtros reduzem a tabela corretamente
-- [ ] Busca global funciona
-- [ ] Clique na linha abre o modal com dados corretos
-- [ ] Timeline do modal tem 4 etapas com cores corretas
-- [ ] Botão ↓ na tabela inicia download do .doc
-- [ ] Formulário de novo protocolo cria item e vai para a lista
-- [ ] WebRepresentantes desabilita campo de homologação
-- [ ] Exportação CSV funciona com filtros aplicados
-- [ ] Notificações toast aparecem após ações
-- [ ] Sidebar marca o item ativo corretamente
+| Atributo | Valor |
+|---|---|
+| Nome | Central de Validações |
+| Empresa | BigCard Tecnologia e Serviços |
+| Localização | Governador Valadares, MG, Brasil |
+| Contexto | Sistema interno de TI — controle de deployments |
+| Tecnologia | HTML5 + CSS3 + JavaScript ES6+ vanilla |
+| Banco (futuro) | SQL Server — ver `DOC_BANCO_DE_DADOS.md` |
+| Geração Word real | Node.js + `docx` (npm) — `gerar_relatorio.js` |
 
 ---
 
-## Informações Complementares
-
-**Nome do sistema:** Central de Validações
-**Empresa:** BigCard Tecnologia e Serviços
-**Localização:** Governador Valadares, MG, Brasil
-**Contexto:** Sistema interno de TI para rastreamento de deployments
-**Versão original:** 2.4.1
-**Tecnologias originais:** HTML5, CSS3 (variáveis), JavaScript ES6+ vanilla
-**Geração Word real:** Node.js + biblioteca `docx` (npm) — veja `gerar_relatorio.js`
-
----
-
-*Este documento deve ser mantido atualizado a cada versão significativa do sistema.*
+*Manter atualizado a cada versão significativa.*

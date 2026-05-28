@@ -1,119 +1,124 @@
 # 📘 Central de Validações — Documentação de Uso
 
-**BigCard Tecnologia e Serviços**
-Versão 2.4.1 · TI / Governador Valadares - MG
+**BigCard · TI · Governador Valadares/MG**
 
 ---
 
-## O que é a Central de Validações?
+## O que é o sistema
 
-A **Central de Validações** é um sistema interno de controle de ajustes e publicações realizados nos sistemas da BigCard. Seu objetivo é garantir rastreabilidade completa de cada alteração, desde o desenvolvimento até a validação final em produção.
-
----
-
-## Como acessar
-
-Abra o arquivo `index.html` diretamente no navegador (Chrome, Edge ou Firefox). Não é necessário servidor ou instalação.
+A **Central de Validações** é o sistema interno de controle de ajustes realizados nos sistemas BigCard. Cada ajuste passa por um ciclo controlado: registro → homologação → publicação → validação em produção.
 
 ---
 
-## Telas do sistema
+## Acesso
+
+Abra o arquivo `central-validacoes.html` diretamente no navegador (Chrome, Edge ou Firefox). Nenhuma instalação é necessária.
+
+**Usuários de demonstração** — senha `bigcard` para todos:
+
+| Usuário | Nome |
+|---|---|
+| renan | Renan |
+| patrick | Patrick |
+| carla | Carla |
+| marcos | Marcos |
+| ana | Ana |
+| rafael | Rafael |
+
+---
+
+## Telas
 
 ### Dashboard
 
-A tela inicial apresenta um resumo geral:
+Visão geral com cinco cards clicáveis:
 
-- **Cards KPI** — Total de protocolos, pendentes, validados, aguardando produção e não validados. Clique em qualquer card para ir à lista filtrada.
-- **Gráfico de status** — Proporção visual dos resultados em produção.
-- **Protocolos por sistema** — Barras comparativas de volume por sistema.
-- **Atividade recente** — Últimas movimentações registradas.
+- **Total** — todos os protocolos registrados
+- **Em Homologação** — ainda em ciclo de teste em hom.
+- **Em Produção** — hom. aprovada, aguardando validação em prod.
+- **Aprovados** — ciclo encerrado com sucesso
+- **Reprovados** — hom. ou prod. reprovadas, requer ação
+
+Abaixo dos cards: gráfico de status, barras por sistema e feed de atividade recente.
 
 ### Protocolos
 
-Lista completa de todos os protocolos cadastrados.
+Lista completa com filtros por sistema e fase. Colunas exibidas:
 
-**Filtros disponíveis:**
-- Por sistema (WebEmpresas, WebCartões, BigCash, etc.)
-- Por ambiente (Homologação / Produção / Ambos)
-- Por status de homologação
-- Por status de produção
-- Busca global (número, sistema, responsável, descrição)
+| Coluna | Descrição |
+|---|---|
+| Protocolo | ID no formato `AA.MM.DD.SEQ.RND` |
+| Sistema | URL do sistema |
+| Data | Data do registro |
+| Responsável | Nome de quem registrou |
+| Retornos | Quantas vezes voltou ao desenvolvedor |
+| Fase · Status | Status atual da fase em que o protocolo se encontra |
+| Ações | Botões de ação contextual |
 
-**Ações na tabela:**
-- Clique em qualquer linha para abrir os detalhes completos do protocolo.
-- Botão **Ver** abre o modal de detalhe.
-- Botão **↓** exporta o relatório Word daquele protocolo diretamente.
-- Botão **CSV** exporta a listagem atual (com filtros aplicados) em formato CSV.
+**Botão "↑ Copiar para Prod."** aparece automaticamente na coluna Ações quando a homologação está Aprovada e o protocolo ainda não foi enviado para produção. Um clique move o protocolo para a fase de produção.
 
-**Paginação:** 10 registros por página. Navegue pelos botões numerados na base da tabela.
+**Clique em qualquer linha** abre o modal de detalhes.
 
-### Detalhes do Protocolo (Modal)
+### Modal de detalhes
 
-Ao clicar em um protocolo, abre-se um painel detalhado com:
+O modal contém três áreas:
 
-- Informações completas (sistema, responsável, ambiente, data)
-- Descrição e ajustes realizados
-- Resultado de homologação e produção
-- Observações
-- **Linha do Tempo** — visualização sequencial das etapas: Ajuste Criado → Homologação → Publicação → Validação Final
+**1. Editor de retornos**
+Botões `−` e `+` para ajustar manualmente a quantidade de retornos ao desenvolvedor. O contador também é incrementado automaticamente ao marcar Reprovado.
 
-Cada etapa da timeline tem cor indicativa:
-- 🟢 Verde — etapa concluída com sucesso
-- 🟡 Amarelo — etapa pendente ou em andamento
-- 🔴 Vermelho — etapa com falha ou reprovação
-- ⚫ Cinza — etapa ainda não iniciada
+**2. Editor de status (HOM → PROD)**
+Dois selects com seta de fluxo entre eles. O select de Produção permanece bloqueado enquanto Homologação não estiver Aprovada. Opções disponíveis: `Pendente`, `Aprovado`, `Reprovado`.
 
-### Novo Protocolo
+**3. Anotação**
+Texto livre editável — o mesmo que foi colado ao criar o protocolo. Editável diretamente no modal.
 
-Formulário para registrar um novo ajuste:
+Clique em **Salvar alterações** para confirmar. Clique fora do modal ou no `✕` para fechar sem salvar.
 
-1. Selecione o **sistema** afetado.
-2. Informe o **responsável** pelo ajuste.
-3. Preencha a **descrição** e os **ajustes realizados**.
-4. O sistema preenche automaticamente a URL de homologação.
-   - Atenção: **WebRepresentantes não possui ambiente de homologação** — o campo é desabilitado automaticamente.
-5. Informe a data e observações.
-6. Clique em **Criar Protocolo**.
+**Comportamento automático ao marcar Reprovado:**
+Sempre que `status_hom` ou `status_prod` mudar de outro valor para `Reprovado`, o contador de retornos é incrementado em +1 automaticamente.
 
-O novo protocolo aparece no topo da listagem com status `Pendente`.
+### Novo Registro
+
+Formulário com três campos:
+
+- **Sistema** — dropdown com todos os sistemas cadastrados
+- **Responsável** — nome de quem está registrando
+- **Anotação** — área de texto para colar o conteúdo completo do sistema de testes (sem reinterpretação de campos)
+- **Obs. internas** — opcional, para notas internas
+
+O protocolo criado começa sempre com `status_hom = Pendente` e `status_prod = Pendente`.
 
 ### Exportar Relatório
 
-1. Acesse **Relatórios > Exportar Relatório** pelo menu lateral.
-2. Selecione o protocolo desejado.
-3. Escolha o tipo:
-   - **Homologação** — documenta apenas a fase de homologação
-   - **Produção** — documenta apenas a validação em produção
-   - **Completo** — inclui ambas as fases
-4. Clique em **Exportar .docx**.
-
-O arquivo gerado segue o padrão BigCard com campos de resultado e assinaturas.
+Selecione um protocolo e o tipo (Homologação, Produção ou Completo) e clique em **Exportar .docx**. O arquivo gerado abre diretamente no Word com o layout padrão BigCard.
 
 ---
 
-## Significado dos Status
+## Fluxo de status
 
-### Homologação
-| Status | Significado |
-|--------|-------------|
-| Validado | Ajuste aprovado em homologação |
-| Não validado | Ajuste reprovado, requer correção |
-| N/A | Sistema sem ambiente de homologação |
+```
+           ┌──────────────────────────────────────────────┐
+           │                                              │
+  Registro │   HOM: Pendente → Aprovado → (Prod. libera) │
+  criado   │                ↘ Reprovado (+1 retorno)      │
+           │                                              │
+           │   PROD: Pendente → EmProducao → Aprovado    │
+           │                  ↘ Reprovado (+1 retorno)   │
+           └──────────────────────────────────────────────┘
+```
 
-### Produção
-| Status | Significado |
-|--------|-------------|
-| Pendente | Aguardando publicação ou homologação |
-| Aguardando validação | Publicado, aguardando verificação |
-| Validado | Confirmado funcionando em produção |
-| Não validado | Problema identificado em produção |
+Regras obrigatórias:
+
+- Produção **nunca** avança enquanto Homologação não estiver `Aprovado`.
+- Ao marcar `Reprovado` em qualquer fase, o contador de retornos sobe automaticamente.
+- "Copiar para Prod." só aparece quando `statusHom = Aprovado` e `statusProd = Pendente`.
 
 ---
 
 ## Sistemas cadastrados
 
-| Sistema | URL Produção | URL Homologação |
-|---------|-------------|-----------------|
+| Sistema | Produção | Homologação |
+|---|---|---|
 | WebEmpresas | webempresas.bigcard.com.br | homempresas.bigcard.com.br |
 | WebCartões (WebView) | webcartoes.bigcard.com.br | homwebcartoes.bigcard.com.br |
 | BigCash | web.bigcash.com.br | homweb.bigcash.com.br |
@@ -124,9 +129,9 @@ O arquivo gerado segue o padrão BigCard com campos de resultado e assinaturas.
 
 ---
 
-## Barra de pesquisa global
+## Exportação CSV
 
-O campo de busca no topo funciona como filtro global: pesquisa simultânea em número de protocolo, nome do sistema, responsável e descrição do ajuste. A pesquisa é aplicada em tempo real conforme você digita.
+Na tela de Protocolos, o botão **↓ CSV** exporta a listagem atual (com filtros aplicados) em formato separado por ponto-e-vírgula, compatível com Excel.
 
 ---
 
