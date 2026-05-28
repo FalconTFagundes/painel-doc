@@ -8,354 +8,277 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0d0f14;
-  --bg2: #12151c;
-  --bg3: #181c26;
-  --bg4: #1e2330;
-  --border: #252c3d;
-  --border2: #2e3750;
-  --accent: #3d8ef0;
-  --accent2: #5aa3ff;
-  --accent-dim: rgba(61,142,240,0.12);
-  --green: #27c483;
-  --green-dim: rgba(39,196,131,0.12);
-  --yellow: #f5a623;
-  --yellow-dim: rgba(245,166,35,0.12);
-  --red: #e8455a;
-  --red-dim: rgba(232,69,90,0.12);
-  --purple: #9b72f5;
-  --purple-dim: rgba(155,114,245,0.12);
-  --text: #e2e8f7;
-  --text2: #8a95b0;
-  --text3: #5a6480;
-  --sidebar-w: 240px;
-  --header-h: 56px;
-  --radius: 8px;
-  --radius2: 12px;
+  --bg:#0d0f14; --bg2:#12151c; --bg3:#181c26; --bg4:#1e2330;
+  --border:#252c3d; --border2:#2e3750;
+  --accent:#3d8ef0; --accent2:#5aa3ff; --accent-dim:rgba(61,142,240,0.12);
+  --green:#27c483; --green-dim:rgba(39,196,131,0.12);
+  --yellow:#f5a623; --yellow-dim:rgba(245,166,35,0.12);
+  --red:#e8455a; --red-dim:rgba(232,69,90,0.12);
+  --purple:#9b72f5; --purple-dim:rgba(155,114,245,0.12);
+  --text:#e2e8f7; --text2:#8a95b0; --text3:#5a6480;
+  --sidebar-w:240px; --header-h:56px; --radius:8px; --radius2:12px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 
-/* ── LOGIN ── */
-#login-screen {
-  position: fixed; inset: 0; z-index: 999;
-  background: var(--bg);
-  display: flex; align-items: center; justify-content: center;
-}
-.login-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius2); padding: 40px 44px;
-  width: 380px; position: relative; overflow: hidden;
-}
-.login-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--purple));
-}
-.login-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
-.login-logo-mark {
-  width: 40px; height: 40px; border-radius: 8px;
-  background: var(--accent); display: grid; place-items: center;
-  font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600; color: #fff;
-}
-.login-logo-text { font-size: 15px; font-weight: 700; }
-.login-logo-sub { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
-.login-title { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
-.login-sub { font-size: 13px; color: var(--text3); margin-bottom: 28px; }
-.login-field { margin-bottom: 16px; }
-.login-field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); margin-bottom: 6px; }
-.login-field input {
-  width: 100%; background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 10px 14px;
-  color: var(--text); font-size: 14px; font-family: inherit; outline: none;
-  transition: border-color .2s;
-}
-.login-field input:focus { border-color: var(--accent); }
-.login-btn {
-  width: 100%; background: var(--accent); border: none; border-radius: var(--radius);
-  padding: 11px; color: #fff; font-size: 14px; font-weight: 600;
-  font-family: inherit; cursor: pointer; margin-top: 8px; transition: background .2s;
-}
-.login-btn:hover { background: var(--accent2); }
-.login-error { color: var(--red); font-size: 12px; margin-top: 10px; display: none; }
-.login-hint { font-size: 11px; color: var(--text3); text-align: center; margin-top: 18px; }
+/* LOGIN */
+#login-screen{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;align-items:center;justify-content:center}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:40px 44px;width:380px;position:relative;overflow:hidden}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--purple))}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.login-logo-mark{width:40px;height:40px;border-radius:8px;background:var(--accent);display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:#fff}
+.login-logo-text{font-size:15px;font-weight:700}
+.login-logo-sub{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+.login-title{font-size:20px;font-weight:600;margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--text3);margin-bottom:28px}
+.login-field{margin-bottom:16px}
+.login-field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px}
+.login-field input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s}
+.login-field input:focus{border-color:var(--accent)}
+.login-btn{width:100%;background:var(--accent);border:none;border-radius:var(--radius);padding:11px;color:#fff;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;margin-top:8px;transition:background .2s}
+.login-btn:hover{background:var(--accent2)}
+.login-error{color:var(--red);font-size:12px;margin-top:10px;display:none}
+.login-hint{font-size:11px;color:var(--text3);text-align:center;margin-top:18px}
 
-/* ── APP (hidden until login) ── */
-#app { display: none; flex-direction: column; min-height: 100vh; }
-#app.visible { display: flex; }
+/* APP */
+#app{display:none;flex-direction:column;min-height:100vh}
+#app.visible{display:flex}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg2); }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 0;gap:16px}
+.header-brand{display:flex;align-items:center;width:var(--sidebar-w);padding:0 20px;border-right:1px solid var(--border);height:100%}
+.header-logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:32px;height:32px;background:var(--accent);border-radius:6px;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:#fff;flex-shrink:0}
+.logo-text{font-size:13px;font-weight:600;line-height:1.2}
+.logo-sub{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+.header-center{flex:1;display:flex;align-items:center;gap:12px}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:0 12px;width:320px;height:34px;transition:border-color .2s}
+.search-box:focus-within{border-color:var(--accent)}
+.search-box input{background:none;border:none;outline:none;color:var(--text);font-size:13px;flex:1;font-family:inherit}
+.search-box input::placeholder{color:var(--text3)}
+.search-icon{color:var(--text3);font-size:14px}
+.header-right{display:flex;align-items:center;gap:12px}
+.header-user{display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;cursor:pointer}
+.header-user:hover{border-color:var(--border2)}
+.user-avatar{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff}
+.user-name{font-size:12px;color:var(--text2)}
 
-/* ── HEADER ── */
-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: var(--header-h); background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 20px 0 0; gap: 16px;
-}
-.header-brand {
-  display: flex; align-items: center; gap: 0;
-  width: var(--sidebar-w); padding: 0 20px;
-  border-right: 1px solid var(--border); height: 100%;
-}
-.header-logo { display: flex; align-items: center; gap: 10px; }
-.logo-mark {
-  width: 32px; height: 32px; background: var(--accent);
-  border-radius: 6px; display: grid; place-items: center;
-  font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; color: #fff; flex-shrink: 0;
-}
-.logo-text { font-size: 13px; font-weight: 600; line-height: 1.2; }
-.logo-sub { font-size: 10px; color: var(--text3); font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
-.header-center { flex: 1; display: flex; align-items: center; gap: 12px; }
-.search-box {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 0 12px; width: 320px; height: 34px; transition: border-color .2s;
-}
-.search-box:focus-within { border-color: var(--accent); }
-.search-box input { background: none; border: none; outline: none; color: var(--text); font-size: 13px; flex: 1; font-family: inherit; }
-.search-box input::placeholder { color: var(--text3); }
-.search-icon { color: var(--text3); font-size: 14px; }
-.header-right { display: flex; align-items: center; gap: 12px; }
-.header-user {
-  display: flex; align-items: center; gap: 8px;
-  padding: 4px 10px 4px 4px; background: var(--bg3);
-  border: 1px solid var(--border); border-radius: 20px; cursor: pointer;
-}
-.user-avatar {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--purple));
-  display: grid; place-items: center; font-size: 10px; font-weight: 700; color: #fff;
-}
-.user-name { font-size: 12px; color: var(--text2); }
+/* SIDEBAR */
+nav.sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;width:var(--sidebar-w);z-index:90;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+.nav-section{padding:16px 12px 4px}
+.nav-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);padding:0 8px;margin-bottom:4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius);cursor:pointer;transition:all .15s;font-size:12px;color:var(--text2);font-weight:400;margin-bottom:2px;position:relative}
+.nav-item:hover{background:var(--bg4);color:var(--text)}
+.nav-item.active{background:var(--accent-dim);color:var(--accent2);font-weight:500}
+.nav-item.active::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--accent);border-radius:0 3px 3px 0}
+.nav-icon{font-size:14px;flex-shrink:0}
+.nav-count{margin-left:auto;background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:1px 6px;font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--text3)}
+.nav-count.warn{background:var(--yellow-dim);border-color:rgba(245,166,35,.25);color:var(--yellow)}
+.sidebar-footer{margin-top:auto;padding:16px 12px;border-top:1px solid var(--border)}
+.env-tag{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);font-size:11px;color:var(--text3)}
+.env-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* ── SIDEBAR ── */
-nav.sidebar {
-  position: fixed; top: var(--header-h); left: 0; bottom: 0;
-  width: var(--sidebar-w); z-index: 90; background: var(--bg2);
-  border-right: 1px solid var(--border); display: flex; flex-direction: column;
-  overflow-y: auto; overflow-x: hidden;
-}
-.nav-section { padding: 16px 12px 4px; }
-.nav-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); padding: 0 8px; margin-bottom: 4px; }
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 12px; border-radius: var(--radius); cursor: pointer;
-  transition: all .15s; font-size: 13px; color: var(--text2); font-weight: 400;
-  margin-bottom: 2px; position: relative;
-}
-.nav-item:hover { background: var(--bg4); color: var(--text); }
-.nav-item.active { background: var(--accent-dim); color: var(--accent2); font-weight: 500; }
-.nav-item.active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; background: var(--accent); border-radius: 0 3px 3px 0; }
-.nav-icon { font-size: 16px; flex-shrink: 0; }
-.nav-count { margin-left: auto; background: var(--bg4); border: 1px solid var(--border); border-radius: 10px; padding: 1px 6px; font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--text3); }
-.nav-count.warn { background: var(--yellow-dim); border-color: rgba(245,166,35,.25); color: var(--yellow); }
-.sidebar-footer { margin-top: auto; padding: 16px 12px; border-top: 1px solid var(--border); }
-.env-tag { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); font-size: 11px; color: var(--text3); }
-.env-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+/* MAIN */
+main{margin-top:var(--header-h);margin-left:var(--sidebar-w);flex:1;overflow-y:auto;padding:28px}
+.view{display:none;animation:fadeIn .2s ease}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* ── MAIN ── */
-main { margin-top: var(--header-h); margin-left: var(--sidebar-w); flex: 1; overflow-y: auto; padding: 28px; }
+/* PAGE TITLE */
+.page-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.page-title h1{font-size:20px;font-weight:600}
+.page-title p{font-size:13px;color:var(--text3);margin-top:2px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2)}
+.btn-outline{background:var(--bg3);border:1px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--border2);color:var(--text)}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-danger{background:var(--red-dim);border:1px solid rgba(232,69,90,.3);color:var(--red)}
+.btn-danger:hover{background:rgba(232,69,90,.2)}
 
-/* ── VIEWS ── */
-.view { display: none; animation: fadeIn .2s ease; }
-.view.active { display: block; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
+.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:18px 20px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.kpi-card:hover{border-color:var(--border2)}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-card.blue::after{background:var(--accent)}
+.kpi-card.yellow::after{background:var(--yellow)}
+.kpi-card.green::after{background:var(--green)}
+.kpi-card.red::after{background:var(--red)}
+.kpi-card.purple::after{background:var(--purple)}
+.kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);font-weight:600;margin-bottom:10px}
+.kpi-num{font-size:32px;font-weight:700;font-family:'IBM Plex Mono',monospace;line-height:1;margin-bottom:6px}
+.kpi-card.blue .kpi-num{color:var(--accent2)}
+.kpi-card.yellow .kpi-num{color:var(--yellow)}
+.kpi-card.green .kpi-num{color:var(--green)}
+.kpi-card.red .kpi-num{color:var(--red)}
+.kpi-card.purple .kpi-num{color:var(--purple)}
+.kpi-sub{font-size:11px;color:var(--text3)}
+.kpi-icon{position:absolute;bottom:14px;right:16px;font-size:28px;opacity:.15}
 
-/* ── PAGE TITLE ── */
-.page-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-.page-title h1 { font-size: 20px; font-weight: 600; }
-.page-title p { font-size: 13px; color: var(--text3); margin-top: 2px; }
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; transition: all .15s; }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: var(--accent2); }
-.btn-outline { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); }
-.btn-outline:hover { border-color: var(--border2); color: var(--text); }
-.btn-sm { padding: 5px 10px; font-size: 12px; }
+/* CHARTS */
+.charts-row{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:14px;margin-bottom:24px}
+.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:20px}
+.chart-card h3{font-size:13px;font-weight:600;margin-bottom:16px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.donut-wrap{display:flex;align-items:center;gap:20px}
+.donut-svg{flex-shrink:0}
+.donut-legend{display:flex;flex-direction:column;gap:8px;flex:1}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2)}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-val{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text)}
+.bar-chart{display:flex;flex-direction:column;gap:10px}
+.bar-row{display:flex;align-items:center;gap:10px;font-size:11px}
+.bar-label{width:110px;color:var(--text3);flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:10px}
+.bar-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+.bar-val{width:28px;text-align:right;font-family:'IBM Plex Mono',monospace;color:var(--text3);flex-shrink:0}
+.timeline-chart{display:flex;flex-direction:column;gap:8px}
+.tl-item{display:flex;align-items:center;gap:12px;padding:8px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);font-size:12px}
+.tl-date{font-family:'IBM Plex Mono',monospace;color:var(--text3);width:80px;flex-shrink:0}
+.tl-sys{color:var(--text2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* ── KPI CARDS ── */
-.kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
-.kpi-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius2); padding: 18px 20px; position: relative; overflow: hidden; cursor: pointer; transition: border-color .2s; }
-.kpi-card:hover { border-color: var(--border2); }
-.kpi-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.kpi-card.blue::after { background: var(--accent); }
-.kpi-card.yellow::after { background: var(--yellow); }
-.kpi-card.green::after { background: var(--green); }
-.kpi-card.red::after { background: var(--red); }
-.kpi-card.purple::after { background: var(--purple); }
-.kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); font-weight: 600; margin-bottom: 10px; }
-.kpi-num { font-size: 32px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; line-height: 1; margin-bottom: 6px; }
-.kpi-card.blue .kpi-num { color: var(--accent2); }
-.kpi-card.yellow .kpi-num { color: var(--yellow); }
-.kpi-card.green .kpi-num { color: var(--green); }
-.kpi-card.red .kpi-num { color: var(--red); }
-.kpi-card.purple .kpi-num { color: var(--purple); }
-.kpi-sub { font-size: 11px; color: var(--text3); }
-.kpi-icon { position: absolute; bottom: 14px; right: 16px; font-size: 28px; opacity: .15; }
+/* FILTERS */
+.filters-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.filter-select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:6px 10px;color:var(--text2);font-size:12px;font-family:inherit;cursor:pointer;outline:none;transition:border-color .2s}
+.filter-select:focus{border-color:var(--accent)}
+.filter-sep{flex:1}
+.active-filters{display:flex;gap:6px;align-items:center}
+.filter-chip{display:flex;align-items:center;gap:5px;background:var(--accent-dim);border:1px solid rgba(61,142,240,.2);border-radius:20px;padding:3px 8px 3px 10px;font-size:11px;color:var(--accent2);cursor:pointer}
+.filter-chip:hover{background:rgba(61,142,240,.2)}
 
-/* ── CHARTS ROW ── */
-.charts-row { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 14px; margin-bottom: 24px; }
-.chart-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius2); padding: 20px; }
-.chart-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
-.donut-wrap { display: flex; align-items: center; gap: 20px; }
-.donut-svg { flex-shrink: 0; }
-.donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text2); }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.legend-val { margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text); }
-.bar-chart { display: flex; flex-direction: column; gap: 10px; }
-.bar-row { display: flex; align-items: center; gap: 10px; font-size: 11px; }
-.bar-label { width: 110px; color: var(--text3); flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
-.bar-track { flex: 1; height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 3px; transition: width .6s ease; }
-.bar-val { width: 28px; text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--text3); flex-shrink: 0; }
-.timeline-chart { display: flex; flex-direction: column; gap: 8px; }
-.tl-item { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--bg3); border-radius: var(--radius); border: 1px solid var(--border); font-size: 12px; }
-.tl-date { font-family: 'IBM Plex Mono', monospace; color: var(--text3); width: 80px; flex-shrink: 0; }
-.tl-sys { color: var(--text2); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* TABLE */
+.table-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);overflow:hidden}
+.table-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.table-header h3{font-size:14px;font-weight:600}
+.table-actions{display:flex;gap:8px;align-items:center}
+.table-info{font-size:12px;color:var(--text3)}
+table{width:100%;border-collapse:collapse}
+thead tr{border-bottom:1px solid var(--border)}
+th{text-align:left;padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{color:var(--text2)}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--bg3)}
+td{padding:10px 16px;font-size:13px;vertical-align:middle}
+td.protocol-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent2);white-space:nowrap}
+td.url-cell{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3)}
 
-/* ── FILTERS BAR ── */
-.filters-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-.filter-select { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 6px 10px; color: var(--text2); font-size: 12px; font-family: inherit; cursor: pointer; outline: none; transition: border-color .2s; }
-.filter-select:focus { border-color: var(--accent); }
-.filter-sep { flex: 1; }
-.active-filters { display: flex; gap: 6px; align-items: center; }
-.filter-chip { display: flex; align-items: center; gap: 5px; background: var(--accent-dim); border: 1px solid rgba(61,142,240,.2); border-radius: 20px; padding: 3px 8px 3px 10px; font-size: 11px; color: var(--accent2); cursor: pointer; }
-.filter-chip:hover { background: rgba(61,142,240,.2); }
+/* STATUS INLINE — HOM / PROD na coluna Ações */
+.status-inline{display:flex;flex-direction:column;gap:4px;min-width:130px}
+.status-row{display:flex;align-items:center;gap:6px;font-size:11px}
+.status-env{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:var(--text3);width:34px;flex-shrink:0}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sd-green{background:var(--green)}
+.sd-red{background:var(--red)}
+.sd-yellow{background:var(--yellow)}
+.sd-purple{background:var(--purple)}
+.sd-gray{background:var(--text3)}
+.status-txt{color:var(--text2);font-size:11px}
 
-/* ── TABLE ── */
-.table-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius2); overflow: hidden; }
-.table-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
-.table-header h3 { font-size: 14px; font-weight: 600; }
-.table-actions { display: flex; gap: 8px; align-items: center; }
-.table-info { font-size: 12px; color: var(--text3); }
-table { width: 100%; border-collapse: collapse; }
-thead tr { border-bottom: 1px solid var(--border); }
-th { text-align: left; padding: 10px 16px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); white-space: nowrap; cursor: pointer; user-select: none; }
-th:hover { color: var(--text2); }
-tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; cursor: pointer; }
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: var(--bg3); }
-td { padding: 11px 16px; font-size: 13px; }
-td.protocol-num { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; color: var(--accent2); white-space: nowrap; }
-td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text3); }
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%}
+.badge-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(39,196,131,.25)}
+.badge-green::before{background:var(--green)}
+.badge-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(232,69,90,.25)}
+.badge-red::before{background:var(--red)}
+.badge-yellow{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,166,35,.25)}
+.badge-yellow::before{background:var(--yellow)}
+.badge-blue{background:var(--accent-dim);color:var(--accent2);border:1px solid rgba(61,142,240,.25)}
+.badge-blue::before{background:var(--accent)}
+.badge-purple{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(155,114,245,.25)}
+.badge-purple::before{background:var(--purple)}
+.badge-gray{background:var(--bg4);color:var(--text3);border:1px solid var(--border)}
+.badge-gray::before{background:var(--text3)}
+.env-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.env-hom{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(155,114,245,.2)}
+.env-prod{background:rgba(245,166,35,.1);color:var(--yellow);border:1px solid rgba(245,166,35,.2)}
 
-/* ── BADGES ── */
-.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; }
-.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
-.badge-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(39,196,131,.25); }
-.badge-green::before { background: var(--green); }
-.badge-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(232,69,90,.25); }
-.badge-red::before { background: var(--red); }
-.badge-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(245,166,35,.25); }
-.badge-yellow::before { background: var(--yellow); }
-.badge-blue { background: var(--accent-dim); color: var(--accent2); border: 1px solid rgba(61,142,240,.25); }
-.badge-blue::before { background: var(--accent); }
-.badge-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(155,114,245,.25); }
-.badge-purple::before { background: var(--purple); }
-.badge-gray { background: var(--bg4); color: var(--text3); border: 1px solid var(--border); }
-.badge-gray::before { background: var(--text3); }
-.env-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
-.env-hom { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(155,114,245,.2); }
-.env-prod { background: rgba(245,166,35,.1); color: var(--yellow); border: 1px solid rgba(245,166,35,.2); }
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid var(--border)}
+.pagination-info{font-size:12px;color:var(--text3)}
+.pagination-btns{display:flex;gap:4px}
+.page-btn{width:30px;height:30px;border-radius:var(--radius);display:grid;place-items:center;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:12px;cursor:pointer;font-family:'IBM Plex Mono',monospace;transition:all .15s}
+.page-btn:hover{border-color:var(--border2);color:var(--text)}
+.page-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.page-btn:disabled{opacity:.3;cursor:default}
 
-/* ── PAGINATION ── */
-.pagination { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-top: 1px solid var(--border); }
-.pagination-info { font-size: 12px; color: var(--text3); }
-.pagination-btns { display: flex; gap: 4px; }
-.page-btn { width: 30px; height: 30px; border-radius: var(--radius); display: grid; place-items: center; background: var(--bg3); border: 1px solid var(--border); color: var(--text2); font-size: 12px; cursor: pointer; font-family: 'IBM Plex Mono', monospace; transition: all .15s; }
-.page-btn:hover { border-color: var(--border2); color: var(--text); }
-.page-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.page-btn:disabled { opacity: .3; cursor: default; }
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);width:100%;max-width:740px;transform:translateY(20px);transition:transform .25s}
+.modal-overlay.open .modal{transform:none}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--border)}
+.modal-head h2{font-size:14px;font-weight:600;font-family:'IBM Plex Mono',monospace;color:var(--accent2)}
+.modal-protocol{font-size:12px;color:var(--text3);margin-top:3px}
+.modal-close{width:28px;height:28px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:16px;cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all .15s}
+.modal-close:hover{background:var(--bg4);color:var(--text)}
+.modal-body{padding:20px 24px}
+.modal-foot{padding:14px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;gap:10px}
 
-/* ── MODAL ── */
-.modal-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.7); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding: 40px 20px; overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity .2s; }
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius2); width: 100%; max-width: 740px; transform: translateY(20px); transition: transform .25s; }
-.modal-overlay.open .modal { transform: none; }
-.modal-head { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border); }
-.modal-head h2 { font-size: 15px; font-weight: 600; }
-.modal-protocol { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent2); margin-top: 3px; }
-.modal-close { width: 28px; height: 28px; border-radius: var(--radius); background: var(--bg3); border: 1px solid var(--border); color: var(--text2); font-size: 16px; cursor: pointer; display: grid; place-items: center; flex-shrink: 0; transition: all .15s; }
-.modal-close:hover { background: var(--bg4); color: var(--text); }
-.modal-body { padding: 20px 24px; }
+/* ANOTACAO BLOCK */
+.anotacao-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden}
+.anotacao-paste{width:100%;background:transparent;border:none;outline:none;resize:none;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.75;padding:16px 18px;min-height:180px}
+.anotacao-paste::placeholder{color:var(--text3)}
+.anotacao-hint{padding:8px 18px 10px;border-top:1px solid var(--border);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px}
 
-/* ── ANOTAÇÃO BLOCK (novo modal layout) ── */
-.anotacao-block {
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px 18px;
-  font-size: 13px; line-height: 1.7; color: var(--text2);
-  white-space: pre-wrap; font-family: 'IBM Plex Mono', monospace;
-  margin-bottom: 16px;
-}
-.anotacao-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 12px; padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-.anotacao-id { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent2); }
-.anotacao-meta { font-size: 11px; color: var(--text3); }
-.anotacao-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; }
-.anotacao-key { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--text3); min-width: 140px; flex-shrink: 0; padding-top: 1px; }
-.anotacao-val { font-size: 13px; color: var(--text); }
-.anotacao-val.mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent2); }
-.anotacao-divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
-.retorno-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(245,166,35,.1); border: 1px solid rgba(245,166,35,.25);
-  border-radius: var(--radius); padding: 6px 12px;
-  font-size: 12px; color: var(--yellow); font-weight: 600;
-  margin-bottom: 14px;
-}
+/* RETORNO BADGE */
+.retorno-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);border-radius:var(--radius);padding:6px 12px;font-size:12px;color:var(--yellow);font-weight:600;margin-bottom:14px}
 
-/* Detail grid (form / new) */
-.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-.detail-field { display: flex; flex-direction: column; gap: 4px; }
-.detail-field.full { grid-column: 1 / -1; }
-.detail-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); }
-.detail-value { font-size: 13px; color: var(--text); line-height: 1.5; }
-.detail-box { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; font-size: 13px; line-height: 1.6; color: var(--text2); }
+/* RETORNO EDITOR */
+.retorno-editor{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px}
+.retorno-editor span{font-size:12px;color:var(--text3)}
+.retorno-editor strong{color:var(--yellow);font-family:'IBM Plex Mono',monospace}
+.retorno-btn{width:26px;height:26px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:16px;cursor:pointer;display:grid;place-items:center;transition:all .15s;line-height:1}
+.retorno-btn:hover{background:var(--bg2);color:var(--text);border-color:var(--border2)}
 
-/* Timeline */
-.tl-section { margin-top: 20px; }
-.tl-section h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); margin-bottom: 14px; }
-.timeline { position: relative; padding-left: 20px; }
-.timeline::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
-.tl-step { position: relative; margin-bottom: 16px; }
-.tl-step:last-child { margin-bottom: 0; }
-.tl-dot { position: absolute; left: -17px; top: 5px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--bg2); }
-.tl-dot.done { background: var(--green); }
-.tl-dot.pending { background: var(--yellow); }
-.tl-dot.error { background: var(--red); }
-.tl-dot.inactive { background: var(--bg4); border-color: var(--border); }
-.tl-step-title { font-size: 12px; font-weight: 600; color: var(--text); }
-.tl-step-meta { font-size: 10px; color: var(--text3); margin-top: 1px; font-family: 'IBM Plex Mono', monospace; }
+/* STATUS EDITOR no modal */
+.status-editor{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.status-edit-block{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
+.status-edit-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:8px}
+.status-edit-select{width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-size:12px;font-family:inherit;outline:none;cursor:pointer}
+.status-edit-select:focus{border-color:var(--accent)}
+/* flow arrow between hom and prod */
+.flow-arrow{display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:20px;padding-top:26px}
 
-.modal-foot { padding: 14px 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+/* TIMELINE */
+.tl-section{margin-top:18px}
+.tl-section h3{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px}
+.timeline{position:relative;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.tl-step{position:relative;margin-bottom:14px}
+.tl-step:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-17px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid var(--bg2)}
+.tl-dot.done{background:var(--green)}
+.tl-dot.pending{background:var(--yellow)}
+.tl-dot.error{background:var(--red)}
+.tl-dot.inactive{background:var(--bg4);border-color:var(--border)}
+.tl-step-title{font-size:12px;font-weight:600;color:var(--text)}
+.tl-step-meta{font-size:10px;color:var(--text3);margin-top:1px;font-family:'IBM Plex Mono',monospace}
 
-/* ── TOAST ── */
-.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 8px; }
-.toast { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius2); padding: 12px 16px; font-size: 13px; color: var(--text); display: flex; align-items: center; gap: 10px; min-width: 260px; box-shadow: 0 8px 24px rgba(0,0,0,.4); animation: toastIn .3s ease; }
-@keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
-.toast.removing { animation: toastOut .3s ease forwards; }
-@keyframes toastOut { to{opacity:0;transform:translateX(20px)} }
-.toast-icon { font-size: 16px; }
+/* FORM */
+.detail-field{display:flex;flex-direction:column;gap:4px}
+.detail-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)}
 
-@media (max-width: 1200px) {
-  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
-  .charts-row { grid-template-columns: 1fr 1fr; }
-}
+/* TOAST */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:12px 16px;font-size:13px;color:var(--text);display:flex;align-items:center;gap:10px;min-width:260px;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.toast.removing{animation:toastOut .3s ease forwards}
+@keyframes toastOut{to{opacity:0;transform:translateX(20px)}}
+.toast-icon{font-size:16px}
+
+@media(max-width:1200px){.kpi-grid{grid-template-columns:repeat(3,1fr)}.charts-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     LOGIN SCREEN
-══════════════════════════════════════ -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
@@ -373,20 +296,17 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
     </div>
     <div class="login-field">
       <label>Senha</label>
-      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
     </div>
     <button class="login-btn" onclick="doLogin()">Entrar</button>
     <div class="login-error" id="login-error">Usuário ou senha incorretos.</div>
-    <div class="login-hint">Usuários de teste: rafael · patrick · carla · marcos<br>Senha: <code style="color:var(--accent2)">bigcard</code></div>
+    <div class="login-hint">Usuários: rafael · patrick · carla · marcos · renan · ana<br>Senha: <code style="color:var(--accent2)">bigcard</code></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     APP
-══════════════════════════════════════ -->
+<!-- APP -->
 <div id="app">
 
-<!-- ── HEADER ── -->
 <header>
   <div class="header-brand">
     <div class="header-logo">
@@ -411,111 +331,51 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
   </div>
 </header>
 
-<!-- ── SIDEBAR ── -->
 <nav class="sidebar">
   <div class="nav-section">
     <div class="nav-label">Menu</div>
-    <div class="nav-item active" onclick="showView('dashboard')">
-      <span class="nav-icon">⊞</span> Dashboard
-    </div>
-    <div class="nav-item" onclick="showView('protocols')">
-      <span class="nav-icon">≡</span> Protocolos
-      <span class="nav-count warn" id="nav-pending">5</span>
-    </div>
-    <div class="nav-item" onclick="showView('new')">
-      <span class="nav-icon">＋</span> Novo Registro
-    </div>
+    <div class="nav-item active" onclick="showView('dashboard')"><span class="nav-icon">⊞</span> Dashboard</div>
+    <div class="nav-item" onclick="showView('protocols')"><span class="nav-icon">≡</span> Protocolos<span class="nav-count warn" id="nav-pending">0</span></div>
+    <div class="nav-item" onclick="showView('new')"><span class="nav-icon">＋</span> Novo Registro</div>
   </div>
   <div class="nav-section">
     <div class="nav-label">Ambientes</div>
-    <div class="nav-item" onclick="filterByEnv('HOM'); showView('protocols')">
-      <span class="nav-icon">◈</span> Homologação
-    </div>
-    <div class="nav-item" onclick="filterByEnv('PROD'); showView('protocols')">
-      <span class="nav-icon">◉</span> Produção
-    </div>
+    <div class="nav-item" onclick="filterByEnv('HOM');showView('protocols')"><span class="nav-icon">◈</span> Homologação</div>
+    <div class="nav-item" onclick="filterByEnv('PROD');showView('protocols')"><span class="nav-icon">◉</span> Produção</div>
   </div>
   <div class="nav-section">
     <div class="nav-label">Sistemas</div>
-    <div class="nav-item" onclick="filterBySys('webempresas'); showView('protocols')">
-      <span class="nav-icon">○</span> webempresas.bigcard.com.br
-    </div>
-    <div class="nav-item" onclick="filterBySys('webcartoes'); showView('protocols')">
-      <span class="nav-icon">○</span> webcartoes.bigcard.com.br
-    </div>
-    <div class="nav-item" onclick="filterBySys('bigcash'); showView('protocols')">
-      <span class="nav-icon">○</span> web.bigcash.com.br
-    </div>
-    <div class="nav-item" onclick="filterBySys('webusuarios'); showView('protocols')">
-      <span class="nav-icon">○</span> webusuarios.bigcard.com.br
-    </div>
-    <div class="nav-item" onclick="filterBySys('webredes'); showView('protocols')">
-      <span class="nav-icon">○</span> webredes.bigcard.com.br
-    </div>
-    <div class="nav-item" onclick="filterBySys('webrepresentantes'); showView('protocols')">
-      <span class="nav-icon">○</span> webrepresentantes.bigcard.com.br
-    </div>
-    <div class="nav-item" onclick="filterBySys('websuporte'); showView('protocols')">
-      <span class="nav-icon">○</span> websuporte.bigcard.com.br
-    </div>
+    <div class="nav-item" onclick="filterBySys('webempresas');showView('protocols')"><span class="nav-icon">○</span> webempresas.bigcard.com.br</div>
+    <div class="nav-item" onclick="filterBySys('webcartoes');showView('protocols')"><span class="nav-icon">○</span> webcartoes.bigcard.com.br</div>
+    <div class="nav-item" onclick="filterBySys('bigcash');showView('protocols')"><span class="nav-icon">○</span> web.bigcash.com.br</div>
+    <div class="nav-item" onclick="filterBySys('webusuarios');showView('protocols')"><span class="nav-icon">○</span> webusuarios.bigcard.com.br</div>
+    <div class="nav-item" onclick="filterBySys('webredes');showView('protocols')"><span class="nav-icon">○</span> webredes.bigcard.com.br</div>
+    <div class="nav-item" onclick="filterBySys('webrepresentantes');showView('protocols')"><span class="nav-icon">○</span> webrepresentantes.bigcard.com.br</div>
+    <div class="nav-item" onclick="filterBySys('websuporte');showView('protocols')"><span class="nav-icon">○</span> websuporte.bigcard.com.br</div>
   </div>
   <div class="nav-section">
     <div class="nav-label">Relatórios</div>
-    <div class="nav-item" onclick="showView('relatorio')">
-      <span class="nav-icon">↓</span> Exportar Relatório
-    </div>
+    <div class="nav-item" onclick="showView('relatorio')"><span class="nav-icon">↓</span> Exportar Relatório</div>
   </div>
   <div class="sidebar-footer">
-    <div class="env-tag">
-      <div class="env-dot"></div>
-      <span>Sistema operacional</span>
-    </div>
+    <div class="env-tag"><div class="env-dot"></div><span>Sistema operacional</span></div>
   </div>
 </nav>
 
-<!-- ── MAIN ── -->
 <main>
 
-  <!-- ═══════════════ DASHBOARD ═══════════════ -->
+  <!-- DASHBOARD -->
   <div class="view active" id="view-dashboard">
     <div class="page-title">
-      <div>
-        <h1>Dashboard</h1>
-        <p>Resumo geral dos protocolos de validação — Mai/2025</p>
-      </div>
+      <div><h1>Dashboard</h1><p>Resumo geral dos protocolos de validação — Mai/2025</p></div>
       <button class="btn btn-primary" onclick="showView('new')">＋ Novo Registro</button>
     </div>
     <div class="kpi-grid">
-      <div class="kpi-card blue" onclick="showView('protocols')">
-        <div class="kpi-label">Total de Protocolos</div>
-        <div class="kpi-num">32</div>
-        <div class="kpi-sub">↑ 8 este mês</div>
-        <div class="kpi-icon">≡</div>
-      </div>
-      <div class="kpi-card yellow" onclick="filterByStatus('pendente'); showView('protocols')">
-        <div class="kpi-label">Pendentes</div>
-        <div class="kpi-num">5</div>
-        <div class="kpi-sub">Aguardando ação</div>
-        <div class="kpi-icon">◷</div>
-      </div>
-      <div class="kpi-card green" onclick="filterByStatus('validado'); showView('protocols')">
-        <div class="kpi-label">Validados</div>
-        <div class="kpi-num">19</div>
-        <div class="kpi-sub">Em produção</div>
-        <div class="kpi-icon">✓</div>
-      </div>
-      <div class="kpi-card purple" onclick="filterByStatus('aguardando'); showView('protocols')">
-        <div class="kpi-label">Aguard. Prod.</div>
-        <div class="kpi-num">5</div>
-        <div class="kpi-sub">Publicados</div>
-        <div class="kpi-icon">↑</div>
-      </div>
-      <div class="kpi-card red" onclick="filterByStatus('nao_validado'); showView('protocols')">
-        <div class="kpi-label">Não Validados</div>
-        <div class="kpi-num">3</div>
-        <div class="kpi-sub">Requer revisão</div>
-        <div class="kpi-icon">✕</div>
-      </div>
+      <div class="kpi-card blue" onclick="showView('protocols')"><div class="kpi-label">Total</div><div class="kpi-num">32</div><div class="kpi-sub">↑ 8 este mês</div><div class="kpi-icon">≡</div></div>
+      <div class="kpi-card yellow" onclick="filterByStatus('pendente');showView('protocols')"><div class="kpi-label">Pendentes</div><div class="kpi-num">5</div><div class="kpi-sub">Aguardando ação</div><div class="kpi-icon">◷</div></div>
+      <div class="kpi-card green" onclick="filterByStatus('validado');showView('protocols')"><div class="kpi-label">Validados</div><div class="kpi-num">19</div><div class="kpi-sub">Em produção</div><div class="kpi-icon">✓</div></div>
+      <div class="kpi-card purple" onclick="filterByStatus('aguardando');showView('protocols')"><div class="kpi-label">Aguard. Prod.</div><div class="kpi-num">5</div><div class="kpi-sub">Publicados</div><div class="kpi-icon">↑</div></div>
+      <div class="kpi-card red" onclick="filterByStatus('nao_validado');showView('protocols')"><div class="kpi-label">Não Validados</div><div class="kpi-num">3</div><div class="kpi-sub">Requer revisão</div><div class="kpi-icon">✕</div></div>
     </div>
     <div class="charts-row">
       <div class="chart-card">
@@ -538,7 +398,7 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
         </div>
       </div>
       <div class="chart-card">
-        <h3>Protocolos por Sistema</h3>
+        <h3>Por Sistema</h3>
         <div class="bar-chart">
           <div class="bar-row"><span class="bar-label">webempresas</span><div class="bar-track"><div class="bar-fill" style="width:75%;background:#3d8ef0"></div></div><span class="bar-val">8</span></div>
           <div class="bar-row"><span class="bar-label">webcartoes</span><div class="bar-track"><div class="bar-fill" style="width:56%;background:#9b72f5"></div></div><span class="bar-val">6</span></div>
@@ -553,7 +413,7 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
         <h3>Atividade Recente</h3>
         <div class="timeline-chart">
           <div class="tl-item"><span class="tl-date">28/05 14:32</span><span class="tl-sys">webcartoes — Validado em prod.</span><span class="badge badge-green">Validado</span></div>
-          <div class="tl-item"><span class="tl-date">28/05 11:10</span><span class="tl-sys">web.bigcash — Publicação realizada</span><span class="badge badge-purple">Aguardando</span></div>
+          <div class="tl-item"><span class="tl-date">28/05 11:10</span><span class="tl-sys">web.bigcash — Publicado</span><span class="badge badge-purple">Aguardando</span></div>
           <div class="tl-item"><span class="tl-date">27/05 17:45</span><span class="tl-sys">webempresas — Hom. reprovada</span><span class="badge badge-red">Não valid.</span></div>
           <div class="tl-item"><span class="tl-date">27/05 09:00</span><span class="tl-sys">webusuarios — Criado</span><span class="badge badge-yellow">Pendente</span></div>
           <div class="tl-item"><span class="tl-date">26/05 16:20</span><span class="tl-sys">websuporte — Validado em prod.</span><span class="badge badge-green">Validado</span></div>
@@ -562,13 +422,10 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
     </div>
   </div>
 
-  <!-- ═══════════════ PROTOCOLOS ═══════════════ -->
+  <!-- PROTOCOLOS -->
   <div class="view" id="view-protocols">
     <div class="page-title">
-      <div>
-        <h1>Protocolos</h1>
-        <p id="proto-count-label">Exibindo 32 protocolos</p>
-      </div>
+      <div><h1>Protocolos</h1><p id="proto-count-label">Exibindo 32 protocolos</p></div>
       <button class="btn btn-primary" onclick="showView('new')">＋ Novo Registro</button>
     </div>
     <div class="filters-bar">
@@ -582,24 +439,18 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
         <option value="webrepresentantes">webrepresentantes.bigcard.com.br</option>
         <option value="websuporte">websuporte.bigcard.com.br</option>
       </select>
-      <select class="filter-select" id="f-ambiente" onchange="filterProtocols()">
-        <option value="">Todos os Ambientes</option>
-        <option value="HOM">Homologação</option>
-        <option value="PROD">Produção</option>
-        <option value="AMBOS">Ambos</option>
-      </select>
       <select class="filter-select" id="f-status-hom" onchange="filterProtocols()">
-        <option value="">Status Homologação</option>
-        <option value="Validado">Validado</option>
-        <option value="Não validado">Não validado</option>
-        <option value="—">N/A</option>
+        <option value="">Status Hom.</option>
+        <option value="Pendente">Hom. Pendente</option>
+        <option value="Validado">Hom. Validado</option>
+        <option value="Não validado">Hom. Não validado</option>
       </select>
       <select class="filter-select" id="f-status-prod" onchange="filterProtocols()">
-        <option value="">Status Produção</option>
-        <option value="Validado">Validado</option>
-        <option value="Aguardando validação">Aguardando</option>
-        <option value="Não validado">Não validado</option>
-        <option value="Pendente">Pendente</option>
+        <option value="">Status Prod.</option>
+        <option value="Pendente">Prod. Pendente</option>
+        <option value="Aguardando validação">Prod. Aguardando</option>
+        <option value="Validado">Prod. Validado</option>
+        <option value="Não validado">Prod. Não validado</option>
       </select>
       <button class="btn btn-outline btn-sm" onclick="clearFilters()">✕ Limpar</button>
       <div class="filter-sep"></div>
@@ -613,17 +464,15 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
           <button class="btn btn-outline btn-sm" onclick="exportCSV()">↓ CSV</button>
         </div>
       </div>
-      <table id="proto-table">
+      <table>
         <thead>
           <tr>
             <th>Protocolo</th>
             <th>Sistema</th>
-            <th>Ambiente</th>
             <th>Data</th>
             <th>Retornos</th>
-            <th>Hom.</th>
-            <th>Prod.</th>
             <th>Responsável</th>
+            <th>Andamento</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -636,16 +485,13 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
     </div>
   </div>
 
-  <!-- ═══════════════ NOVO REGISTRO ═══════════════ -->
+  <!-- NOVO REGISTRO -->
   <div class="view" id="view-new">
     <div class="page-title">
-      <div>
-        <h1>Novo Registro</h1>
-        <p>Registrar um novo protocolo de ajuste</p>
-      </div>
+      <div><h1>Novo Registro</h1><p>Cole a anotação do sistema de testes, informe o sistema e o responsável</p></div>
     </div>
     <div class="table-card" style="padding:28px;max-width:720px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
         <div class="detail-field">
           <label class="detail-label">Sistema</label>
           <select class="filter-select" style="width:100%;padding:9px 12px" id="np-sistema" onchange="updateNPHom()">
@@ -661,66 +507,51 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
         </div>
         <div class="detail-field">
           <label class="detail-label">Responsável</label>
-          <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp" placeholder="Nome do responsável">
+          <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp" placeholder="Nome de quem está registrando">
         </div>
-        <div class="detail-field full">
-          <label class="detail-label">Painel / Descrição do Ajuste</label>
-          <textarea class="filter-select" style="width:100%;padding:9px 12px;height:60px;resize:vertical" id="np-painel" placeholder="Ex: Aplicativo Novo (webcartoes), WebEmpresas — tela de fatura…"></textarea>
+      </div>
+
+      <div class="detail-field" style="margin-bottom:16px">
+        <label class="detail-label" style="margin-bottom:6px">Anotação completa
+          <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text3)"> — cole aqui o texto do sistema de testes (ID, Painel, Cartão, Caminho, Detalhamento, Resposta…)</span>
+        </label>
+        <div class="anotacao-wrap">
+          <textarea class="anotacao-paste" id="np-anotacao"
+            placeholder="14.72.00.04.64&#10;Patrick,&#10;- Painel: Aplicativo Novo (webcartoes)&#10;- Código ou cartão usado para testes: 6271127425817365&#10;- A situação afetou mais de uma empresa/Usuários? Sim&#10;- Caminho para reproduzir o erro: Na aba lateral > Serviços > Saque&#10;- Detalhamento: &#10;Na resolução de celular ao acessar a aba lateral, serviços em saque, o redirecionamento da página ao invés de ir para /saque_especie ele redireciona para /saque_espicie&#10;R: Ajuste validado com sucesso."></textarea>
+          <div class="anotacao-hint">
+            <span>📋</span>
+            <span>Ctrl+V para colar — o texto será armazenado como está, sem reinterpretação de campos.</span>
+          </div>
         </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
         <div class="detail-field">
-          <label class="detail-label">Código / Cartão usado nos testes</label>
-          <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-cartao" placeholder="Ex: 6271127425817365">
-        </div>
-        <div class="detail-field">
-          <label class="detail-label">A situação afetou mais de uma empresa?</label>
-          <select class="filter-select" style="width:100%;padding:9px 12px" id="np-afetou">
-            <option value="Não">Não</option>
-            <option value="Sim">Sim</option>
-            <option value="Não verificado">Não verificado</option>
-          </select>
-        </div>
-        <div class="detail-field full">
-          <label class="detail-label">Caminho para reproduzir o erro</label>
-          <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-caminho" placeholder="Ex: Aba lateral > Serviços > Saque">
-        </div>
-        <div class="detail-field full">
-          <label class="detail-label">Detalhamento</label>
-          <textarea class="filter-select" style="width:100%;padding:9px 12px;height:90px;resize:vertical" id="np-desc" placeholder="Descreva o problema e o que foi ajustado…"></textarea>
-        </div>
-        <div class="detail-field" id="np-hom-field">
-          <label class="detail-label">Ambiente de Homologação</label>
-          <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-hom-url" placeholder="URL do ambiente hom.">
+          <label class="detail-label">Obs. internas (opcional)</label>
+          <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-obs" placeholder="Ex: ticket #4821, alta prioridade…">
         </div>
         <div class="detail-field">
           <label class="detail-label">Data</label>
           <input type="date" class="filter-select" style="width:100%;padding:9px 12px" id="np-data">
         </div>
-        <div class="detail-field full">
-          <label class="detail-label">Resposta / Resultado</label>
-          <textarea class="filter-select" style="width:100%;padding:9px 12px;height:60px;resize:vertical" id="np-resultado" placeholder="Ex: Ajuste validado com sucesso."></textarea>
-        </div>
       </div>
-      <div style="margin-top:20px;display:flex;gap:10px">
+
+      <div style="display:flex;gap:10px">
         <button class="btn btn-primary" onclick="createProtocol()">Criar Protocolo</button>
         <button class="btn btn-outline" onclick="showView('protocols')">Cancelar</button>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════ RELATÓRIO ═══════════════ -->
+  <!-- RELATÓRIO -->
   <div class="view" id="view-relatorio">
     <div class="page-title">
-      <div>
-        <h1>Exportar Relatório</h1>
-        <p>Gere documentos Word no padrão BigCard</p>
-      </div>
+      <div><h1>Exportar Relatório</h1><p>Gere documentos Word no padrão BigCard</p></div>
     </div>
     <div class="table-card" style="padding:28px;max-width:600px">
       <div style="margin-bottom:20px">
         <div class="detail-label" style="margin-bottom:8px">Selecione o Protocolo</div>
-        <select class="filter-select" style="width:100%;padding:9px 12px" id="rel-protocolo">
-          <option value="">Selecione um protocolo…</option>
-        </select>
+        <select class="filter-select" style="width:100%;padding:9px 12px" id="rel-protocolo"></select>
       </div>
       <div style="margin-bottom:20px">
         <div class="detail-label" style="margin-bottom:8px">Tipo de Relatório</div>
@@ -731,7 +562,7 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
         </div>
       </div>
       <div id="rel-preview" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:20px;font-size:12px;color:var(--text3);min-height:80px">
-        Selecione um protocolo para visualizar o preview do documento.
+        Selecione um protocolo para visualizar o preview.
       </div>
       <div style="display:flex;gap:10px">
         <button class="btn btn-primary" onclick="exportWord()">↓ Exportar .docx</button>
@@ -742,9 +573,9 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
 
 </main>
 
-<!-- ── MODAL DETALHE ── -->
+<!-- MODAL DETALHE -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal-content">
+  <div class="modal">
     <div class="modal-head">
       <div>
         <h2 id="m-title">—</h2>
@@ -752,615 +583,484 @@ td.url-cell { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: v
       </div>
       <button class="modal-close" onclick="closeModalBtn()">✕</button>
     </div>
-    <div class="modal-body" id="m-body">
-      <!-- preenchido dinamicamente -->
-    </div>
+    <div class="modal-body" id="m-body"></div>
     <div class="modal-foot">
-      <button class="btn btn-outline btn-sm" id="m-export-btn" onclick="exportWordFromModal()">↓ Exportar .docx</button>
-      <button class="btn btn-primary btn-sm" onclick="closeModalBtn()">Fechar</button>
+      <button class="btn btn-outline btn-sm" onclick="exportWordFromModal()">↓ Exportar .docx</button>
+      <button class="btn btn-primary btn-sm" onclick="saveModalChanges()">Salvar alterações</button>
     </div>
   </div>
 </div>
 
 <div class="toast-container" id="toast-container"></div>
-
 </div><!-- /app -->
 
 <script>
-/* ═══════════════════════════════════════════════════
-   USUÁRIOS FICTÍCIOS
-═══════════════════════════════════════════════════ */
-const USERS = {
-  'rafael':  { nome:'Rafael',  senha:'bigcard', initials:'RF' },
-  'patrick': { nome:'Patrick', senha:'bigcard', initials:'PT' },
-  'carla':   { nome:'Carla',   senha:'bigcard', initials:'CL' },
-  'marcos':  { nome:'Marcos',  senha:'bigcard', initials:'MC' },
-  'renan':   { nome:'Renan',   senha:'bigcard', initials:'RN' },
-  'ana':     { nome:'Ana',     senha:'bigcard', initials:'AF' },
-};
-let currentUser = null;
+/* ═══ USUÁRIOS ═══ */
+const USERS={'rafael':{nome:'Rafael',senha:'bigcard',initials:'RF'},'patrick':{nome:'Patrick',senha:'bigcard',initials:'PT'},'carla':{nome:'Carla',senha:'bigcard',initials:'CL'},'marcos':{nome:'Marcos',senha:'bigcard',initials:'MC'},'renan':{nome:'Renan',senha:'bigcard',initials:'RN'},'ana':{nome:'Ana',senha:'bigcard',initials:'AF'}};
+let currentUser=null;
 
-function doLogin() {
-  const u = document.getElementById('login-user').value.trim().toLowerCase();
-  const p = document.getElementById('login-pass').value;
-  const usr = USERS[u];
-  if (usr && usr.senha === p) {
-    currentUser = usr;
-    document.getElementById('user-display-name').textContent = usr.nome;
-    document.getElementById('user-avatar-initials').textContent = usr.initials;
-    document.getElementById('login-screen').style.display = 'none';
+function doLogin(){
+  const u=document.getElementById('login-user').value.trim().toLowerCase();
+  const p=document.getElementById('login-pass').value;
+  const usr=USERS[u];
+  if(usr&&usr.senha===p){
+    currentUser=usr;
+    document.getElementById('user-display-name').textContent=usr.nome;
+    document.getElementById('user-avatar-initials').textContent=usr.initials;
+    document.getElementById('login-screen').style.display='none';
     document.getElementById('app').classList.add('visible');
-    filtered = [...PROTOCOLS];
+    filtered=[...PROTOCOLS];
     renderTable();
+    updateNavPending();
   } else {
-    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-error').style.display='block';
   }
 }
-
-function doLogout() {
-  if (!confirm('Sair do sistema?')) return;
-  currentUser = null;
-  document.getElementById('login-screen').style.display = 'flex';
+function doLogout(){
+  if(!confirm('Sair do sistema?'))return;
+  currentUser=null;
+  document.getElementById('login-screen').style.display='flex';
   document.getElementById('app').classList.remove('visible');
-  document.getElementById('login-user').value = '';
-  document.getElementById('login-pass').value = '';
-  document.getElementById('login-error').style.display = 'none';
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pass').value='';
+  document.getElementById('login-error').style.display='none';
 }
+document.getElementById('login-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
 
-/* ═══════════════════════════════════════════════════
-   DATA
-═══════════════════════════════════════════════════ */
-const SISTEMAS = {
-  webempresas:      { nome:'WebEmpresas',           url:'webempresas.bigcard.com.br',      hom:'homempresas.bigcard.com.br' },
-  webcartoes:       { nome:'WebCartões (WebView)',   url:'webcartoes.bigcard.com.br',       hom:'homwebcartoes.bigcard.com.br' },
-  bigcash:          { nome:'BigCash',               url:'web.bigcash.com.br',              hom:'homweb.bigcash.com.br' },
-  webusuarios:      { nome:'WebUsuários',           url:'webusuarios.bigcard.com.br',      hom:'homusuarios.bigcard.com.br' },
-  webredes:         { nome:'WebRedes',              url:'webredes.bigcard.com.br',         hom:'homredes.bigcard.com.br' },
-  webrepresentantes:{ nome:'WebRepresentantes',     url:'webrepresentantes.bigcard.com.br',hom:null },
-  websuporte:       { nome:'WebSuporte',            url:'websuporte.bigcard.com.br',       hom:'homsuporte.bigcard.com.br' },
+/* ═══ DATA ═══ */
+const SISTEMAS={
+  webempresas:     {nome:'WebEmpresas',          url:'webempresas.bigcard.com.br',       hom:'homempresas.bigcard.com.br'},
+  webcartoes:      {nome:'WebCartões (WebView)',  url:'webcartoes.bigcard.com.br',        hom:'homwebcartoes.bigcard.com.br'},
+  bigcash:         {nome:'BigCash',              url:'web.bigcash.com.br',               hom:'homweb.bigcash.com.br'},
+  webusuarios:     {nome:'WebUsuários',          url:'webusuarios.bigcard.com.br',       hom:'homusuarios.bigcard.com.br'},
+  webredes:        {nome:'WebRedes',             url:'webredes.bigcard.com.br',          hom:'homredes.bigcard.com.br'},
+  webrepresentantes:{nome:'WebRepresentantes',   url:'webrepresentantes.bigcard.com.br', hom:null},
+  websuporte:      {nome:'WebSuporte',           url:'websuporte.bigcard.com.br',        hom:'homsuporte.bigcard.com.br'},
 };
 
-/* Gerador de ID no formato 11.11.11.11.11 */
-function gerarId(seq) {
-  const d = new Date();
-  const yy = String(d.getFullYear()).slice(2);
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const s  = String(seq).padStart(2,'0');
-  // formato: AA.MM.DD.SS.XX — ex: 25.05.28.32.01
-  return `${yy}.${mm}.${String(d.getDate()).padStart(2,'0')}.${s}.${String(Math.floor(Math.random()*90)+10)}`;
+function gerarId(seq){
+  const d=new Date();
+  const yy=String(d.getFullYear()).slice(2);
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  const dd=String(d.getDate()).padStart(2,'0');
+  const s=String(seq).padStart(2,'0');
+  return `${yy}.${mm}.${dd}.${s}.${String(Math.floor(Math.random()*90)+10)}`;
 }
 
-let PROTOCOLS = [
-  { id:'25.05.28.32.14', sistema:'webcartoes', ambiente:'AMBOS', data:'28/05/2025', responsavel:'Patrick', statusHom:'Validado', statusProd:'Aguardando validação', retornos:0,
-    painel:'Aplicativo Novo (webcartoes)', cartao:'6271127425817365', afetou:'Sim',
-    caminho:'Aba lateral > Serviços > Saque',
-    desc:'Na resolução de celular ao acessar a aba lateral, serviços em saque, o redirecionamento da página ao invés de ir para /saque_especie ele redireciona para /saque_espicie (typo na rota).',
-    resultado:'Ajuste validado com sucesso.',
-    obsHom:'Testado em Android e iOS. Rota corrigida.', obsProd:'Publicado em 28/05 às 11:10. Aguardando validação do usuário final.', obs:'Typo na rota causava 404 em dispositivos mobile.' },
-  { id:'25.05.28.31.07', sistema:'webempresas', ambiente:'AMBOS', data:'28/05/2025', responsavel:'Renan', statusHom:'Validado', statusProd:'Validado', retornos:1,
-    painel:'WebEmpresas — cálculo de limite PJ', cartao:'N/A', afetou:'Não',
-    caminho:'Empresas > Crédito > Limite',
-    desc:'Correção no cálculo de limite de crédito para empresas PJ com sócio estrangeiro. Campo CPF_ESTRANGEIRO não era tratado corretamente na procedure.',
-    resultado:'Ajuste validado com sucesso.',
-    obsHom:'Testado com 3 CNPJs distintos.', obsProd:'Validado às 14:32 sem incidentes.', obs:'Ajuste solicitado pelo setor de crédito — ticket #4821.' },
-  { id:'25.05.27.30.22', sistema:'bigcash', ambiente:'AMBOS', data:'27/05/2025', responsavel:'Marcos', statusHom:'Validado', statusProd:'Aguardando validação', retornos:0,
-    painel:'BigCash — transações TEF', cartao:'N/A', afetou:'Sim',
-    caminho:'Financeiro > TEF > Transações',
-    desc:'Timeout em transações TEF acima de R$10.000. O parâmetro TEF_TIMEOUT estava em 30s — insuficiente para valores altos.',
-    resultado:'Ajuste em validação — deploy realizado.',
-    obsHom:'Simulado com R$12.000 e R$50.000.', obsProd:'Deploy realizado. Aguarda confirmação do setor financeiro.', obs:'Reportado por 3 PDVs no Vale do Aço.' },
-  { id:'25.05.27.29.88', sistema:'webusuarios', ambiente:'AMBOS', data:'27/05/2025', responsavel:'Ana', statusHom:'Não validado', statusProd:'Pendente', retornos:2,
-    painel:'WebUsuários — listagem', cartao:'N/A', afetou:'Não',
-    caminho:'Administração > Usuários > Listar',
-    desc:'Erro 500 ao filtrar usuários com departamento nulo. A query não tratava NULL no campo DEP_ID.',
-    resultado:'Pendente — necessária nova correção.',
-    obsHom:'Erro persistiu após primeiro deploy. Nova correção em andamento.', obsProd:'Não publicado.', obs:'Bug reportado pelo RH em 26/05. Alta prioridade.' },
-  { id:'25.05.26.28.53', sistema:'webempresas', ambiente:'AMBOS', data:'26/05/2025', responsavel:'Renan', statusHom:'Validado', statusProd:'Não validado', retornos:1,
-    painel:'WebEmpresas — extrato consolidado', cartao:'N/A', afetou:'Sim',
-    caminho:'Empresas > Relatórios > Extrato Consolidado',
-    desc:'Nova tela de extrato por CNPJ raiz. PDF não gerado corretamente em produção — encoding UTF-8 diferente do hom.',
-    resultado:'Não validado — reverter. Encoding divergente entre hom e prod.',
-    obsHom:'Aprovado. Performance OK.', obsProd:'Erro no PDF em produção.', obs:'Pendente correção de encoding.' },
-  { id:'25.05.26.27.41', sistema:'webredes', ambiente:'AMBOS', data:'26/05/2025', responsavel:'Carlos', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebRedes — monitoramento', cartao:'N/A', afetou:'Não',
-    caminho:'Redes > Dashboard > Equipamentos',
-    desc:'Dashboard de monitoramento de equipamentos de rede. Alertas integrados via webhook Zabbix.',
-    resultado:'Validado em produção às 16:20.',
-    obsHom:'OK.', obsProd:'Funcionando normalmente.', obs:'Módulo solicitado pela gerência de infra.' },
-  { id:'25.05.25.26.19', sistema:'websuporte', ambiente:'AMBOS', data:'25/05/2025', responsavel:'Juliana', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebSuporte — chat', cartao:'N/A', afetou:'Não',
-    caminho:'Suporte > Atendimento > Chat',
-    desc:'Integração do chat de suporte com sistema de tickets. Botão "Abrir Ticket" implementado.',
-    resultado:'Validado. Usuários reportando positivo.',
-    obsHom:'10 conversas testadas. OK.', obsProd:'Em produção desde 25/05.', obs:'Reduz tempo de atendimento ~30%.' },
-  { id:'25.05.24.25.37', sistema:'webcartoes', ambiente:'AMBOS', data:'24/05/2025', responsavel:'Carla', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'Aplicativo Novo (webcartoes) — bloqueio de cartão', cartao:'4111111111111111', afetou:'Sim',
-    caminho:'Meu Cartão > Segurança > Bloquear',
-    desc:'Botão de bloqueio de cartão não respondia em iOS 17. Problema no WKWebView bridge.',
-    resultado:'Validado. Reclamações cessaram após deploy.',
-    obsHom:'Testado em iPhone 12, 13 e 14.', obsProd:'OK.', obs:'Afetava ~15% dos usuários iOS.' },
-  { id:'25.05.23.24.62', sistema:'bigcash', ambiente:'AMBOS', data:'23/05/2025', responsavel:'Marcos', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'BigCash — conciliação', cartao:'N/A', afetou:'Sim',
-    caminho:'Financeiro > Conciliação > Diária',
-    desc:'Campo data_repasse gravando em UTC ao invés de BRT. Causava diferença de R$0,01 em ~200 transações/dia.',
-    resultado:'Ajuste validado. Diferença eliminada.',
-    obsHom:'5 dias reprocessados com sucesso.', obsProd:'Validado em 23/05.', obs:'Job SQL Agent ajustado.' },
-  { id:'25.05.22.23.81', sistema:'webempresas', ambiente:'AMBOS', data:'22/05/2025', responsavel:'Renan', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebEmpresas — consulta de faturas', cartao:'N/A', afetou:'Não',
-    caminho:'Empresas > Financeiro > Faturas',
-    desc:'Performance: queries da tela de faturas com 8s de resposta. Adição de índice e refatoração de procedure.',
-    resultado:'Validado. Tempo caiu de 8s para 0.3s.',
-    obsHom:'OK.', obsProd:'Estável desde 22/05.', obs:'Aprovado pelo gerente.' },
-  { id:'25.05.21.22.55', sistema:'webusuarios', ambiente:'AMBOS', data:'21/05/2025', responsavel:'Ana', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebUsuários — 2FA', cartao:'N/A', afetou:'Não',
-    caminho:'Admin > Segurança > 2FA',
-    desc:'Implementação de 2FA por TOTP para administradores. Integração com Google Authenticator e Authy.',
-    resultado:'Validado. 12 admins configurados.',
-    obsHom:'OK.', obsProd:'Ativo.', obs:'Requisito LGPD.' },
-  { id:'25.05.20.21.44', sistema:'webrepresentantes', ambiente:'PROD', data:'20/05/2025', responsavel:'Ricardo', statusHom:'—', statusProd:'Validado', retornos:0,
-    painel:'WebRepresentantes — comissões', cartao:'N/A', afetou:'Não',
-    caminho:'Representantes > Financeiro > Comissões',
-    desc:'Cálculo de comissões incorreto para vendas parceladas. Função calcularComissao() não considerava divisor correto.',
-    resultado:'Validado diretamente em produção com supervisão.',
-    obsHom:'N/A — sem ambiente de homologação.', obsProd:'OK.', obs:'Deploy direto com supervisão.' },
-  { id:'25.05.19.20.33', sistema:'webredes', ambiente:'AMBOS', data:'19/05/2025', responsavel:'Carlos', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebRedes — PRTG', cartao:'N/A', afetou:'Não',
-    caminho:'Redes > Monitoramento > Banda',
-    desc:'Integração com API PRTG para alertas de banda. Polling a cada 5 min.',
-    resultado:'Validado. Alertas chegando no Teams.',
-    obsHom:'OK.', obsProd:'Funcionando.', obs:'Reduz acesso manual ao PRTG.' },
-  { id:'25.05.18.19.72', sistema:'websuporte', ambiente:'AMBOS', data:'18/05/2025', responsavel:'Juliana', statusHom:'Não validado', statusProd:'Pendente', retornos:1,
-    painel:'WebSuporte — pesquisa satisfação', cartao:'N/A', afetou:'Não',
-    caminho:'Suporte > Pós-atendimento > Pesquisa',
-    desc:'E-mail de pesquisa de satisfação não sendo enviado em homologação. SMTP de hom. diferente do prod.',
-    resultado:'Pendente — configuração SMTP pendente.',
-    obsHom:'E-mail não enviando.', obsProd:'Não publicado.', obs:'SMTP hom. precisa configurar.' },
-  { id:'25.05.17.18.91', sistema:'bigcash', ambiente:'AMBOS', data:'17/05/2025', responsavel:'Marcos', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'BigCash — fluxo de caixa', cartao:'N/A', afetou:'Não',
-    caminho:'Financeiro > Relatórios > Fluxo de Caixa',
-    desc:'Relatório de fluxo de caixa semanal em Excel. Template EPPlus configurado.',
-    resultado:'Validado. Relatório agendado toda segunda-feira.',
-    obsHom:'OK.', obsProd:'Em prod.', obs:'Solicitado pela diretoria financeira.' },
-  { id:'25.05.16.17.28', sistema:'webcartoes', ambiente:'AMBOS', data:'16/05/2025', responsavel:'Carla', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'Aplicativo Novo (webcartoes) — push fatura', cartao:'N/A', afetou:'Sim',
-    caminho:'Push > Fatura > Vencimento',
-    desc:'Push notification para vencimento de fatura 5 dias antes. Firebase Cloud Messaging integrado.',
-    resultado:'Validado. ~2.400 pushes/dia.',
-    obsHom:'Push recebido em 3 dispositivos.', obsProd:'Ativo.', obs:'Taxa de abertura: 34%.' },
-  { id:'25.05.15.16.64', sistema:'webempresas', ambiente:'AMBOS', data:'15/05/2025', responsavel:'Renan', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebEmpresas — permissões', cartao:'N/A', afetou:'Não',
-    caminho:'Configurações > Permissões > Perfis',
-    desc:'Regressão: usuário gerente não conseguia aprovar faturas. Permissão APROVAR_FATURA ausente no perfil GERENTE.',
-    resultado:'Corrigido. Usuários notificados.',
-    obsHom:'OK.', obsProd:'Estável.', obs:'Regressão do PRO anterior.' },
-  { id:'25.05.14.15.57', sistema:'webusuarios', ambiente:'AMBOS', data:'14/05/2025', responsavel:'Ana', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebUsuários — exportação', cartao:'N/A', afetou:'Não',
-    caminho:'Admin > Usuários > Exportar',
-    desc:'Exportação de relatório de usuários ativos em CSV e PDF. Integração iTextSharp.',
-    resultado:'Validado. Utilizado pelo RH semanalmente.',
-    obsHom:'OK.', obsProd:'Funcionando.', obs:'LGPD — auditoria de acessos.' },
-  { id:'25.05.12.14.39', sistema:'webredes', ambiente:'AMBOS', data:'12/05/2025', responsavel:'Carlos', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebRedes — topologia Ipatinga', cartao:'N/A', afetou:'Não',
-    caminho:'Redes > Topologia > Filiais',
-    desc:'Mapa interativo de topologia de rede da filial Ipatinga. vis.js com 47 nós.',
-    resultado:'Online. Equipe de infra usando.',
-    obsHom:'OK.', obsProd:'Online.', obs:'Próxima: BH e Coronel.' },
-  { id:'25.05.10.13.16', sistema:'websuporte', ambiente:'AMBOS', data:'10/05/2025', responsavel:'Juliana', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebSuporte — SLA', cartao:'N/A', afetou:'Não',
-    caminho:'Suporte > Configurações > SLA',
-    desc:'SLA automático: escalação de tickets sem resposta > 4h. Job Quartz configurado.',
-    resultado:'Ativo. 3 escalações desde o deploy.',
-    obsHom:'Escalação em 4h. OK.', obsProd:'Ativo desde 10/05.', obs:'Melhora índice de SLA.' },
-  { id:'25.05.08.12.74', sistema:'webcartoes', ambiente:'AMBOS', data:'08/05/2025', responsavel:'Carla', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'Aplicativo Novo (webcartoes) — 2ª via PDF', cartao:'5500005555555559', afetou:'Não',
-    caminho:'Fatura > Detalhe > 2ª Via',
-    desc:'Segunda via de fatura em PDF. Endpoint /api/faturas/{id}/pdf-segunda-via.',
-    resultado:'Validado. Reduz chamadas ao suporte.',
-    obsHom:'5 faturas testadas. OK.', obsProd:'Funcionando.', obs:'Top feature solicitada.' },
-  { id:'25.05.07.11.83', sistema:'bigcash', ambiente:'AMBOS', data:'07/05/2025', responsavel:'Marcos', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'BigCash — liquidez', cartao:'N/A', afetou:'Não',
-    caminho:'Financeiro > Liquidez > Painel',
-    desc:'Painel de liquidez diária. Integração com API Banco Central (SGS). Atualização a cada hora.',
-    resultado:'Online. Diretoria financeira usando.',
-    obsHom:'OK.', obsProd:'Ativo.', obs:'Acesso restrito DIRETOR/CFO.' },
-  { id:'25.05.05.10.26', sistema:'webempresas', ambiente:'AMBOS', data:'05/05/2025', responsavel:'Renan', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebEmpresas — permissões hierárquicas', cartao:'N/A', afetou:'Não',
-    caminho:'Configurações > Permissões > Hierarquia',
-    desc:'Refatoração do módulo de permissões para suporte a perfis hierárquicos. Nova tabela TB_PERFIS_HIERARQUIA.',
-    resultado:'Validado. Base para delegação de acesso.',
-    obsHom:'OK.', obsProd:'Em prod.', obs:'Introduziu regressão corrigida depois.' },
-  { id:'25.05.03.09.48', sistema:'webusuarios', ambiente:'AMBOS', data:'03/05/2025', responsavel:'Ana', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebUsuários — SSO AD', cartao:'N/A', afetou:'Não',
-    caminho:'Login > Active Directory',
-    desc:'Integração com Active Directory para login SSO. LDAP configurado no appsettings.',
-    resultado:'SSO ativo para TI e RH.',
-    obsHom:'Login AD funcionando.', obsProd:'Ativo.', obs:'Login local mantido para emergências.' },
-  { id:'25.05.01.08.55', sistema:'webrepresentantes', ambiente:'PROD', data:'01/05/2025', responsavel:'Ricardo', statusHom:'—', statusProd:'Validado', retornos:0,
-    painel:'WebRepresentantes — metas', cartao:'N/A', afetou:'Não',
-    caminho:'Representantes > Relatórios > Metas',
-    desc:'Relatório de metas mensais em Excel. Template XLSX com macro de formatação.',
-    resultado:'Validado. 12 representantes usando.',
-    obsHom:'N/A.', obsProd:'OK.', obs:'Deploy direto.' },
-  { id:'25.04.29.07.63', sistema:'webredes', ambiente:'AMBOS', data:'29/04/2025', responsavel:'Carlos', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebRedes — Radius', cartao:'N/A', afetou:'Não',
-    caminho:'Redes > Wi-Fi > Autenticação',
-    desc:'Autenticação Radius para Wi-Fi corporativo. Integração FreeRadius + WLC Cisco.',
-    resultado:'Ativo. 87 dispositivos autenticados.',
-    obsHom:'5 contas testadas.', obsProd:'OK.', obs:'Projeto segurança 2025.' },
-  { id:'25.04.27.06.91', sistema:'websuporte', ambiente:'AMBOS', data:'27/04/2025', responsavel:'Juliana', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebSuporte — base de conhecimento', cartao:'N/A', afetou:'Não',
-    caminho:'Suporte > Base de Conhecimento',
-    desc:'Base de conhecimento com CRUD de artigos e busca Elasticsearch.',
-    resultado:'Online com 45 artigos. Reduz tickets repetitivos.',
-    obsHom:'Busca OK.', obsProd:'Online.', obs:'45 artigos iniciais.' },
-  { id:'25.04.25.05.77', sistema:'bigcash', ambiente:'AMBOS', data:'25/04/2025', responsavel:'Marcos', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'BigCash — antifraude', cartao:'N/A', afetou:'Sim',
-    caminho:'Admin > Antifraude > Regras',
-    desc:'Módulo antifraude por geolocalização. Integração MaxMind. Regras configuráveis.',
-    resultado:'Ativo. 3 fraudes bloqueadas na primeira semana.',
-    obsHom:'IPs restritos bloqueados.', obsProd:'Funcionando.', obs:'Admin em /admin/antifraude.' },
-  { id:'25.04.22.04.38', sistema:'webcartoes', ambiente:'AMBOS', data:'22/04/2025', responsavel:'Carla', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'Aplicativo Novo (webcartoes) — tela inicial v2', cartao:'N/A', afetou:'Não',
-    caminho:'App > Home',
-    desc:'Redesign completo da tela inicial. Novo design system com tokens CSS e animações GSAP.',
-    resultado:'Avaliação App Store: 4.7⭐. +22% engajamento.',
-    obsHom:'Aprovado por designer e PO.', obsProd:'Lançado.', obs:'Engajamento diário aumentou.' },
-  { id:'25.04.18.03.25', sistema:'webempresas', ambiente:'AMBOS', data:'18/04/2025', responsavel:'Renan', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebEmpresas — Serasa', cartao:'N/A', afetou:'Não',
-    caminho:'Empresas > Crédito > Consultar Serasa',
-    desc:'Integração API Serasa para consulta de crédito PJ. Cache Redis 24h. <200ms.',
-    resultado:'Validado. 340 consultas/dia.',
-    obsHom:'OK.', obsProd:'Em prod.', obs:'R$0,35/consulta — monitorar.' },
-  { id:'25.04.15.02.14', sistema:'webusuarios', ambiente:'AMBOS', data:'15/04/2025', responsavel:'Ana', statusHom:'Validado', statusProd:'Validado', retornos:0,
-    painel:'WebUsuários — onboarding digital', cartao:'N/A', afetou:'Não',
-    caminho:'Usuários > Onboarding',
-    desc:'Onboarding digital com assinatura eletrônica Clicksign. Fluxo em 4 etapas.',
-    resultado:'Ativo. 28 usuários onboardados digitalmente.',
-    obsHom:'OK.', obsProd:'Ativo.', obs:'Elimina papel.' },
-  { id:'25.04.10.01.99', sistema:'webrepresentantes', ambiente:'PROD', data:'10/04/2025', responsavel:'Ricardo', statusHom:'—', statusProd:'Validado', retornos:0,
-    painel:'WebRepresentantes — go-live v1.0', cartao:'N/A', afetou:'Não',
-    caminho:'Deploy inicial',
-    desc:'Sistema WebRepresentantes — versão inicial go-live. Deploy completo, DNS, SSL, treinamento.',
-    resultado:'Go-live realizado. Todos os representantes ativos.',
-    obsHom:'N/A.', obsProd:'Online.', obs:'Marco: primeiro deploy.' },
+/*
+  Schema:
+  { id, sistema, data, responsavel,
+    statusHom: 'Pendente'|'Validado'|'Não validado',
+    statusProd: 'Pendente'|'Aguardando validação'|'Validado'|'Não validado',
+    retornos: number,
+    anotacao: string (texto livre colado do sistema externo),
+    obs: string
+  }
+  REGRA: statusProd só avança se statusHom==='Validado'
+*/
+let PROTOCOLS=[
+  {id:'25.05.28.32.14',sistema:'webcartoes',data:'28/05/2025',responsavel:'Patrick',statusHom:'Validado',statusProd:'Aguardando validação',retornos:0,
+   anotacao:`14.72.00.04.64\nPatrick,\n- Painel: Aplicativo Novo (webcartoes)\n- Código ou cartão usado para testes: 6271127425817365\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Na aba lateral > Serviços > Saque\n- Detalhamento:\nNa resolução de celular ao acessar a aba lateral, serviços em saque, o redirecionamento da página ao invés de ir para /saque_especie ele redireciona para /saque_espicie\nR: Ajuste validado com sucesso.`,
+   obs:'Typo na rota causava 404 em dispositivos mobile.'},
+  {id:'25.05.28.31.07',sistema:'webempresas',data:'28/05/2025',responsavel:'Renan',statusHom:'Validado',statusProd:'Validado',retornos:1,
+   anotacao:`25.05.28.31.07\nRenan,\n- Painel: WebEmpresas — Crédito PJ\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Empresas > Crédito > Limite\n- Detalhamento:\nCampo CPF_ESTRANGEIRO não era tratado corretamente na procedure sp_calcular_limite_pj.\nR: Ajuste validado com sucesso.`,
+   obs:'Solicitado pelo setor de crédito — ticket #4821.'},
+  {id:'25.05.27.30.22',sistema:'bigcash',data:'27/05/2025',responsavel:'Marcos',statusHom:'Validado',statusProd:'Aguardando validação',retornos:0,
+   anotacao:`25.05.27.30.22\nMarcos,\n- Painel: BigCash — TEF\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Financeiro > TEF > Transações\n- Detalhamento:\nTimeout em transações TEF acima de R$10.000. Parâmetro TEF_TIMEOUT estava em 30s.\nR: Deploy realizado. Aguardando confirmação financeiro.`,
+   obs:'Reportado por 3 PDVs no Vale do Aço.'},
+  {id:'25.05.27.29.88',sistema:'webusuarios',data:'27/05/2025',responsavel:'Ana',statusHom:'Não validado',statusProd:'Pendente',retornos:2,
+   anotacao:`25.05.27.29.88\nAna,\n- Painel: WebUsuários — Listagem\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Administração > Usuários > Listar\n- Detalhamento:\nErro 500 ao filtrar usuários com departamento nulo. Query não trata NULL no campo DEP_ID.\nR: Pendente — necessária nova correção.`,
+   obs:'Bug reportado pelo RH em 26/05. Alta prioridade.'},
+  {id:'25.05.26.28.53',sistema:'webempresas',data:'26/05/2025',responsavel:'Renan',statusHom:'Validado',statusProd:'Não validado',retornos:1,
+   anotacao:`25.05.26.28.53\nRenan,\n- Painel: WebEmpresas — Extrato Consolidado\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Empresas > Relatórios > Extrato\n- Detalhamento:\nPDF não gerado em produção — encoding UTF-8 divergente entre hom e prod.\nR: Não validado — reverter.`,
+   obs:'Pendente correção de encoding.'},
+  {id:'25.05.26.27.41',sistema:'webredes',data:'26/05/2025',responsavel:'Carlos',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.26.27.41\nCarlos,\n- Painel: WebRedes — Monitoramento\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Redes > Dashboard > Equipamentos\n- Detalhamento:\nDashboard de monitoramento com alertas Zabbix via webhook.\nR: Validado em produção às 16:20.`,
+   obs:'Módulo solicitado pela gerência de infra.'},
+  {id:'25.05.25.26.19',sistema:'websuporte',data:'25/05/2025',responsavel:'Juliana',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.25.26.19\nJuliana,\n- Painel: WebSuporte — Chat\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Suporte > Atendimento > Chat\n- Detalhamento:\nIntegração chat com sistema de tickets. Botão "Abrir Ticket" implementado.\nR: Validado. Usuários reportando positivo.`,
+   obs:'Reduz tempo de atendimento ~30%.'},
+  {id:'25.05.24.25.37',sistema:'webcartoes',data:'24/05/2025',responsavel:'Carla',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.24.25.37\nCarla,\n- Painel: Aplicativo Novo (webcartoes) — Bloqueio de Cartão\n- Código ou cartão usado para testes: 4111111111111111\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Meu Cartão > Segurança > Bloquear\n- Detalhamento:\nBotão de bloqueio não respondia em iOS 17. Problema no WKWebView bridge.\nR: Validado. Reclamações cessaram após deploy.`,
+   obs:'Afetava ~15% dos usuários iOS.'},
+  {id:'25.05.23.24.62',sistema:'bigcash',data:'23/05/2025',responsavel:'Marcos',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.23.24.62\nMarcos,\n- Painel: BigCash — Conciliação Diária\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Financeiro > Conciliação > Diária\n- Detalhamento:\ndata_repasse gravando em UTC ao invés de BRT. Diferença de R$0,01 em ~200 transações/dia.\nR: Ajuste validado. Diferença eliminada.`,
+   obs:'Job SQL Agent ajustado.'},
+  {id:'25.05.22.23.81',sistema:'webempresas',data:'22/05/2025',responsavel:'Renan',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.22.23.81\nRenan,\n- Painel: WebEmpresas — Consulta de Faturas\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Empresas > Financeiro > Faturas\n- Detalhamento:\nQueries com 8s de resposta. Adição de índice e refatoração de procedure.\nR: Validado. Tempo caiu de 8s para 0.3s.`,
+   obs:'Aprovado pelo gerente.'},
+  {id:'25.05.21.22.55',sistema:'webusuarios',data:'21/05/2025',responsavel:'Ana',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.21.22.55\nAna,\n- Painel: WebUsuários — 2FA\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Admin > Segurança > 2FA\n- Detalhamento:\nImplementação de 2FA por TOTP para administradores. Integração Google Authenticator e Authy.\nR: Validado. 12 admins configurados.`,
+   obs:'Requisito LGPD.'},
+  {id:'25.05.19.20.33',sistema:'webredes',data:'19/05/2025',responsavel:'Carlos',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.19.20.33\nCarlos,\n- Painel: WebRedes — PRTG\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Redes > Monitoramento > Banda\n- Detalhamento:\nIntegração API PRTG para alertas de banda. Polling a cada 5 min.\nR: Validado. Alertas chegando no Teams.`,
+   obs:'Reduz acesso manual ao PRTG.'},
+  {id:'25.05.18.19.72',sistema:'websuporte',data:'18/05/2025',responsavel:'Juliana',statusHom:'Não validado',statusProd:'Pendente',retornos:1,
+   anotacao:`25.05.18.19.72\nJuliana,\n- Painel: WebSuporte — Pesquisa de Satisfação\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Suporte > Pós-atendimento > Pesquisa\n- Detalhamento:\nE-mail de pesquisa não enviado em homologação. SMTP hom. divergente.\nR: Pendente — configuração SMTP pendente.`,
+   obs:'SMTP hom. precisa configurar.'},
+  {id:'25.05.17.18.91',sistema:'bigcash',data:'17/05/2025',responsavel:'Marcos',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.17.18.91\nMarcos,\n- Painel: BigCash — Fluxo de Caixa\n- Código ou cartão usado para testes: N/A\n- Detalhamento:\nRelatório de fluxo de caixa semanal em Excel. Template EPPlus.\nR: Validado. Agendado toda segunda-feira.`,
+   obs:'Solicitado pela diretoria financeira.'},
+  {id:'25.05.16.17.28',sistema:'webcartoes',data:'16/05/2025',responsavel:'Carla',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.16.17.28\nCarla,\n- Painel: Aplicativo Novo (webcartoes) — Push Fatura\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Detalhamento:\nPush notification 5 dias antes do vencimento via Firebase.\nR: Validado. ~2.400 pushes/dia. Taxa abertura: 34%.`,
+   obs:''},
+  {id:'25.05.15.16.64',sistema:'webempresas',data:'15/05/2025',responsavel:'Renan',statusHom:'Validado',statusProd:'Validado',retornos:0,
+   anotacao:`25.05.15.16.64\nRenan,\n- Painel: WebEmpresas — Permissões\n- Código ou cartão usado para testes: N/A\n- Detalhamento:\nRegressão: gerente não conseguia aprovar faturas. Permissão APROVAR_FATURA ausente no perfil GERENTE.\nR: Corrigido. Usuários notificados.`,
+   obs:'Regressão do protocolo anterior.'},
 ];
 
-let filtered = [...PROTOCOLS];
-let currentPage = 1;
-const PAGE_SIZE = 10;
-let activeModalId = null;
+let filtered=[...PROTOCOLS];
+let currentPage=1;
+const PAGE_SIZE=10;
+let activeModalId=null;
 
-/* ═══════════════════════════════════════════════════
-   NAVEGAÇÃO
-═══════════════════════════════════════════════════ */
-function showView(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.getElementById('view-' + name).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-  const map = {dashboard:0, protocols:1, new:2};
-  const items = document.querySelectorAll('.nav-item');
-  if (map[name] !== undefined && items[map[name]]) items[map[name]].classList.add('active');
-  if (name === 'protocols') filterProtocols();
-  if (name === 'relatorio') {
-    const sel = document.getElementById('rel-protocolo');
-    sel.innerHTML = '<option value="">Selecione um protocolo…</option>';
-    PROTOCOLS.forEach(p => { sel.innerHTML += `<option value="${p.id}">${p.id} — ${SISTEMAS[p.sistema].url}</option>`; });
-    sel.onchange = updateRelPreview;
+/* ═══ NAVEGAÇÃO ═══ */
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  const idx={dashboard:0,protocols:1,new:2};
+  const items=document.querySelectorAll('.nav-item');
+  if(idx[name]!==undefined&&items[idx[name]])items[idx[name]].classList.add('active');
+  if(name==='protocols')filterProtocols();
+  if(name==='relatorio'){
+    const sel=document.getElementById('rel-protocolo');
+    sel.innerHTML='<option value="">Selecione um protocolo…</option>';
+    PROTOCOLS.forEach(p=>{sel.innerHTML+=`<option value="${p.id}">${p.id} — ${SISTEMAS[p.sistema].url}</option>`;});
+    sel.onchange=updateRelPreview;
+  }
+  if(name==='new'){
+    document.getElementById('np-data').value=new Date().toISOString().split('T')[0];
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   FILTROS & TABELA
-═══════════════════════════════════════════════════ */
-function filterProtocols() {
-  const search = document.getElementById('globalSearch').value.toLowerCase();
-  const fSis = document.getElementById('f-sistema').value;
-  const fAmb = document.getElementById('f-ambiente').value;
-  const fHom = document.getElementById('f-status-hom').value;
-  const fProd = document.getElementById('f-status-prod').value;
-  filtered = PROTOCOLS.filter(p => {
-    if (search && !JSON.stringify(p).toLowerCase().includes(search)) return false;
-    if (fSis && p.sistema !== fSis) return false;
-    if (fAmb && p.ambiente !== fAmb) return false;
-    if (fHom && p.statusHom !== fHom) return false;
-    if (fProd && !p.statusProd.includes(fProd.replace('Aguardando','Aguardando'))) return false;
+/* ═══ FILTROS ═══ */
+function filterProtocols(){
+  const search=document.getElementById('globalSearch').value.toLowerCase();
+  const fSis=document.getElementById('f-sistema').value;
+  const fHom=document.getElementById('f-status-hom').value;
+  const fProd=document.getElementById('f-status-prod').value;
+  filtered=PROTOCOLS.filter(p=>{
+    if(search&&!JSON.stringify(p).toLowerCase().includes(search))return false;
+    if(fSis&&p.sistema!==fSis)return false;
+    if(fHom&&p.statusHom!==fHom)return false;
+    if(fProd&&p.statusProd!==fProd)return false;
     return true;
   });
-  currentPage = 1;
-  renderTable();
-  renderChips();
+  currentPage=1;renderTable();renderChips();
 }
-function filterByEnv(env) { document.getElementById('f-ambiente').value = env; filterProtocols(); }
-function filterBySys(sys) { document.getElementById('f-sistema').value = sys; filterProtocols(); }
-function filterByStatus(status) {
-  const map = { pendente:'Pendente', validado:'Validado', aguardando:'Aguardando validação', nao_validado:'Não validado' };
-  document.getElementById('f-status-prod').value = map[status] || '';
+function filterByEnv(env){
+  // "HOM" → só mostra onde hom ainda não validado | "PROD" → hom validado
+  if(env==='HOM'){document.getElementById('f-status-hom').value='Pendente';}
+  if(env==='PROD'){document.getElementById('f-status-prod').value='Aguardando validação';}
   filterProtocols();
 }
-function clearFilters() {
-  ['f-sistema','f-ambiente','f-status-hom','f-status-prod'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('globalSearch').value = '';
-  filtered = [...PROTOCOLS]; currentPage = 1; renderTable(); renderChips();
+function filterBySys(sys){document.getElementById('f-sistema').value=sys;filterProtocols();}
+function filterByStatus(status){
+  const m={pendente:'Pendente',validado:'Validado',aguardando:'Aguardando validação',nao_validado:'Não validado'};
+  document.getElementById('f-status-prod').value=m[status]||'';filterProtocols();
 }
-function renderChips() {
-  const chips = document.getElementById('active-chips');
-  chips.innerHTML = '';
-  const fSis = document.getElementById('f-sistema').value;
-  const fAmb = document.getElementById('f-ambiente').value;
-  if (fSis) chips.innerHTML += `<div class="filter-chip" onclick="document.getElementById('f-sistema').value='';filterProtocols()">${SISTEMAS[fSis]?.url} ✕</div>`;
-  if (fAmb) chips.innerHTML += `<div class="filter-chip" onclick="document.getElementById('f-ambiente').value='';filterProtocols()">${fAmb} ✕</div>`;
+function clearFilters(){
+  ['f-sistema','f-status-hom','f-status-prod'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('globalSearch').value='';
+  filtered=[...PROTOCOLS];currentPage=1;renderTable();renderChips();
+}
+function renderChips(){
+  const chips=document.getElementById('active-chips');chips.innerHTML='';
+  const fSis=document.getElementById('f-sistema').value;
+  if(fSis)chips.innerHTML+=`<div class="filter-chip" onclick="document.getElementById('f-sistema').value='';filterProtocols()">${SISTEMAS[fSis]?.url} ✕</div>`;
+}
+function updateNavPending(){
+  document.getElementById('nav-pending').textContent=PROTOCOLS.filter(p=>p.statusProd==='Pendente'||p.statusHom==='Pendente').length;
 }
 
-function renderTable() {
-  const tbody = document.getElementById('proto-tbody');
-  const total = filtered.length;
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const end = Math.min(start + PAGE_SIZE, total);
-  const page = filtered.slice(start, end);
-  document.getElementById('proto-count-label').textContent = `Exibindo ${total} protocolos`;
-  document.getElementById('table-count').textContent = `${start+1}–${end} de ${total}`;
-  document.getElementById('page-info').textContent = `Página ${currentPage} de ${Math.ceil(total/PAGE_SIZE)}`;
+/* ═══ TABELA ═══ */
+function renderTable(){
+  const tbody=document.getElementById('proto-tbody');
+  const total=filtered.length;
+  const start=(currentPage-1)*PAGE_SIZE;
+  const end=Math.min(start+PAGE_SIZE,total);
+  const page=filtered.slice(start,end);
+  document.getElementById('proto-count-label').textContent=`Exibindo ${total} protocolo${total!==1?'s':''}`;
+  document.getElementById('table-count').textContent=`${start+1}–${end} de ${total}`;
+  document.getElementById('page-info').textContent=`Página ${currentPage} de ${Math.ceil(total/PAGE_SIZE)||1}`;
 
-  tbody.innerHTML = page.map(p => {
-    const sis = SISTEMAS[p.sistema];
-    const retBadge = p.retornos > 0
-      ? `<span class="badge badge-yellow" style="font-size:10px">${p.retornos}x retorno</span>`
-      : `<span style="font-size:11px;color:var(--text3)">—</span>`;
+  tbody.innerHTML=page.map(p=>{
+    const sis=SISTEMAS[p.sistema];
+    const retBadge=p.retornos>0
+      ?`<span class="badge badge-yellow" style="font-size:10px;padding:2px 7px">⟳ ${p.retornos}x</span>`
+      :`<span style="font-size:11px;color:var(--text3)">—</span>`;
+
+    // Coluna Andamento: status inline visual legível
+    const andamento=buildAndamentoInline(p);
+
     return `<tr onclick="openModal('${p.id}')">
       <td class="protocol-num">${p.id}</td>
       <td class="url-cell">${sis.url}</td>
-      <td>${ambienteBadge(p.ambiente)}</td>
-      <td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3)">${p.data}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);white-space:nowrap">${p.data}</td>
       <td>${retBadge}</td>
-      <td>${homBadge(p.statusHom)}</td>
-      <td>${prodBadge(p.statusProd)}</td>
       <td style="font-size:12px;color:var(--text2)">${p.responsavel}</td>
-      <td>
-        <div style="display:flex;gap:6px" onclick="event.stopPropagation()">
-          <button class="btn btn-outline btn-sm" onclick="openModal('${p.id}')">Ver</button>
-          <button class="btn btn-outline btn-sm" onclick="exportWordById('${p.id}')">↓</button>
-        </div>
-      </td>
+      <td>${andamento}</td>
+      <td><div style="display:flex;gap:6px" onclick="event.stopPropagation()">
+        <button class="btn btn-outline btn-sm" onclick="openModal('${p.id}')">Ver</button>
+        <button class="btn btn-outline btn-sm" onclick="exportWordById('${p.id}')">↓</button>
+      </div></td>
     </tr>`;
   }).join('');
   renderPagination(total);
 }
 
-function ambienteBadge(a) {
-  if (a === 'HOM') return '<span class="env-badge env-hom">HOM</span>';
-  if (a === 'PROD') return '<span class="env-badge env-prod">PROD</span>';
-  return '<span class="env-badge env-hom">HOM</span><span class="env-badge env-prod" style="margin-left:2px">PROD</span>';
-}
-function homBadge(s) {
-  if (s === 'Validado') return '<span class="badge badge-green">Validado</span>';
-  if (s === 'Não validado') return '<span class="badge badge-red">Não validado</span>';
-  return '<span class="badge badge-gray">N/A</span>';
-}
-function prodBadge(s) {
-  if (s === 'Validado') return '<span class="badge badge-green">Validado</span>';
-  if (s === 'Não validado') return '<span class="badge badge-red">Não validado</span>';
-  if (s === 'Aguardando validação') return '<span class="badge badge-purple">Aguardando</span>';
-  return '<span class="badge badge-yellow">Pendente</span>';
+function buildAndamentoInline(p){
+  const homMap={
+    'Pendente':   {dot:'sd-yellow', txt:'Pendente'},
+    'Validado':   {dot:'sd-green',  txt:'Testado'},
+    'Não validado':{dot:'sd-red',   txt:'Reprovado'},
+  };
+  const prodMap={
+    'Pendente':          {dot:'sd-gray',   txt:'Pendente'},
+    'Aguardando validação':{dot:'sd-purple',txt:'Publicado'},
+    'Validado':          {dot:'sd-green',  txt:'Testado'},
+    'Não validado':      {dot:'sd-red',    txt:'Reprovado'},
+  };
+  const h=homMap[p.statusHom]||{dot:'sd-gray',txt:'—'};
+  const pr=prodMap[p.statusProd]||{dot:'sd-gray',txt:'—'};
+  return `<div class="status-inline">
+    <div class="status-row"><span class="status-env">HOM</span><span class="status-dot ${h.dot}"></span><span class="status-txt">${h.txt}</span></div>
+    <div class="status-row"><span class="status-env">PROD</span><span class="status-dot ${pr.dot}"></span><span class="status-txt">${pr.txt}</span></div>
+  </div>`;
 }
 
-function renderPagination(total) {
-  const pages = Math.ceil(total / PAGE_SIZE);
-  const btns = document.getElementById('page-btns');
-  btns.innerHTML = '';
-  const prev = document.createElement('button');
-  prev.className = 'page-btn'; prev.textContent = '←'; prev.disabled = currentPage === 1;
-  prev.onclick = () => { currentPage--; renderTable(); }; btns.appendChild(prev);
-  for (let i = 1; i <= pages; i++) {
-    const b = document.createElement('button');
-    b.className = 'page-btn' + (i === currentPage ? ' active' : '');
-    b.textContent = i;
-    b.onclick = (pg => () => { currentPage = pg; renderTable(); })(i);
-    btns.appendChild(b);
+function renderPagination(total){
+  const pages=Math.ceil(total/PAGE_SIZE)||1;
+  const btns=document.getElementById('page-btns');btns.innerHTML='';
+  const prev=document.createElement('button');
+  prev.className='page-btn';prev.textContent='←';prev.disabled=currentPage===1;
+  prev.onclick=()=>{currentPage--;renderTable();};btns.appendChild(prev);
+  for(let i=1;i<=pages;i++){
+    const b=document.createElement('button');
+    b.className='page-btn'+(i===currentPage?' active':'');
+    b.textContent=i;b.onclick=(pg=>()=>{currentPage=pg;renderTable();})(i);btns.appendChild(b);
   }
-  const next = document.createElement('button');
-  next.className = 'page-btn'; next.textContent = '→'; next.disabled = currentPage === pages;
-  next.onclick = () => { currentPage++; renderTable(); }; btns.appendChild(next);
+  const next=document.createElement('button');
+  next.className='page-btn';next.textContent='→';next.disabled=currentPage===pages;
+  next.onclick=()=>{currentPage++;renderTable();};btns.appendChild(next);
 }
 
-/* ═══════════════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════════════ */
-function openModal(id) {
-  const p = PROTOCOLS.find(x => x.id === id);
-  if (!p) return;
-  activeModalId = id;
-  const sis = SISTEMAS[p.sistema];
+/* ═══ MODAL ═══ */
+function openModal(id){
+  const p=PROTOCOLS.find(x=>x.id===id);if(!p)return;
+  activeModalId=id;
+  const sis=SISTEMAS[p.sistema];
+  document.getElementById('m-title').textContent=sis.url;
+  document.getElementById('m-num').textContent=p.id+' · '+p.data+' · '+p.responsavel;
 
-  document.getElementById('m-title').textContent = sis.url;
-  document.getElementById('m-num').textContent = p.id + ' · ' + p.data + ' · ' + p.responsavel;
+  const retHtml=p.retornos>0?`<div class="retorno-badge">⟳ Retornou ao desenvolvedor ${p.retornos}x</div>`:'';
 
-  const retornosHtml = p.retornos > 0
-    ? `<div class="retorno-badge">⟳ Retornou ao desenvolvedor ${p.retornos}x</div>`
-    : '';
+  // Status editors: HOM e PROD com seta de fluxo entre eles
+  // PROD só habilita se HOM === Validado
+  const prodDisabled=p.statusHom!=='Validado'?'disabled title="Defina Homologação como Validado primeiro"':'';
 
-  document.getElementById('m-body').innerHTML = `
-    ${retornosHtml}
-    <div class="anotacao-block">
-<span style="color:var(--accent2);font-weight:700">${p.id}</span>
-<span style="color:var(--text3)"> · ${p.responsavel},</span>
+  document.getElementById('m-body').innerHTML=`
+    ${retHtml}
 
-<span style="color:var(--text3)">- Painel:</span> <span style="color:var(--text)">${p.painel}</span>
-<span style="color:var(--text3)">- Código ou cartão usado para testes:</span> <span style="color:var(--accent2)">${p.cartao || 'N/A'}</span>
-<span style="color:var(--text3)">- A situação afetou mais de uma empresa/Usuários?</span> <span style="color:var(--text)">${p.afetou}</span>
-<span style="color:var(--text3)">- Caminho para reproduzir o erro:</span> <span style="color:var(--text)">${p.caminho}</span>
-<span style="color:var(--text3)">- Detalhamento:</span>
-<span style="color:var(--text);padding-left:8px">${p.desc}</span>
-
-<span style="color:var(--green)">R: ${p.resultado}</span>
+    <!-- editor retornos -->
+    <div class="retorno-editor">
+      <span>Retornos ao desenvolvedor:</span>
+      <button class="retorno-btn" onclick="adjustRetornos('${p.id}',-1)">−</button>
+      <strong id="retornos-val-${p.id}">${p.retornos}</strong>
+      <button class="retorno-btn" onclick="adjustRetornos('${p.id}',+1)">＋</button>
+      <span style="color:var(--text3);font-size:11px;margin-left:4px">(ajuste manual)</span>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
-      ${ambienteBadge(p.ambiente)}
-      ${homBadge(p.statusHom)}
-      ${prodBadge(p.statusProd)}
+
+    <!-- editor status com fluxo HOM → PROD -->
+    <div class="status-editor">
+      <div class="status-edit-block">
+        <div class="status-edit-label">Homologação</div>
+        <select class="status-edit-select" id="se-hom-${p.id}" onchange="onHomChange('${p.id}')">
+          <option value="Pendente" ${p.statusHom==='Pendente'?'selected':''}>⬤ Pendente</option>
+          <option value="Validado" ${p.statusHom==='Validado'?'selected':''}>✓ Validado</option>
+          <option value="Não validado" ${p.statusHom==='Não validado'?'selected':''}>✕ Não validado</option>
+        </select>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="status-edit-block">
+        <div class="status-edit-label">Produção <span id="prod-lock-hint-${p.id}" style="color:var(--red);font-size:9px">${p.statusHom!=='Validado'?'(aguardando hom.)':''}</span></div>
+        <select class="status-edit-select" id="se-prod-${p.id}" ${prodDisabled}>
+          <option value="Pendente" ${p.statusProd==='Pendente'?'selected':''}>⬤ Pendente</option>
+          <option value="Aguardando validação" ${p.statusProd==='Aguardando validação'?'selected':''}>↑ Publicado — aguard. validação</option>
+          <option value="Validado" ${p.statusProd==='Validado'?'selected':''}>✓ Validado</option>
+          <option value="Não validado" ${p.statusProd==='Não validado'?'selected':''}>✕ Não validado</option>
+        </select>
+      </div>
     </div>
+
+    <!-- anotação em texto livre -->
+    <div style="margin-bottom:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Anotação</div>
+    <div class="anotacao-wrap" style="margin-bottom:14px">
+      <textarea class="anotacao-paste" id="ae-anotacao-${p.id}" style="min-height:160px">${escHtml(p.anotacao)}</textarea>
+      <div class="anotacao-hint"><span>✏️</span><span>Editável — alterações salvas ao clicar em "Salvar alterações"</span></div>
+    </div>
+
+    ${p.obs?`<div style="font-size:11px;color:var(--text3);margin-bottom:16px">Obs: ${escHtml(p.obs)}</div>`:''}
+
     <div class="tl-section">
       <h3>Linha do Tempo</h3>
-      <div class="timeline">${buildTimeline(p).map(s => `
-        <div class="tl-step">
-          <div class="tl-dot ${s.dot}"></div>
-          <div class="tl-step-title">${s.title}</div>
-          <div class="tl-step-meta">${s.meta}</div>
-        </div>`).join('')}
-      </div>
+      <div class="timeline" id="tl-${p.id}">${buildTimelineHtml(p)}</div>
     </div>`;
-
-  document.getElementById('modal-overlay').classList.add('open');
 }
 
-function buildTimeline(p) {
-  const steps = [];
-  steps.push({ dot:'done', title:'Registro criado', meta:p.data + ' · ' + p.responsavel });
-  if (p.ambiente !== 'PROD') {
-    const homDone = p.statusHom === 'Validado';
-    const homFail = p.statusHom === 'Não validado';
-    steps.push({ dot: homDone?'done':homFail?'error':'pending', title:'Homologação ' + (homDone?'aprovada':homFail?'reprovada':'pendente'), meta: (homDone||homFail) ? (SISTEMAS[p.sistema].hom||'—') : 'Aguardando…' });
-    if (p.retornos > 0) steps.push({ dot:'error', title:`Retorno ao desenvolvedor (${p.retornos}x)`, meta:'Correção necessária' });
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function onHomChange(id){
+  const p=PROTOCOLS.find(x=>x.id===id);if(!p)return;
+  const newHom=document.getElementById(`se-hom-${id}`).value;
+  const prodSel=document.getElementById(`se-prod-${id}`);
+  const hint=document.getElementById(`prod-lock-hint-${id}`);
+  if(newHom==='Validado'){
+    prodSel.disabled=false;prodSel.removeAttribute('title');
+    hint.textContent='';
+  } else {
+    prodSel.disabled=true;prodSel.title='Defina Homologação como Validado primeiro';
+    prodSel.value='Pendente';
+    hint.textContent='(aguardando hom.)';
   }
-  const pubDone = p.statusProd !== 'Pendente';
-  steps.push({ dot:pubDone?'done':'pending', title:'Publicação em produção', meta:pubDone ? SISTEMAS[p.sistema].url : 'Aguardando homologação…' });
-  const prodVal = p.statusProd === 'Validado';
-  const prodFail = p.statusProd === 'Não validado';
-  steps.push({ dot:prodVal?'done':prodFail?'error':p.statusProd==='Aguardando validação'?'pending':'inactive', title:'Validação final ' + (prodVal?'concluída':prodFail?'reprovada':''), meta:prodVal?'Concluído':prodFail?'Reprovado':'Aguardando…' });
-  return steps;
 }
 
-function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalBtn(); }
-function closeModalBtn() { document.getElementById('modal-overlay').classList.remove('open'); activeModalId = null; }
-
-/* ═══════════════════════════════════════════════════
-   NOVO REGISTRO
-═══════════════════════════════════════════════════ */
-function updateNPHom() {
-  const sys = document.getElementById('np-sistema').value;
-  const field = document.getElementById('np-hom-field');
-  const urlInput = document.getElementById('np-hom-url');
-  if (sys === 'webrepresentantes') { field.style.opacity='.4'; field.style.pointerEvents='none'; urlInput.value='Sem ambiente de homologação'; }
-  else { field.style.opacity='1'; field.style.pointerEvents='auto'; urlInput.value=sys?(SISTEMAS[sys]?.hom||''):''; }
+function adjustRetornos(id,delta){
+  const p=PROTOCOLS.find(x=>x.id===id);if(!p)return;
+  p.retornos=Math.max(0,p.retornos+delta);
+  const el=document.getElementById(`retornos-val-${id}`);
+  if(el)el.textContent=p.retornos;
+  renderTable();
+  showToast('⟳',`Retornos de ${id}: ${p.retornos}x`);
 }
-function createProtocol() {
-  const sistema = document.getElementById('np-sistema').value;
-  const resp = document.getElementById('np-resp').value;
-  const desc = document.getElementById('np-desc').value;
-  if (!sistema || !resp || !desc) { showToast('⚠️', 'Preencha os campos obrigatórios.'); return; }
-  const today = new Date();
-  const dataStr = String(today.getDate()).padStart(2,'0')+'/'+String(today.getMonth()+1).padStart(2,'0')+'/'+today.getFullYear();
-  const seq = PROTOCOLS.length + 1;
-  const id = gerarId(seq);
+
+function saveModalChanges(){
+  if(!activeModalId)return;
+  const p=PROTOCOLS.find(x=>x.id===activeModalId);if(!p)return;
+  const newHom=document.getElementById(`se-hom-${p.id}`).value;
+  const newProd=document.getElementById(`se-prod-${p.id}`).value;
+  // Regra: PROD só avança se HOM === Validado
+  if(newProd!=='Pendente'&&newHom!=='Validado'){
+    showToast('⚠️','Homologação precisa estar Validado antes de avançar em Produção.');return;
+  }
+  p.statusHom=newHom;
+  p.statusProd=newProd;
+  const anotEl=document.getElementById(`ae-anotacao-${p.id}`);
+  if(anotEl)p.anotacao=anotEl.value;
+  // Atualiza timeline no modal
+  const tlEl=document.getElementById(`tl-${p.id}`);
+  if(tlEl)tlEl.innerHTML=buildTimelineHtml(p);
+  // Atualiza retorno badge
+  renderTable();updateNavPending();
+  showToast('✓','Protocolo atualizado com sucesso!');
+}
+
+function buildTimelineHtml(p){
+  const steps=[];
+  steps.push({dot:'done',title:'Registro criado',meta:p.data+' · '+p.responsavel});
+  const homDone=p.statusHom==='Validado',homFail=p.statusHom==='Não validado',homPend=p.statusHom==='Pendente';
+  steps.push({dot:homDone?'done':homFail?'error':'pending',title:'Homologação — '+(homDone?'Testado ✓':homFail?'Reprovado':'Pendente'),meta:homDone||homFail?(SISTEMAS[p.sistema].hom||'—'):'Aguardando teste…'});
+  if(p.retornos>0)steps.push({dot:'error',title:`Retorno ao desenvolvedor (${p.retornos}x)`,meta:'Correção necessária antes de avançar'});
+  const pubDone=p.statusProd!=='Pendente';
+  steps.push({dot:homDone&&pubDone?'done':'inactive',title:'Publicação em produção',meta:homDone&&pubDone?SISTEMAS[p.sistema].url:'Aguardando aprovação em hom…'});
+  const prodVal=p.statusProd==='Validado',prodFail=p.statusProd==='Não validado',prodAg=p.statusProd==='Aguardando validação';
+  steps.push({dot:prodVal?'done':prodFail?'error':prodAg?'pending':'inactive',title:'Validação em produção — '+(prodVal?'Testado ✓':prodFail?'Reprovado':prodAg?'Aguardando':'Pendente'),meta:prodVal?'Concluído':prodFail?'Reprovado':prodAg?'Publicado — aguardando validação':'Aguardando publicação…'});
+  return steps.map(s=>`<div class="tl-step"><div class="tl-dot ${s.dot}"></div><div class="tl-step-title">${s.title}</div><div class="tl-step-meta">${s.meta}</div></div>`).join('');
+}
+
+function closeModal(e){if(e.target===document.getElementById('modal-overlay'))closeModalBtn();}
+function closeModalBtn(){document.getElementById('modal-overlay').classList.remove('open');activeModalId=null;}
+
+/* ═══ NOVO REGISTRO ═══ */
+function updateNPHom(){/* informativo apenas */}
+function createProtocol(){
+  const sistema=document.getElementById('np-sistema').value;
+  const resp=document.getElementById('np-resp').value.trim();
+  const anotacao=document.getElementById('np-anotacao').value.trim();
+  if(!sistema){showToast('⚠️','Selecione o sistema.');return;}
+  if(!resp){showToast('⚠️','Informe o responsável.');return;}
+  if(!anotacao){showToast('⚠️','Cole a anotação do sistema de testes.');return;}
+  const today=new Date();
+  const dataStr=String(today.getDate()).padStart(2,'0')+'/'+String(today.getMonth()+1).padStart(2,'0')+'/'+today.getFullYear();
+  const seq=PROTOCOLS.length+1;
+  const id=gerarId(seq);
   PROTOCOLS.unshift({
-    id, sistema, ambiente: sistema==='webrepresentantes'?'PROD':'AMBOS',
-    data: dataStr, responsavel: resp,
-    statusHom: sistema==='webrepresentantes'?'—':'Pendente', statusProd:'Pendente', retornos:0,
-    painel: document.getElementById('np-painel').value||'—',
-    cartao: document.getElementById('np-cartao').value||'N/A',
-    afetou: document.getElementById('np-afetou').value,
-    caminho: document.getElementById('np-caminho').value||'—',
-    desc, resultado: document.getElementById('np-resultado').value||'—',
-    obsHom:'—', obsProd:'—', obs:'—'
+    id,sistema,data:dataStr,responsavel:resp,
+    statusHom:'Pendente',statusProd:'Pendente',retornos:0,
+    anotacao,obs:document.getElementById('np-obs').value.trim()
   });
-  filtered = [...PROTOCOLS];
-  document.getElementById('nav-pending').textContent = PROTOCOLS.filter(p=>p.statusProd==='Pendente').length;
-  showToast('✓', `Protocolo ${id} criado com sucesso!`);
+  filtered=[...PROTOCOLS];
+  updateNavPending();
+  showToast('✓',`Protocolo ${id} criado!`);
+  // limpa form
+  ['np-sistema','np-resp','np-anotacao','np-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   showView('protocols');
 }
 
-/* ═══════════════════════════════════════════════════
-   EXPORTAÇÃO
-═══════════════════════════════════════════════════ */
-function updateRelPreview() {
-  const id = document.getElementById('rel-protocolo').value;
-  const tipo = document.querySelector('input[name="rel-tipo"]:checked').value;
-  const prev = document.getElementById('rel-preview');
-  if (!id) { prev.textContent='Selecione um protocolo.'; return; }
-  const p = PROTOCOLS.find(x=>x.id===id);
-  const sis = SISTEMAS[p.sistema];
+/* ═══ EXPORTAÇÃO ═══ */
+function updateRelPreview(){
+  const id=document.getElementById('rel-protocolo').value;
+  const prev=document.getElementById('rel-preview');
+  if(!id){prev.textContent='Selecione um protocolo para visualizar.';return;}
+  const p=PROTOCOLS.find(x=>x.id===id);
+  const sis=SISTEMAS[p.sistema];
+  const tipo=document.querySelector('input[name="rel-tipo"]:checked').value;
   prev.innerHTML=`<strong style="color:var(--text)">${id}</strong> — ${sis.url}<br>Responsável: ${p.responsavel} · Data: ${p.data}<br>Tipo: ${tipo}<br><span style="color:var(--accent2)">→ Exportar como .doc padrão BigCard</span>`;
 }
-function exportWord() {
-  const id = document.getElementById('rel-protocolo').value;
-  if (!id) { showToast('⚠️','Selecione um protocolo.'); return; }
-  exportWordById(id, document.querySelector('input[name="rel-tipo"]:checked').value);
+function exportWord(){
+  const id=document.getElementById('rel-protocolo').value;
+  if(!id){showToast('⚠️','Selecione um protocolo.');return;}
+  exportWordById(id,document.querySelector('input[name="rel-tipo"]:checked').value);
 }
-function exportWordFromModal() { if (activeModalId) exportWordById(activeModalId,'completo'); }
-function exportCSV() {
-  const headers = ['Protocolo','Sistema','Ambiente','Data','Retornos','Status Hom.','Status Prod.','Responsável'];
-  const rows = filtered.map(p=>[p.id,SISTEMAS[p.sistema].url,p.ambiente,p.data,p.retornos,p.statusHom,p.statusProd,p.responsavel]);
-  const csv = [headers,...rows].map(r=>r.join(';')).join('\n');
+function exportWordFromModal(){if(activeModalId)exportWordById(activeModalId,'completo');}
+function exportCSV(){
+  const headers=['Protocolo','Sistema','Data','Retornos','Status Hom.','Status Prod.','Responsável'];
+  const rows=filtered.map(p=>[p.id,SISTEMAS[p.sistema].url,p.data,p.retornos,p.statusHom,p.statusProd,p.responsavel]);
+  const csv=[headers,...rows].map(r=>r.join(';')).join('\n');
   download('protocolos.csv',csv,'text/csv');
   showToast('↓','CSV exportado!');
 }
-function exportWordById(id, tipo='completo') {
-  const p = PROTOCOLS.find(x=>x.id===id);
-  if (!p) return;
-  const sis = SISTEMAS[p.sistema];
-  const html = generateWordHTML(p, sis, tipo);
-  const b = new Blob([html],{type:'application/msword'});
-  const url = URL.createObjectURL(b);
-  const a = document.createElement('a');
-  a.href=url; a.download=`${id}_relatorio.doc`; a.click(); URL.revokeObjectURL(url);
-  showToast('↓',`Relatório ${id} exportado!`);
-}
-function generateWordHTML(p, sis, tipo) {
-  const valHom=p.statusHom==='Validado', nvalHom=p.statusHom==='Não validado';
-  const valProd=p.statusProd==='Validado', nvalProd=p.statusProd==='Não validado';
-  const retornosInfo = p.retornos > 0 ? `<p><b>RETORNOS AO DESENVOLVEDOR:</b> ${p.retornos}x</p>` : '';
+function exportWordById(id,tipo='completo'){
+  const p=PROTOCOLS.find(x=>x.id===id);if(!p)return;
+  const sis=SISTEMAS[p.sistema];
+  const valHom=p.statusHom==='Validado',nvalHom=p.statusHom==='Não validado';
+  const valProd=p.statusProd==='Validado',nvalProd=p.statusProd==='Não validado';
+  const retInfo=p.retornos>0?`<p><b>RETORNOS AO DESENVOLVEDOR:</b> ${p.retornos}x</p>`:'';
   let homBlock='';
-  if (tipo!=='producao') homBlock=`
-    <h2>RESULTADO — HOMOLOGAÇÃO</h2>
-    <p><b>AMBIENTE:</b><br>☑ HOMOLOGAÇÃO &nbsp;&nbsp; ☐ PRODUÇÃO</p>
-    <p><b>RESULTADO:</b></p>
-    <p>${valHom?'☑':'☐'} VALIDADO &nbsp;&nbsp; ☐ VALIDADO COM RESSALVAS &nbsp;&nbsp; ${nvalHom?'☑':'☐'} NÃO VALIDADO</p>
-    <p><b>OBSERVAÇÕES:</b><br>${p.obsHom}</p>`;
+  if(tipo!=='producao')homBlock=`<h2>RESULTADO — HOMOLOGAÇÃO</h2><p><b>AMBIENTE:</b> ☑ HOMOLOGAÇÃO &nbsp; ☐ PRODUÇÃO</p><p><b>RESULTADO:</b><br>${valHom?'☑':'☐'} VALIDADO &nbsp; ☐ VALIDADO COM RESSALVAS &nbsp; ${nvalHom?'☑':'☐'} NÃO VALIDADO</p>`;
   let prodBlock='';
-  if (tipo!=='homologacao') prodBlock=`
-    <hr>
-    <h2>VALIDAÇÃO EM PRODUÇÃO</h2>
-    <p><b>DATA:</b> ${p.data}</p>
-    <p><b>SISTEMA:</b> ${sis.url}</p>
-    <p><b>AMBIENTE:</b><br>☐ HOMOLOGAÇÃO &nbsp;&nbsp; ☑ PRODUÇÃO</p>
-    <p><b>RESULTADO:</b></p>
-    <p>${valProd?'☑':'☐'} VALIDADO &nbsp;&nbsp; ☐ VALIDADO COM RESSALVAS &nbsp;&nbsp; ${nvalProd?'☑':'☐'} NÃO VALIDADO</p>
-    <p><b>OBSERVAÇÕES:</b><br>${p.obsProd}</p>`;
-  return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:11pt;margin:2cm}h1{font-size:13pt;text-align:center;border-bottom:2pt solid #000;padding-bottom:6pt}h2{font-size:12pt;margin-top:18pt}p{margin:4pt 0}hr{border:1pt solid #ccc;margin:16pt 0}</style></head>
+  if(tipo!=='homologacao')prodBlock=`<hr><h2>VALIDAÇÃO EM PRODUÇÃO</h2><p><b>DATA:</b> ${p.data}</p><p><b>SISTEMA:</b> ${sis.url}</p><p><b>AMBIENTE:</b> ☐ HOMOLOGAÇÃO &nbsp; ☑ PRODUÇÃO</p><p><b>RESULTADO:</b><br>${valProd?'☑':'☐'} VALIDADO &nbsp; ☐ VALIDADO COM RESSALVAS &nbsp; ${nvalProd?'☑':'☐'} NÃO VALIDADO</p>`;
+  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:11pt;margin:2cm}h1{font-size:13pt;text-align:center;border-bottom:2pt solid #000;padding-bottom:6pt}h2{font-size:12pt;margin-top:18pt}p{margin:4pt 0}pre{font-family:Courier New,monospace;font-size:9pt;background:#f5f5f5;padding:10pt;border:1pt solid #ccc;white-space:pre-wrap}hr{border:1pt solid #ccc;margin:16pt 0}</style></head>
 <body>
 <h1>CENTRAL DE VALIDAÇÕES — BigCard<br><span style="font-size:10pt;font-weight:normal">${p.id}</span></h1>
 <p><b>DATA:</b> ${p.data}</p>
 <p><b>PROTOCOLO:</b> ${p.id}</p>
 <p><b>SISTEMA:</b> ${sis.url}</p>
 <p><b>RESPONSÁVEL:</b> ${p.responsavel}</p>
-<p><b>AMBIENTE:</b><br>${tipo!=='producao'?'☑':'☐'} HOMOLOGAÇÃO &nbsp;&nbsp; ${tipo==='producao'?'☑':'☐'} PRODUÇÃO</p>
-<p><b>PAINEL:</b> ${p.painel}</p>
-<p><b>CÓDIGO/CARTÃO PARA TESTES:</b> ${p.cartao||'N/A'}</p>
-<p><b>SITUAÇÃO AFETOU MAIS DE UMA EMPRESA?</b> ${p.afetou}</p>
-<p><b>CAMINHO PARA REPRODUZIR:</b><br>${p.caminho}</p>
-<p><b>DETALHAMENTO:</b><br>${p.desc}</p>
-${retornosInfo}
-<p><b>RESULTADO/RESPOSTA:</b><br>${p.resultado}</p>
+${retInfo}
+<p><b>ANOTAÇÃO:</b></p>
+<pre>${escHtml(p.anotacao)}</pre>
 ${homBlock}
 ${prodBlock}
-<p style="margin-top:40pt;font-size:9pt;color:#666">Documento gerado pela Central de Validações BigCard — ${new Date().toLocaleString('pt-BR')}</p>
+<p style="margin-top:40pt;font-size:9pt;color:#666">Gerado pela Central de Validações BigCard — ${new Date().toLocaleString('pt-BR')}</p>
 </body></html>`;
+  const b=new Blob([html],{type:'application/msword'});
+  const url=URL.createObjectURL(b);
+  const a=document.createElement('a');a.href=url;a.download=`${id}_relatorio.doc`;a.click();URL.revokeObjectURL(url);
+  showToast('↓',`Relatório ${id} exportado!`);
 }
 
-/* ═══════════════════════════════════════════════════
-   UTILS
-═══════════════════════════════════════════════════ */
-function download(name,content,mime) { const b=new Blob([content],{type:mime}); const url=URL.createObjectURL(b); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url); }
-function showToast(icon,msg) {
+/* ═══ UTILS ═══ */
+function download(name,content,mime){const b=new Blob([content],{type:mime});const url=URL.createObjectURL(b);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
+function showToast(icon,msg){
   const c=document.getElementById('toast-container');
-  const t=document.createElement('div'); t.className='toast';
+  const t=document.createElement('div');t.className='toast';
   t.innerHTML=`<span class="toast-icon">${icon}</span>${msg}`;
   c.appendChild(t);
   setTimeout(()=>{t.classList.add('removing');setTimeout(()=>t.remove(),300);},3000);
 }
-
-/* Enter no login */
-document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 </script>
 </body>
 </html>
