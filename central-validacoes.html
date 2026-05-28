@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Validações — BigCard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #12151c;
+  --bg3: #181c26;
+  --bg4: #1e2330;
+  --border: #252c3d;
+  --border2: #2e3750;
+  --accent: #3d8ef0;
+  --accent2: #5aa3ff;
+  --accent-dim: rgba(61,142,240,0.12);
+  --green: #27c483;
+  --green-dim: rgba(39,196,131,0.12);
+  --yellow: #f5a623;
+  --yellow-dim: rgba(245,166,35,0.12);
+  --red: #e8455a;
+  --red-dim: rgba(232,69,90,0.12);
+  --purple: #9b72f5;
+  --purple-dim: rgba(155,114,245,0.12);
+  --text: #e2e8f7;
+  --text2: #8a95b0;
+  --text3: #5a6480;
+  --sidebar-w: 240px;
+  --header-h: 56px;
+  --radius: 8px;
+  --radius2: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ── HEADER ── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--header-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px 0 0;
+  gap: 16px;
+}
+.header-brand {
+  display: flex; align-items: center; gap: 0;
+  width: var(--sidebar-w);
+  padding: 0 20px;
+  border-right: 1px solid var(--border);
+  height: 100%;
+}
+.header-logo {
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--accent);
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px; font-weight: 500;
+  color: #fff;
+  flex-shrink: 0;
+}
+.logo-text { font-size: 13px; font-weight: 600; line-height: 1.2; }
+.logo-sub { font-size: 10px; color: var(--text3); font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
+
+.header-center { flex: 1; display: flex; align-items: center; gap: 12px; }
+.search-box {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 0 12px;
+  width: 320px; height: 34px;
+  transition: border-color .2s;
+}
+.search-box:focus-within { border-color: var(--accent); }
+.search-box input {
+  background: none; border: none; outline: none;
+  color: var(--text); font-size: 13px; flex: 1;
+  font-family: inherit;
+}
+.search-box input::placeholder { color: var(--text3); }
+.search-icon { color: var(--text3); font-size: 14px; }
+
+.header-right { display: flex; align-items: center; gap: 12px; }
+.header-badge {
+  background: var(--accent-dim); border: 1px solid rgba(61,142,240,0.25);
+  border-radius: 20px; padding: 3px 10px;
+  font-size: 11px; color: var(--accent2); font-family: 'IBM Plex Mono', monospace;
+}
+.header-user {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 10px 4px 4px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 20px; cursor: pointer;
+}
+.user-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  display: grid; place-items: center;
+  font-size: 10px; font-weight: 700; color: #fff;
+}
+.user-name { font-size: 12px; color: var(--text2); }
+
+/* ── SIDEBAR ── */
+nav.sidebar {
+  position: fixed; top: var(--header-h); left: 0; bottom: 0;
+  width: var(--sidebar-w); z-index: 90;
+  background: var(--bg2); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow-y: auto; overflow-x: hidden;
+}
+.nav-section { padding: 16px 12px 4px; }
+.nav-label {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text3);
+  padding: 0 8px; margin-bottom: 4px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: var(--radius);
+  cursor: pointer; transition: all .15s;
+  font-size: 13px; color: var(--text2); font-weight: 400;
+  margin-bottom: 2px; position: relative;
+}
+.nav-item:hover { background: var(--bg4); color: var(--text); }
+.nav-item.active { background: var(--accent-dim); color: var(--accent2); font-weight: 500; }
+.nav-item.active::before {
+  content: ''; position: absolute; left: 0; top: 4px; bottom: 4px;
+  width: 3px; background: var(--accent); border-radius: 0 3px 3px 0;
+}
+.nav-icon { font-size: 16px; flex-shrink: 0; }
+.nav-count {
+  margin-left: auto;
+  background: var(--bg4); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1px 6px;
+  font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--text3);
+}
+.nav-count.warn { background: var(--yellow-dim); border-color: rgba(245,166,35,.25); color: var(--yellow); }
+.sidebar-footer {
+  margin-top: auto; padding: 16px 12px;
+  border-top: 1px solid var(--border);
+}
+.env-tag {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  font-size: 11px; color: var(--text3);
+}
+.env-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* ── MAIN ── */
+main {
+  margin-top: var(--header-h);
+  margin-left: var(--sidebar-w);
+  flex: 1; overflow-y: auto;
+  padding: 28px;
+}
+
+/* ── VIEWS ── */
+.view { display: none; animation: fadeIn .2s ease; }
+.view.active { display: block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+/* ── PAGE TITLE ── */
+.page-title {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.page-title h1 { font-size: 20px; font-weight: 600; }
+.page-title p { font-size: 13px; color: var(--text3); margin-top: 2px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: var(--radius);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  border: none; font-family: inherit; transition: all .15s;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-outline {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text2);
+}
+.btn-outline:hover { border-color: var(--border2); color: var(--text); }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+
+/* ── KPI CARDS ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px; margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius2); padding: 18px 20px;
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: border-color .2s;
+}
+.kpi-card:hover { border-color: var(--border2); }
+.kpi-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.kpi-card.blue::after { background: var(--accent); }
+.kpi-card.yellow::after { background: var(--yellow); }
+.kpi-card.green::after { background: var(--green); }
+.kpi-card.red::after { background: var(--red); }
+.kpi-card.purple::after { background: var(--purple); }
+
+.kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); font-weight: 600; margin-bottom: 10px; }
+.kpi-num { font-size: 32px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; line-height: 1; margin-bottom: 6px; }
+.kpi-card.blue .kpi-num { color: var(--accent2); }
+.kpi-card.yellow .kpi-num { color: var(--yellow); }
+.kpi-card.green .kpi-num { color: var(--green); }
+.kpi-card.red .kpi-num { color: var(--red); }
+.kpi-card.purple .kpi-num { color: var(--purple); }
+.kpi-sub { font-size: 11px; color: var(--text3); }
+.kpi-icon { position: absolute; bottom: 14px; right: 16px; font-size: 28px; opacity: .15; }
+
+/* ── CHARTS ROW ── */
+.charts-row { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 14px; margin-bottom: 24px; }
+.chart-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius2); padding: 20px;
+}
+.chart-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
+
+/* Donut */
+.donut-wrap { display: flex; align-items: center; gap: 20px; }
+.donut-svg { flex-shrink: 0; }
+.donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text2); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.legend-val { margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text); }
+
+/* Bar chart */
+.bar-chart { display: flex; flex-direction: column; gap: 10px; }
+.bar-row { display: flex; align-items: center; gap: 10px; font-size: 11px; }
+.bar-label { width: 90px; color: var(--text3); flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { flex: 1; height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; transition: width .6s ease; }
+.bar-val { width: 28px; text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--text3); flex-shrink: 0; }
+
+/* Mini timeline chart */
+.timeline-chart { display: flex; flex-direction: column; gap: 8px; }
+.tl-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 12px; background: var(--bg3); border-radius: var(--radius);
+  border: 1px solid var(--border); font-size: 12px;
+}
+.tl-date { font-family: 'IBM Plex Mono', monospace; color: var(--text3); width: 80px; flex-shrink: 0; }
+.tl-sys { color: var(--text2); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── FILTERS BAR ── */
+.filters-bar {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; flex-wrap: wrap;
+}
+.filter-select {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 6px 10px;
+  color: var(--text2); font-size: 12px; font-family: inherit;
+  cursor: pointer; outline: none; transition: border-color .2s;
+}
+.filter-select:focus { border-color: var(--accent); }
+.filter-sep { flex: 1; }
+.active-filters { display: flex; gap: 6px; align-items: center; }
+.filter-chip {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--accent-dim); border: 1px solid rgba(61,142,240,.2);
+  border-radius: 20px; padding: 3px 8px 3px 10px;
+  font-size: 11px; color: var(--accent2); cursor: pointer;
+}
+.filter-chip:hover { background: rgba(61,142,240,.2); }
+
+/* ── TABLE ── */
+.table-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius2); overflow: hidden;
+}
+.table-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+}
+.table-header h3 { font-size: 14px; font-weight: 600; }
+.table-actions { display: flex; gap: 8px; align-items: center; }
+.table-info { font-size: 12px; color: var(--text3); }
+
+table { width: 100%; border-collapse: collapse; }
+thead tr { border-bottom: 1px solid var(--border); }
+th {
+  text-align: left; padding: 10px 16px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .8px; color: var(--text3);
+  white-space: nowrap; cursor: pointer; user-select: none;
+}
+th:hover { color: var(--text2); }
+th .sort-icon { opacity: .4; margin-left: 4px; }
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .1s; cursor: pointer;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--bg3); }
+td { padding: 12px 16px; font-size: 13px; }
+td.mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text3); }
+td.protocol-num { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; color: var(--accent2); }
+td.sys-cell { max-width: 200px; }
+td.sys-name { font-size: 12px; color: var(--text2); }
+td.sys-url { font-size: 10px; color: var(--text3); font-family: 'IBM Plex Mono', monospace; }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+}
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+.badge-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(39,196,131,.25); }
+.badge-green::before { background: var(--green); }
+.badge-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(232,69,90,.25); }
+.badge-red::before { background: var(--red); }
+.badge-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(245,166,35,.25); }
+.badge-yellow::before { background: var(--yellow); }
+.badge-blue { background: var(--accent-dim); color: var(--accent2); border: 1px solid rgba(61,142,240,.25); }
+.badge-blue::before { background: var(--accent); }
+.badge-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(155,114,245,.25); }
+.badge-purple::before { background: var(--purple); }
+.badge-gray { background: var(--bg4); color: var(--text3); border: 1px solid var(--border); }
+.badge-gray::before { background: var(--text3); }
+
+/* ── ENV BADGE ── */
+.env-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 7px; border-radius: 4px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+}
+.env-hom { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(155,114,245,.2); }
+.env-prod { background: rgba(245,166,35,.1); color: var(--yellow); border: 1px solid rgba(245,166,35,.2); }
+
+/* ── PAGINATION ── */
+.pagination {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border-top: 1px solid var(--border);
+}
+.pagination-info { font-size: 12px; color: var(--text3); }
+.pagination-btns { display: flex; gap: 4px; }
+.page-btn {
+  width: 30px; height: 30px; border-radius: var(--radius);
+  display: grid; place-items: center;
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text2); font-size: 12px; cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace; transition: all .15s;
+}
+.page-btn:hover { border-color: var(--border2); color: var(--text); }
+.page-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.page-btn:disabled { opacity: .3; cursor: default; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 20px; overflow-y: auto;
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius2); width: 100%; max-width: 780px;
+  transform: translateY(20px); transition: transform .25s;
+}
+.modal-overlay.open .modal { transform: none; }
+.modal-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 24px 28px 20px; border-bottom: 1px solid var(--border);
+}
+.modal-head h2 { font-size: 17px; font-weight: 600; }
+.modal-protocol { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent2); margin-top: 3px; }
+.modal-close {
+  width: 30px; height: 30px; border-radius: var(--radius);
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text2); font-size: 18px; cursor: pointer; display: grid; place-items: center;
+  flex-shrink: 0; transition: all .15s;
+}
+.modal-close:hover { background: var(--bg4); color: var(--text); }
+.modal-body { padding: 24px 28px; }
+
+/* Detail grid */
+.detail-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; margin-bottom: 24px;
+}
+.detail-field { display: flex; flex-direction: column; gap: 4px; }
+.detail-field.full { grid-column: 1 / -1; }
+.detail-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .8px; color: var(--text3);
+}
+.detail-value { font-size: 13px; color: var(--text); line-height: 1.5; }
+.detail-value.mono { font-family: 'IBM Plex Mono', monospace; color: var(--accent2); font-size: 12px; }
+.detail-box {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px;
+  font-size: 13px; line-height: 1.6; color: var(--text2);
+}
+
+/* Timeline */
+.tl-section { margin-top: 24px; }
+.tl-section h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); margin-bottom: 16px; }
+.timeline { position: relative; padding-left: 20px; }
+.timeline::before {
+  content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--border);
+}
+.tl-step { position: relative; margin-bottom: 20px; }
+.tl-step:last-child { margin-bottom: 0; }
+.tl-dot {
+  position: absolute; left: -17px; top: 6px;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--bg2); display: grid; place-items: center;
+}
+.tl-dot.done { background: var(--green); }
+.tl-dot.pending { background: var(--yellow); }
+.tl-dot.error { background: var(--red); }
+.tl-dot.inactive { background: var(--bg4); border-color: var(--border); }
+.tl-step-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.tl-step-meta { font-size: 11px; color: var(--text3); margin-top: 2px; font-family: 'IBM Plex Mono', monospace; }
+.tl-step-desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+/* Modal footer */
+.modal-foot {
+  padding: 16px 28px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+}
+
+/* ── TOAST ── */
+.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 8px; }
+.toast {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius2); padding: 12px 16px;
+  font-size: 13px; color: var(--text);
+  display: flex; align-items: center; gap: 10px;
+  min-width: 260px; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  animation: toastIn .3s ease;
+}
+@keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
+.toast.removing { animation: toastOut .3s ease forwards; }
+@keyframes toastOut { to{opacity:0;transform:translateX(20px)} }
+.toast-icon { font-size: 16px; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center; padding: 60px 20px;
+  color: var(--text3);
+}
+.empty-state .es-icon { font-size: 40px; margin-bottom: 12px; opacity: .4; }
+.empty-state p { font-size: 14px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1200px) {
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+  .charts-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-brand">
+    <div class="header-logo">
+      <div class="logo-mark">CV</div>
+      <div>
+        <div class="logo-text">Central de Validações</div>
+        <div class="logo-sub">BigCard Sistemas</div>
+      </div>
+    </div>
+  </div>
+  <div class="header-center">
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+      <input type="text" placeholder="Buscar protocolo, sistema ou responsável…" id="globalSearch" oninput="filterProtocols()">
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-badge">v2.4.1</div>
+    <div class="header-user">
+      <div class="user-avatar">RN</div>
+      <span class="user-name">Renan · TI</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="nav-section">
+    <div class="nav-label">Menu</div>
+    <div class="nav-item active" onclick="showView('dashboard')">
+      <span class="nav-icon">⊞</span> Dashboard
+    </div>
+    <div class="nav-item" onclick="showView('protocols')">
+      <span class="nav-icon">≡</span> Protocolos
+      <span class="nav-count warn" id="nav-pending">5</span>
+    </div>
+    <div class="nav-item" onclick="showView('new')">
+      <span class="nav-icon">＋</span> Novo Protocolo
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Ambientes</div>
+    <div class="nav-item" onclick="filterByEnv('HOM'); showView('protocols')">
+      <span class="nav-icon">◈</span> Homologação
+    </div>
+    <div class="nav-item" onclick="filterByEnv('PROD'); showView('protocols')">
+      <span class="nav-icon">◉</span> Produção
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Sistemas</div>
+    <div class="nav-item" onclick="filterBySys('webempresas'); showView('protocols')">
+      <span class="nav-icon">○</span> WebEmpresas
+    </div>
+    <div class="nav-item" onclick="filterBySys('webcartoes'); showView('protocols')">
+      <span class="nav-icon">○</span> WebCartões
+    </div>
+    <div class="nav-item" onclick="filterBySys('bigcash'); showView('protocols')">
+      <span class="nav-icon">○</span> BigCash
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Relatórios</div>
+    <div class="nav-item" onclick="showView('relatorio')">
+      <span class="nav-icon">↓</span> Exportar Relatório
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <div class="env-tag">
+      <div class="env-dot"></div>
+      <span>Sistema operacional</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <!-- ═══════════════ DASHBOARD ═══════════════ -->
+  <div class="view active" id="view-dashboard">
+    <div class="page-title">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Resumo geral dos protocolos de validação — Mai/2025</p>
+      </div>
+      <button class="btn btn-primary" onclick="showView('new')">＋ Novo Protocolo</button>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card blue" onclick="showView('protocols')">
+        <div class="kpi-label">Total de Protocolos</div>
+        <div class="kpi-num">32</div>
+        <div class="kpi-sub">↑ 8 este mês</div>
+        <div class="kpi-icon">≡</div>
+      </div>
+      <div class="kpi-card yellow" onclick="filterByStatus('pendente'); showView('protocols')">
+        <div class="kpi-label">Pendentes</div>
+        <div class="kpi-num">5</div>
+        <div class="kpi-sub">Aguardando ação</div>
+        <div class="kpi-icon">◷</div>
+      </div>
+      <div class="kpi-card green" onclick="filterByStatus('validado'); showView('protocols')">
+        <div class="kpi-label">Validados</div>
+        <div class="kpi-num">19</div>
+        <div class="kpi-sub">Em produção</div>
+        <div class="kpi-icon">✓</div>
+      </div>
+      <div class="kpi-card purple" onclick="filterByStatus('aguardando'); showView('protocols')">
+        <div class="kpi-label">Aguard. Prod.</div>
+        <div class="kpi-num">5</div>
+        <div class="kpi-sub">Publicados</div>
+        <div class="kpi-icon">↑</div>
+      </div>
+      <div class="kpi-card red" onclick="filterByStatus('nao_validado'); showView('protocols')">
+        <div class="kpi-label">Não Validados</div>
+        <div class="kpi-num">3</div>
+        <div class="kpi-sub">Requer revisão</div>
+        <div class="kpi-icon">✕</div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <!-- Donut -->
+      <div class="chart-card">
+        <h3>Status Produção</h3>
+        <div class="donut-wrap">
+          <svg class="donut-svg" width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#1e2330" stroke-width="14"/>
+            <!-- Validated: 19/32 = 59.4% → 142.1 of 238.8 -->
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#27c483" stroke-width="14"
+              stroke-dasharray="142 239" stroke-dashoffset="60" stroke-linecap="round"/>
+            <!-- Pending: 5/32 = 15.6% → 37.3 -->
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#9b72f5" stroke-width="14"
+              stroke-dasharray="37 239" stroke-dashoffset="-82" stroke-linecap="round"/>
+            <!-- Not validated: 3/32 = 9.4% -->
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#e8455a" stroke-width="14"
+              stroke-dasharray="22 239" stroke-dashoffset="-119" stroke-linecap="round"/>
+            <text x="50" y="46" text-anchor="middle" fill="#e2e8f7" font-size="14" font-weight="700" font-family="IBM Plex Mono">32</text>
+            <text x="50" y="58" text-anchor="middle" fill="#5a6480" font-size="7">Total</text>
+          </svg>
+          <div class="donut-legend">
+            <div class="legend-item"><span class="legend-dot" style="background:#27c483"></span>Validados<span class="legend-val">19</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:#9b72f5"></span>Aguardando<span class="legend-val">5</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:#f5a623"></span>Pendentes<span class="legend-val">5</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:#e8455a"></span>Não validados<span class="legend-val">3</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bar by system -->
+      <div class="chart-card">
+        <h3>Protocolos por Sistema</h3>
+        <div class="bar-chart">
+          <div class="bar-row">
+            <span class="bar-label">WebEmpresas</span>
+            <div class="bar-track"><div class="bar-fill" style="width:75%;background:#3d8ef0"></div></div>
+            <span class="bar-val">8</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">WebCartões</span>
+            <div class="bar-track"><div class="bar-fill" style="width:56%;background:#9b72f5"></div></div>
+            <span class="bar-val">6</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">BigCash</span>
+            <div class="bar-track"><div class="bar-fill" style="width:47%;background:#27c483"></div></div>
+            <span class="bar-val">5</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">WebUsuários</span>
+            <div class="bar-track"><div class="bar-fill" style="width:38%;background:#f5a623"></div></div>
+            <span class="bar-val">4</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">WebRedes</span>
+            <div class="bar-track"><div class="bar-fill" style="width:28%;background:#e8455a"></div></div>
+            <span class="bar-val">3</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">WebRepres.</span>
+            <div class="bar-track"><div class="bar-fill" style="width:19%;background:#5aa3ff"></div></div>
+            <span class="bar-val">2</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">WebSuporte</span>
+            <div class="bar-track"><div class="bar-fill" style="width:38%;background:#8a95b0"></div></div>
+            <span class="bar-val">4</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent timeline -->
+      <div class="chart-card">
+        <h3>Atividade Recente</h3>
+        <div class="timeline-chart">
+          <div class="tl-item">
+            <span class="tl-date">28/05 14:32</span>
+            <span class="tl-sys">WebCartões — Validado em prod.</span>
+            <span class="badge badge-green">Validado</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">28/05 11:10</span>
+            <span class="tl-sys">BigCash — Publicação realizada</span>
+            <span class="badge badge-purple">Aguardando</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">27/05 17:45</span>
+            <span class="tl-sys">WebEmpresas — Hom. reprovada</span>
+            <span class="badge badge-red">Não valid.</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">27/05 09:00</span>
+            <span class="tl-sys">WebUsuários — Criado</span>
+            <span class="badge badge-yellow">Pendente</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">26/05 16:20</span>
+            <span class="tl-sys">WebSuporte — Validado em prod.</span>
+            <span class="badge badge-green">Validado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /view-dashboard -->
+
+
+  <!-- ═══════════════ PROTOCOLOS ═══════════════ -->
+  <div class="view" id="view-protocols">
+    <div class="page-title">
+      <div>
+        <h1>Protocolos</h1>
+        <p id="proto-count-label">Exibindo 32 protocolos</p>
+      </div>
+      <button class="btn btn-primary" onclick="showView('new')">＋ Novo Protocolo</button>
+    </div>
+
+    <div class="filters-bar">
+      <select class="filter-select" id="f-sistema" onchange="filterProtocols()">
+        <option value="">Todos os Sistemas</option>
+        <option value="webempresas">WebEmpresas</option>
+        <option value="webcartoes">WebCartões</option>
+        <option value="bigcash">BigCash</option>
+        <option value="webusuarios">WebUsuários</option>
+        <option value="webredes">WebRedes</option>
+        <option value="webrepresentantes">WebRepresentantes</option>
+        <option value="websuporte">WebSuporte</option>
+      </select>
+      <select class="filter-select" id="f-ambiente" onchange="filterProtocols()">
+        <option value="">Todos os Ambientes</option>
+        <option value="HOM">Homologação</option>
+        <option value="PROD">Produção</option>
+        <option value="AMBOS">Ambos</option>
+      </select>
+      <select class="filter-select" id="f-status-hom" onchange="filterProtocols()">
+        <option value="">Status Homologação</option>
+        <option value="Validado">Validado</option>
+        <option value="Não validado">Não validado</option>
+        <option value="—">N/A</option>
+      </select>
+      <select class="filter-select" id="f-status-prod" onchange="filterProtocols()">
+        <option value="">Status Produção</option>
+        <option value="Validado">Validado</option>
+        <option value="Aguardando validação">Aguardando</option>
+        <option value="Não validado">Não validado</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+      <button class="btn btn-outline btn-sm" onclick="clearFilters()">✕ Limpar</button>
+      <div class="filter-sep"></div>
+      <div class="active-filters" id="active-chips"></div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-header">
+        <h3>Lista de Protocolos</h3>
+        <div class="table-actions">
+          <span class="table-info" id="table-count"></span>
+          <button class="btn btn-outline btn-sm" onclick="exportCSV()">↓ CSV</button>
+        </div>
+      </div>
+      <table id="proto-table">
+        <thead>
+          <tr>
+            <th>Protocolo</th>
+            <th>Sistema</th>
+            <th>Ambiente</th>
+            <th>Data</th>
+            <th>Hom.</th>
+            <th>Prod.</th>
+            <th>Responsável</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="proto-tbody"></tbody>
+      </table>
+      <div class="pagination">
+        <span class="pagination-info" id="page-info"></span>
+        <div class="pagination-btns" id="page-btns"></div>
+      </div>
+    </div>
+  </div><!-- /view-protocols -->
+
+
+  <!-- ═══════════════ NOVO PROTOCOLO ═══════════════ -->
+  <div class="view" id="view-new">
+    <div class="page-title">
+      <div>
+        <h1>Novo Protocolo</h1>
+        <p>Registrar um novo protocolo de ajuste</p>
+      </div>
+    </div>
+    <div class="table-card" style="padding:28px;max-width:700px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="detail-field">
+          <label class="detail-label">Sistema</label>
+          <select class="filter-select" style="width:100%;padding:9px 12px" id="np-sistema" onchange="updateNPHom()">
+            <option value="">Selecione…</option>
+            <option value="webempresas">WebEmpresas</option>
+            <option value="webcartoes">WebCartões (WebView)</option>
+            <option value="bigcash">BigCash</option>
+            <option value="webusuarios">WebUsuários</option>
+            <option value="webredes">WebRedes</option>
+            <option value="webrepresentantes">WebRepresentantes</option>
+            <option value="websuporte">WebSuporte</option>
+          </select>
+        </div>
+        <div class="detail-field">
+          <label class="detail-label">Responsável</label>
+          <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp" placeholder="Nome do responsável">
+        </div>
+        <div class="detail-field full">
+          <label class="detail-label">Descrição do Ajuste</label>
+          <textarea class="filter-select" style="width:100%;padding:9px 12px;height:70px;resize:vertical" id="np-desc" placeholder="Descreva brevemente o ajuste realizado…"></textarea>
+        </div>
+        <div class="detail-field full">
+          <label class="detail-label">Ajustes Realizados (detalhado)</label>
+          <textarea class="filter-select" style="width:100%;padding:9px 12px;height:90px;resize:vertical" id="np-ajustes" placeholder="Liste os arquivos, tabelas ou configurações alteradas…"></textarea>
+        </div>
+        <div class="detail-field" id="np-hom-field">
+          <label class="detail-label">Ambiente de Homologação</label>
+          <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-hom-url" placeholder="URL do ambiente hom.">
+        </div>
+        <div class="detail-field">
+          <label class="detail-label">Data</label>
+          <input type="date" class="filter-select" style="width:100%;padding:9px 12px" id="np-data">
+        </div>
+        <div class="detail-field full">
+          <label class="detail-label">Observações</label>
+          <textarea class="filter-select" style="width:100%;padding:9px 12px;height:60px;resize:vertical" id="np-obs" placeholder="Observações adicionais…"></textarea>
+        </div>
+      </div>
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn btn-primary" onclick="createProtocol()">Criar Protocolo</button>
+        <button class="btn btn-outline" onclick="showView('protocols')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ RELATÓRIO ═══════════════ -->
+  <div class="view" id="view-relatorio">
+    <div class="page-title">
+      <div>
+        <h1>Exportar Relatório</h1>
+        <p>Gere documentos Word no padrão BigCard</p>
+      </div>
+    </div>
+    <div class="table-card" style="padding:28px;max-width:600px">
+      <div style="margin-bottom:20px">
+        <div class="detail-label" style="margin-bottom:8px">Selecione o Protocolo</div>
+        <select class="filter-select" style="width:100%;padding:9px 12px" id="rel-protocolo">
+          <option value="">Selecione um protocolo…</option>
+        </select>
+      </div>
+      <div style="margin-bottom:20px">
+        <div class="detail-label" style="margin-bottom:8px">Tipo de Relatório</div>
+        <div style="display:flex;gap:10px">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;color:var(--text2)">
+            <input type="radio" name="rel-tipo" value="homologacao" checked> Homologação
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;color:var(--text2)">
+            <input type="radio" name="rel-tipo" value="producao"> Produção
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;color:var(--text2)">
+            <input type="radio" name="rel-tipo" value="completo"> Completo
+          </label>
+        </div>
+      </div>
+      <div id="rel-preview" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:20px;font-size:12px;color:var(--text3);min-height:80px">
+        Selecione um protocolo para visualizar o preview do documento.
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-primary" onclick="exportWord()">↓ Exportar .docx</button>
+        <button class="btn btn-outline" onclick="showView('dashboard')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+</main><!-- /main -->
+
+
+<!-- ── MODAL DETALHE ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <div class="modal-head">
+      <div>
+        <h2 id="m-title">—</h2>
+        <div class="modal-protocol" id="m-num">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid">
+        <div class="detail-field">
+          <div class="detail-label">Sistema</div>
+          <div class="detail-value" id="m-sistema">—</div>
+        </div>
+        <div class="detail-field">
+          <div class="detail-label">Responsável</div>
+          <div class="detail-value" id="m-resp">—</div>
+        </div>
+        <div class="detail-field">
+          <div class="detail-label">Ambiente</div>
+          <div class="detail-value" id="m-ambiente">—</div>
+        </div>
+        <div class="detail-field">
+          <div class="detail-label">Data</div>
+          <div class="detail-value mono" id="m-data">—</div>
+        </div>
+        <div class="detail-field full">
+          <div class="detail-label">Descrição do Ajuste</div>
+          <div class="detail-box" id="m-desc">—</div>
+        </div>
+        <div class="detail-field full">
+          <div class="detail-label">Ajustes Realizados</div>
+          <div class="detail-box" id="m-ajustes">—</div>
+        </div>
+        <div class="detail-field">
+          <div class="detail-label">Resultado — Homologação</div>
+          <div class="detail-value" id="m-res-hom">—</div>
+        </div>
+        <div class="detail-field">
+          <div class="detail-label">Resultado — Produção</div>
+          <div class="detail-value" id="m-res-prod">—</div>
+        </div>
+        <div class="detail-field full">
+          <div class="detail-label">Observações</div>
+          <div class="detail-box" id="m-obs">—</div>
+        </div>
+      </div>
+      <div class="tl-section">
+        <h3>Linha do Tempo</h3>
+        <div class="timeline" id="m-timeline"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline btn-sm" id="m-export-btn" onclick="exportWordFromModal()">↓ Exportar .docx</button>
+      <button class="btn btn-primary btn-sm" onclick="closeModalBtn()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST CONTAINER ── -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════ */
+const SISTEMAS = {
+  webempresas:     { nome:'WebEmpresas',    url:'webempresas.bigcard.com.br',    hom:'homempresas.bigcard.com.br' },
+  webcartoes:      { nome:'WebCartões (WebView)', url:'webcartoes.bigcard.com.br', hom:'homwebcartoes.bigcard.com.br' },
+  bigcash:         { nome:'BigCash',        url:'web.bigcash.com.br',            hom:'homweb.bigcash.com.br' },
+  webusuarios:     { nome:'WebUsuários',    url:'webusuarios.bigcard.com.br',    hom:'homusuarios.bigcard.com.br' },
+  webredes:        { nome:'WebRedes',       url:'webredes.bigcard.com.br',       hom:'homredes.bigcard.com.br' },
+  webrepresentantes:{ nome:'WebRepresentantes', url:'webrepresentantes.bigcard.com.br', hom:null },
+  websuporte:      { nome:'WebSuporte',     url:'websuporte.bigcard.com.br',     hom:'homsuporte.bigcard.com.br' },
+};
+
+let PROTOCOLS = [
+  { id:'PRO-2025-0032', sistema:'webempresas', ambiente:'AMBOS', data:'28/05/2025', responsavel:'Renan N.', statusHom:'Validado', statusProd:'Validado', desc:'Correção no cálculo de limite de crédito para empresas PJ com sócio estrangeiro.', ajustes:'Ajuste na procedure sp_calcular_limite_pj no banco BIGCARD_PROD. Alteração no arquivo LimiteService.cs linha 312. Deploy realizado via GitLab CI/CD.', obsHom:'Testado com 3 CNPJs distintos, todos aprovados.', obsProd:'Validado às 14:32 sem incidentes.', obs:'Ajuste solicitado pelo setor de crédito — ticket #4821.' },
+  { id:'PRO-2025-0031', sistema:'webcartoes', ambiente:'AMBOS', data:'28/05/2025', responsavel:'Carla M.', statusHom:'Validado', statusProd:'Aguardando validação', desc:'Implementação de novo layout de fatura no Novo Aplicativo (WebView).', ajustes:'Refatoração do componente FaturaCard.vue. Atualização do endpoint /api/v2/fatura para incluir campo "desconto_fidelidade". Ajuste no CSS do webview.', obsHom:'Aprovado em Android e iOS. Pequeno ajuste de padding corrigido.', obsProd:'Publicado em 28/05 às 11:10. Aguardando validação do usuário final.', obs:'Requer teste em dispositivos de tela pequena (<5").' },
+  { id:'PRO-2025-0030', sistema:'bigcash', ambiente:'AMBOS', data:'27/05/2025', responsavel:'Marcos T.', statusHom:'Validado', statusProd:'Aguardando validação', desc:'Correção de timeout em transações TEF acima de R$10.000.', ajustes:'Aumento do parâmetro TEF_TIMEOUT de 30s para 90s no arquivo config.properties. Ajuste no retry logic da classe TransacaoService.java.', obsHom:'Simulado com valores de R$12.000 e R$50.000 — OK.', obsProd:'Deploy realizado. Aguarda confirmação do setor financeiro.', obs:'Problema reportado por 3 PDVs diferentes no Vale do Aço.' },
+  { id:'PRO-2025-0029', sistema:'webusuarios', ambiente:'AMBOS', data:'27/05/2025', responsavel:'Ana F.', statusHom:'Não validado', statusProd:'Pendente', desc:'Página de listagem de usuários com erro 500 ao filtrar por departamento nulo.', ajustes:'Correção no UsuarioController.cs para tratar departamento == null. Ajuste na query SQL da view VW_USUARIOS_ATIVOS.', obsHom:'Erro persistiu após primeiro deploy. Correção adicional necessária.', obsProd:'Não publicado — aguardando aprovação em hom.', obs:'Bug reportado pelo RH em 26/05. Alta prioridade.' },
+  { id:'PRO-2025-0028', sistema:'webempresas', ambiente:'AMBOS', data:'26/05/2025', responsavel:'Renan N.', statusHom:'Validado', statusProd:'Não validado', desc:'Nova tela de relatório de extrato consolidado por CNPJ raiz.', ajustes:'Criação do endpoint GET /api/empresas/extrato-consolidado. Novo componente ExtratoConsolidado.vue. Adição de 2 colunas na tabela TB_RELATORIOS.', obsHom:'Aprovado. Performance OK (<1s para 500 registros).', obsProd:'Erro na geração do PDF em produção — encoding UTF-8 diferente do hom. Reverter.', obs:'PDF não gerado corretamente em produção. Pendente correção.' },
+  { id:'PRO-2025-0027', sistema:'webredes', ambiente:'AMBOS', data:'26/05/2025', responsavel:'Carlos S.', statusHom:'Validado', statusProd:'Validado', desc:'Dashboard de monitoramento de equipamentos de rede — novo módulo.', ajustes:'Criação das telas Dashboard.vue e AlertasRede.vue. API /api/redes/alertas integrada com Zabbix via webhook. Atualização do nginx.conf.', obsHom:'Todos os testes OK. Aprovado pela TI.', obsProd:'Validado em 26/05 às 16:20. Funcionando normalmente.', obs:'Módulo solicitado pela gerência de infraestrutura.' },
+  { id:'PRO-2025-0026', sistema:'websuporte', ambiente:'AMBOS', data:'25/05/2025', responsavel:'Juliana P.', statusHom:'Validado', statusProd:'Validado', desc:'Integração do chat de suporte com sistema de tickets interno.', ajustes:'Novo webhook POST /api/suporte/ticket-chat. Ajuste no componente ChatWindow.vue para incluir botão "Abrir Ticket". Configuração do serviço de e-mail.', obsHom:'Testado com 10 conversas distintas. OK.', obsProd:'Em produção desde 25/05. Usuários reportando positivo.', obs:'Reduz tempo de atendimento estimado em 30%.' },
+  { id:'PRO-2025-0025', sistema:'webcartoes', ambiente:'AMBOS', data:'24/05/2025', responsavel:'Carla M.', statusHom:'Validado', statusProd:'Validado', desc:'Correção no bloqueio de cartão via App — botão não respondia em iOS 17.', ajustes:'Atualização do WKWebView bridge. Correção no evento onClick do botão BloquearCartao. Ajuste no manifest.json do PWA.', obsHom:'Testado em iPhone 12, 13 e 14. OK.', obsProd:'Validado. Reclamações cessaram após deploy.', obs:'Afetava ~15% dos usuários iOS.' },
+  { id:'PRO-2025-0024', sistema:'bigcash', ambiente:'AMBOS', data:'23/05/2025', responsavel:'Marcos T.', statusHom:'Validado', statusProd:'Validado', desc:'Ajuste na conciliação automática de repasses diários.', ajustes:'Correção na procedure sp_conciliacao_repasse — campo data_repasse estava gravando em UTC ao invés de BRT. Ajuste no job SQL Agent "JOB_CONCILIACAO_DIARIA".', obsHom:'Conciliação de 5 dias anteriores reprocessada com sucesso.', obsProd:'Validado em 23/05. Diferença eliminada.', obs:'Causava diferença de R$0,01 em ~200 transações/dia.' },
+  { id:'PRO-2025-0023', sistema:'webempresas', ambiente:'AMBOS', data:'22/05/2025', responsavel:'Renan N.', statusHom:'Validado', statusProd:'Validado', desc:'Performance: otimização das queries da tela de consulta de faturas.', ajustes:'Adição de índice IX_FATURAS_EMPRESA_DATA na tabela TB_FATURAS. Refatoração da stored procedure sp_consulta_faturas com hints de query.', obsHom:'Tempo de resposta caiu de 8s para 0.3s.', obsProd:'Em produção desde 22/05. Estável.', obs:'Melhoria de performance aprovada pelo gerente.' },
+  { id:'PRO-2025-0022', sistema:'webusuarios', ambiente:'AMBOS', data:'21/05/2025', responsavel:'Ana F.', statusHom:'Validado', statusProd:'Validado', desc:'Implementação de 2FA por TOTP para usuários administradores.', ajustes:'Integração com biblioteca speakeasy. Nova tabela TB_2FA_SECRETS. Telas de configuração do 2FA criadas. E-mail de setup implementado.', obsHom:'Testado com Google Authenticator e Authy. OK.', obsProd:'Ativo em prod. 12 admins configurados.', obs:'Requisito de segurança — LGPD compliance.' },
+  { id:'PRO-2025-0021', sistema:'webrepresentantes', ambiente:'PROD', data:'20/05/2025', responsavel:'Ricardo A.', statusHom:'—', statusProd:'Validado', desc:'Correção no cálculo de comissões para vendas parceladas.', ajustes:'Ajuste na função calcularComissao() em ComissaoService.js. Correção na query de relatório de comissões. Sem ambiente de homologação.', obsHom:'N/A — WebRepresentantes não possui ambiente de homologação.', obsProd:'Validado diretamente em produção com supervisão. OK.', obs:'Ajuste direto em produção (sem hom. disponível) com supervisão do responsável.' },
+  { id:'PRO-2025-0020', sistema:'webredes', ambiente:'AMBOS', data:'19/05/2025', responsavel:'Carlos S.', statusHom:'Validado', statusProd:'Validado', desc:'Integração com API do PRTG para alertas de banda.', ajustes:'Novo serviço PrtgService.cs. Endpoint /api/redes/banda. Configuração do cron job para polling a cada 5 min.', obsHom:'Dados recebidos corretamente do PRTG hom.', obsProd:'Funcionando em prod. Alertas chegando no Teams.', obs:'Reduz necessidade de acesso manual ao PRTG.' },
+  { id:'PRO-2025-0019', sistema:'websuporte', ambiente:'AMBOS', data:'18/05/2025', responsavel:'Juliana P.', statusHom:'Não validado', statusProd:'Pendente', desc:'Módulo de pesquisa de satisfação pós-atendimento.', ajustes:'Componente Pesquisa.vue criado. Endpoint POST /api/pesquisa/resposta. E-mail automático após fechamento de ticket.', obsHom:'E-mail não sendo enviado em hom. Configuração SMTP pendente.', obsProd:'Não publicado.', obs:'SMTP de hom. diferente do prod. Ajuste necessário.' },
+  { id:'PRO-2025-0018', sistema:'bigcash', ambiente:'AMBOS', data:'17/05/2025', responsavel:'Marcos T.', statusHom:'Validado', statusProd:'Validado', desc:'Novo relatório de fluxo de caixa semanal em Excel.', ajustes:'Implementação da exportação XLSX usando EPPlus. Novo endpoint /api/relatorios/fluxo-caixa. Template Excel configurado.', obsHom:'Testado com dados de jan a mai/2025. OK.', obsProd:'Em prod. Relatório agendado toda segunda-feira.', obs:'Solicitado pela diretoria financeira.' },
+  { id:'PRO-2025-0017', sistema:'webcartoes', ambiente:'AMBOS', data:'16/05/2025', responsavel:'Carla M.', statusHom:'Validado', statusProd:'Validado', desc:'Pushnotification para vencimento de fatura — 5 dias antes.', ajustes:'Integração com Firebase Cloud Messaging. Job agendado no Quartz. Template de push configurado no Console Firebase.', obsHom:'Push recebido em 3 dispositivos de teste. OK.', obsProd:'Ativo. ~2.400 pushes/dia.', obs:'Taxa de abertura inicial: 34%.' },
+  { id:'PRO-2025-0016', sistema:'webempresas', ambiente:'AMBOS', data:'15/05/2025', responsavel:'Renan N.', statusHom:'Validado', statusProd:'Validado', desc:'Correção de permissões: usuário gerente não conseguia aprovar faturas.', ajustes:'Ajuste na tabela TB_PERFIS_PERMISSOES — perfil GERENTE sem a permissão APROVAR_FATURA. Correção via script SQL.', obsHom:'Testado com usuário de perfil gerente. OK.', obsProd:'Corrigido. Usuários notificados por e-mail.', obs:'Regressão introduzida no PRO-2025-0010.' },
+  { id:'PRO-2025-0015', sistema:'webusuarios', ambiente:'AMBOS', data:'14/05/2025', responsavel:'Ana F.', statusHom:'Validado', statusProd:'Validado', desc:'Exportação de relatório de usuários ativos em CSV e PDF.', ajustes:'Novos endpoints /api/usuarios/export/csv e /pdf. Integração com iTextSharp para PDF. Botões de export na tela.', obsHom:'CSV e PDF gerados corretamente.', obsProd:'Funcionando. Utilizado pelo RH semanalmente.', obs:'Facilita auditoria de acessos — LGPD.' },
+  { id:'PRO-2025-0014', sistema:'webredes', ambiente:'AMBOS', data:'12/05/2025', responsavel:'Carlos S.', statusHom:'Validado', statusProd:'Validado', desc:'Mapa interativo de topologia de rede — filial Ipatinga.', ajustes:'Componente MapaRede.vue com vis.js. Dados de topologia no arquivo topologia_ipatinga.json. API /api/redes/topologia/{filial}.', obsHom:'Mapa renderizando corretamente com 47 nós.', obsProd:'Online. Utilizado pela equipe de infra.', obs:'Próxima etapa: adicionar filiais BH e Coronel.' },
+  { id:'PRO-2025-0013', sistema:'websuporte', ambiente:'AMBOS', data:'10/05/2025', responsavel:'Juliana P.', statusHom:'Validado', statusProd:'Validado', desc:'SLA automático — escalação de tickets sem resposta > 4h.', ajustes:'Job de escalação no Quartz (cron: 0 */30 * * * ?). E-mail de escalação para supervisor. Atualização do status ticket para "ESCALADO".', obsHom:'Testado com ticket artificial. Escalação em 4h. OK.', obsProd:'Ativo desde 10/05. 3 escalações até o momento.', obs:'Melhora o índice de SLA do suporte.' },
+  { id:'PRO-2025-0012', sistema:'webcartoes', ambiente:'AMBOS', data:'08/05/2025', responsavel:'Carla M.', statusHom:'Validado', statusProd:'Validado', desc:'Segunda via de fatura em PDF no Novo Aplicativo.', ajustes:'Botão "2ª via PDF" no componente FaturaDetalhe.vue. Endpoint /api/faturas/{id}/pdf-segunda-via. PDF gerado via iText.', obsHom:'Testado em 5 faturas. OK.', obsProd:'Funcionando. Reduz chamadas ao suporte.', obs:'Top feature solicitada pelos usuários.' },
+  { id:'PRO-2025-0011', sistema:'bigcash', ambiente:'AMBOS', data:'07/05/2025', responsavel:'Marcos T.', statusHom:'Validado', statusProd:'Validado', desc:'Painel de liquidez diária — visão consolidada de saldo.', ajustes:'Criação do PainelLiquidez.vue. Integração com API do Banco Central (SGS). Job de atualização a cada hora.', obsHom:'Saldos carregando corretamente.', obsProd:'Online. Usado pela diretoria financeira.', obs:'Dados sensíveis — acesso restrito a DIRETOR e CFO.' },
+  { id:'PRO-2025-0010', sistema:'webempresas', ambiente:'AMBOS', data:'05/05/2025', responsavel:'Renan N.', statusHom:'Validado', statusProd:'Validado', desc:'Refatoração do módulo de permissões para suporte a perfis hierárquicos.', ajustes:'Nova tabela TB_PERFIS_HIERARQUIA. Refatoração da classe PermissaoService.cs. Migration SQL aplicada.', obsHom:'Todos os perfis testados. OK.', obsProd:'Em prod. (introduziu regressão corrigida no PRO-0016).', obs:'Base para o futuro módulo de delegação de acesso.' },
+  { id:'PRO-2025-0009', sistema:'webusuarios', ambiente:'AMBOS', data:'03/05/2025', responsavel:'Ana F.', statusHom:'Validado', statusProd:'Validado', desc:'Integração com Active Directory para login SSO.', ajustes:'Configuração do LDAP no appsettings.json. Middleware de autenticação AD. Remoção dos logins locais para perfis de TI.', obsHom:'Login com conta AD funcionando. OK.', obsProd:'SSO ativo para TI e RH.', obs:'Autenticação local mantida para emergências.' },
+  { id:'PRO-2025-0008', sistema:'webrepresentantes', ambiente:'PROD', data:'01/05/2025', responsavel:'Ricardo A.', statusHom:'—', statusProd:'Validado', desc:'Relatório de metas mensais — exportação em Excel.', ajustes:'Função exportarMetas() em MetasService.js. Template XLSX com macro de formatação.', obsHom:'N/A — sem ambiente de homologação.', obsProd:'Validado diretamente. Utilizado por 12 representantes.', obs:'Deploy direto em prod. com supervisão.' },
+  { id:'PRO-2025-0007', sistema:'webredes', ambiente:'AMBOS', data:'29/04/2025', responsavel:'Carlos S.', statusHom:'Validado', statusProd:'Validado', desc:'Autenticação Radius para Wi-Fi corporativo via WebRedes.', ajustes:'Integração com servidor Radius (FreeRadius). Novo endpoint /api/redes/radius/auth. Config. no WLC Cisco.', obsHom:'Autenticação testada com 5 contas.', obsProd:'Ativo. 87 dispositivos autenticados.', obs:'Parte do projeto de segurança de rede 2025.' },
+  { id:'PRO-2025-0006', sistema:'websuporte', ambiente:'AMBOS', data:'27/04/2025', responsavel:'Juliana P.', statusHom:'Validado', statusProd:'Validado', desc:'Base de conhecimento — artigos de autoatendimento.', ajustes:'Módulo BaseConhecimento.vue. CRUD de artigos. Busca full-text com Elasticsearch.', obsHom:'Busca retornando resultados corretos.', obsProd:'Online com 45 artigos iniciais.', obs:'Reduz volume de tickets repetitivos.' },
+  { id:'PRO-2025-0005', sistema:'bigcash', ambiente:'AMBOS', data:'25/04/2025', responsavel:'Marcos T.', statusHom:'Validado', statusProd:'Validado', desc:'Módulo antifraude — bloqueio automático por geolocalização.', ajustes:'Serviço GeoAntifraude.java. Integração com API de geolocalização MaxMind. Regras configuráveis no painel admin.', obsHom:'Bloqueou corretamente IPs de países restritos.', obsProd:'Ativo. 3 fraudes bloqueadas na primeira semana.', obs:'Parâmetros ajustáveis em /admin/antifraude.' },
+  { id:'PRO-2025-0004', sistema:'webcartoes', ambiente:'AMBOS', data:'22/04/2025', responsavel:'Carla M.', statusHom:'Validado', statusProd:'Validado', desc:'Novo App (WebView) — tela inicial redesenhada v2.0.', ajustes:'Refatoração completa do HomeScreen.vue. Novo design system baseado em tokens CSS. Animações de entrada com GSAP.', obsHom:'Aprovado pelo designer e PO.', obsProd:'Lançado em 22/04. Avaliação App Store: 4.7⭐.', obs:'Aumento de 22% no engajamento diário.' },
+  { id:'PRO-2025-0003', sistema:'webempresas', ambiente:'AMBOS', data:'18/04/2025', responsavel:'Renan N.', statusHom:'Validado', statusProd:'Validado', desc:'Integração com API SERASA para consulta de crédito PJ.', ajustes:'Cliente SerасаService.cs. Novo endpoint /api/empresas/consultar-credito. Credenciais no Vault. Cache Redis de 24h.', obsHom:'Consultas retornando em <200ms. OK.', obsProd:'Em prod. 340 consultas/dia.', obs:'Custo por consulta: R$0,35 — monitorar volume.' },
+  { id:'PRO-2025-0002', sistema:'webusuarios', ambiente:'AMBOS', data:'15/04/2025', responsavel:'Ana F.', statusHom:'Validado', statusProd:'Validado', desc:'Onboarding digital de novos usuários com assinatura eletrônica.', ajustes:'Fluxo de onboarding em 4 etapas. Integração com Clicksign. Tabela TB_ONBOARDING criada.', obsHom:'Fluxo completo testado. Assinatura gerada. OK.', obsProd:'Ativo. 28 usuários onboardados digitalmente.', obs:'Elimina processo manual em papel.' },
+  { id:'PRO-2025-0001', sistema:'webrepresentantes', ambiente:'PROD', data:'10/04/2025', responsavel:'Ricardo A.', statusHom:'—', statusProd:'Validado', desc:'Sistema de WebRepresentantes — versão inicial go-live.', ajustes:'Deploy completo da versão 1.0. Configuração de servidor, DNS, SSL. Treinamento de 12 representantes.', obsHom:'N/A — sistema sem ambiente de homologação.', obsProd:'Go-live realizado em 10/04. Todos os representantes ativos.', obs:'Marco: primeiro deploy do WebRepresentantes.' },
+];
+
+/* ═══════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════ */
+let filtered = [...PROTOCOLS];
+let currentPage = 1;
+const PAGE_SIZE = 10;
+let activeModalId = null;
+let activeFilters = {};
+
+/* ═══════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════ */
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+
+  const map = {dashboard:0, protocols:1, new:2, relatorio:7};
+  const items = document.querySelectorAll('.nav-item');
+  if (map[name] !== undefined && items[map[name]]) items[map[name]].classList.add('active');
+
+  if (name === 'protocols') {
+    filterProtocols();
+  }
+  if (name === 'relatorio') {
+    const sel = document.getElementById('rel-protocolo');
+    sel.innerHTML = '<option value="">Selecione um protocolo…</option>';
+    PROTOCOLS.forEach(p => {
+      sel.innerHTML += `<option value="${p.id}">${p.id} — ${SISTEMAS[p.sistema].nome}</option>`;
+    });
+    sel.onchange = updateRelPreview;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   FILTER & TABLE
+═══════════════════════════════════════════════════ */
+function filterProtocols() {
+  const search = document.getElementById('globalSearch').value.toLowerCase();
+  const fSis = document.getElementById('f-sistema').value;
+  const fAmb = document.getElementById('f-ambiente').value;
+  const fHom = document.getElementById('f-status-hom').value;
+  const fProd = document.getElementById('f-status-prod').value;
+
+  filtered = PROTOCOLS.filter(p => {
+    if (search && !JSON.stringify(p).toLowerCase().includes(search)) return false;
+    if (fSis && p.sistema !== fSis) return false;
+    if (fAmb && p.ambiente !== fAmb) return false;
+    if (fHom && p.statusHom !== fHom) return false;
+    if (fProd && !p.statusProd.includes(fProd.replace('Aguardando','Aguardando'))) return false;
+    return true;
+  });
+
+  currentPage = 1;
+  renderTable();
+  renderChips();
+}
+
+function filterByEnv(env) {
+  document.getElementById('f-ambiente').value = env;
+  filterProtocols();
+}
+function filterBySys(sys) {
+  document.getElementById('f-sistema').value = sys;
+  filterProtocols();
+}
+function filterByStatus(status) {
+  const map = { pendente:'Pendente', validado:'Validado', aguardando:'Aguardando validação', nao_validado:'Não validado' };
+  document.getElementById('f-status-prod').value = map[status] || '';
+  filterProtocols();
+}
+function clearFilters() {
+  document.getElementById('f-sistema').value = '';
+  document.getElementById('f-ambiente').value = '';
+  document.getElementById('f-status-hom').value = '';
+  document.getElementById('f-status-prod').value = '';
+  document.getElementById('globalSearch').value = '';
+  filtered = [...PROTOCOLS];
+  currentPage = 1;
+  renderTable();
+  renderChips();
+}
+
+function renderChips() {
+  const chips = document.getElementById('active-chips');
+  chips.innerHTML = '';
+  const fSis = document.getElementById('f-sistema').value;
+  const fAmb = document.getElementById('f-ambiente').value;
+  if (fSis) chips.innerHTML += `<div class="filter-chip" onclick="document.getElementById('f-sistema').value='';filterProtocols()">${SISTEMAS[fSis]?.nome} ✕</div>`;
+  if (fAmb) chips.innerHTML += `<div class="filter-chip" onclick="document.getElementById('f-ambiente').value='';filterProtocols()">${fAmb} ✕</div>`;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('proto-tbody');
+  const total = filtered.length;
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const end = Math.min(start + PAGE_SIZE, total);
+  const page = filtered.slice(start, end);
+
+  document.getElementById('proto-count-label').textContent = `Exibindo ${total} protocolos`;
+  document.getElementById('table-count').textContent = `${start+1}–${end} de ${total}`;
+  document.getElementById('page-info').textContent = `Página ${currentPage} de ${Math.ceil(total/PAGE_SIZE)}`;
+
+  tbody.innerHTML = page.map(p => {
+    const sis = SISTEMAS[p.sistema];
+    return `<tr onclick="openModal('${p.id}')">
+      <td class="protocol-num">${p.id}</td>
+      <td class="sys-cell">
+        <div class="sys-name">${sis.nome}</div>
+        <div class="sys-url">${sis.url}</div>
+      </td>
+      <td>${ambienteBadge(p.ambiente)}</td>
+      <td class="mono">${p.data}</td>
+      <td>${homBadge(p.statusHom)}</td>
+      <td>${prodBadge(p.statusProd)}</td>
+      <td style="font-size:12px;color:var(--text2)">${p.responsavel}</td>
+      <td>
+        <div style="display:flex;gap:6px" onclick="event.stopPropagation()">
+          <button class="btn btn-outline btn-sm" onclick="openModal('${p.id}')">Ver</button>
+          <button class="btn btn-outline btn-sm" onclick="exportWordById('${p.id}')">↓</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  renderPagination(total);
+}
+
+function ambienteBadge(a) {
+  if (a === 'HOM') return '<span class="env-badge env-hom">HOM</span>';
+  if (a === 'PROD') return '<span class="env-badge env-prod">PROD</span>';
+  return '<span class="env-badge env-hom">HOM</span> <span class="env-badge env-prod" style="margin-left:2px">PROD</span>';
+}
+function homBadge(s) {
+  if (s === 'Validado') return '<span class="badge badge-green">Validado</span>';
+  if (s === 'Não validado') return '<span class="badge badge-red">Não validado</span>';
+  return '<span class="badge badge-gray">N/A</span>';
+}
+function prodBadge(s) {
+  if (s === 'Validado') return '<span class="badge badge-green">Validado</span>';
+  if (s === 'Não validado') return '<span class="badge badge-red">Não validado</span>';
+  if (s === 'Aguardando validação') return '<span class="badge badge-purple">Aguardando</span>';
+  return '<span class="badge badge-yellow">Pendente</span>';
+}
+
+function renderPagination(total) {
+  const pages = Math.ceil(total / PAGE_SIZE);
+  const btns = document.getElementById('page-btns');
+  btns.innerHTML = '';
+  const prev = document.createElement('button');
+  prev.className = 'page-btn'; prev.textContent = '←'; prev.disabled = currentPage === 1;
+  prev.onclick = () => { currentPage--; renderTable(); };
+  btns.appendChild(prev);
+  for (let i = 1; i <= pages; i++) {
+    const b = document.createElement('button');
+    b.className = 'page-btn' + (i === currentPage ? ' active' : '');
+    b.textContent = i;
+    b.onclick = (pg => () => { currentPage = pg; renderTable(); })(i);
+    btns.appendChild(b);
+  }
+  const next = document.createElement('button');
+  next.className = 'page-btn'; next.textContent = '→'; next.disabled = currentPage === pages;
+  next.onclick = () => { currentPage++; renderTable(); };
+  btns.appendChild(next);
+}
+
+/* ═══════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════ */
+function openModal(id) {
+  const p = PROTOCOLS.find(x => x.id === id);
+  if (!p) return;
+  activeModalId = id;
+  const sis = SISTEMAS[p.sistema];
+
+  document.getElementById('m-title').textContent = p.desc.length > 55 ? p.desc.substring(0,55)+'…' : p.desc;
+  document.getElementById('m-num').textContent = p.id;
+  document.getElementById('m-sistema').innerHTML = `${sis.nome} <span style="color:var(--text3);font-size:11px;font-family:'IBM Plex Mono',monospace;margin-left:4px">${sis.url}</span>`;
+  document.getElementById('m-resp').textContent = p.responsavel;
+  document.getElementById('m-ambiente').innerHTML = ambienteBadge(p.ambiente);
+  document.getElementById('m-data').textContent = p.data;
+  document.getElementById('m-desc').textContent = p.desc;
+  document.getElementById('m-ajustes').textContent = p.ajustes;
+  document.getElementById('m-res-hom').innerHTML = homBadge(p.statusHom);
+  document.getElementById('m-res-prod').innerHTML = prodBadge(p.statusProd);
+  document.getElementById('m-obs').textContent = p.obs;
+
+  // Timeline
+  const tl = document.getElementById('m-timeline');
+  const steps = buildTimeline(p);
+  tl.innerHTML = steps.map(s => `
+    <div class="tl-step">
+      <div class="tl-dot ${s.dot}"></div>
+      <div class="tl-step-title">${s.title}</div>
+      <div class="tl-step-meta">${s.meta}</div>
+      <div class="tl-step-desc">${s.desc}</div>
+    </div>`).join('');
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function buildTimeline(p) {
+  const steps = [];
+  steps.push({
+    dot: 'done', title: 'Ajuste Criado',
+    meta: p.data + ' · ' + p.responsavel,
+    desc: 'Protocolo registrado e encaminhado para validação.'
+  });
+
+  if (p.ambiente !== 'PROD') {
+    const homDone = p.statusHom === 'Validado';
+    const homFail = p.statusHom === 'Não validado';
+    steps.push({
+      dot: homDone ? 'done' : homFail ? 'error' : 'pending',
+      title: 'Homologação ' + (homDone ? 'Realizada' : homFail ? '— Reprovada' : 'Pendente'),
+      meta: homDone || homFail ? p.data + ' · ' + SISTEMAS[p.sistema].hom : 'Aguardando…',
+      desc: p.obsHom
+    });
+  }
+
+  const pubDone = p.statusProd !== 'Pendente';
+  steps.push({
+    dot: pubDone ? 'done' : 'pending',
+    title: 'Publicação em Produção',
+    meta: pubDone ? p.data + ' · ' + SISTEMAS[p.sistema].url : 'Aguardando homologação…',
+    desc: pubDone ? 'Deploy realizado em ambiente de produção.' : 'Aguardando aprovação na homologação.'
+  });
+
+  const prodVal = p.statusProd === 'Validado';
+  const prodFail = p.statusProd === 'Não validado';
+  steps.push({
+    dot: prodVal ? 'done' : prodFail ? 'error' : p.statusProd === 'Aguardando validação' ? 'pending' : 'inactive',
+    title: 'Validação Final ' + (prodVal ? 'Concluída' : prodFail ? '— Reprovada' : ''),
+    meta: prodVal ? 'Concluído · ' + p.responsavel : prodFail ? 'Reprovado' : 'Aguardando validação…',
+    desc: p.obsProd
+  });
+
+  return steps;
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  activeModalId = null;
+}
+
+/* ═══════════════════════════════════════════════════
+   NEW PROTOCOL
+═══════════════════════════════════════════════════ */
+function updateNPHom() {
+  const sys = document.getElementById('np-sistema').value;
+  const field = document.getElementById('np-hom-field');
+  const urlInput = document.getElementById('np-hom-url');
+  if (sys === 'webrepresentantes') {
+    field.style.opacity = '.4'; field.style.pointerEvents = 'none';
+    urlInput.value = 'Sem ambiente de homologação';
+  } else {
+    field.style.opacity = '1'; field.style.pointerEvents = 'auto';
+    urlInput.value = sys ? (SISTEMAS[sys]?.hom || '') : '';
+  }
+}
+
+function createProtocol() {
+  const sistema = document.getElementById('np-sistema').value;
+  const resp = document.getElementById('np-resp').value;
+  const desc = document.getElementById('np-desc').value;
+  if (!sistema || !resp || !desc) { showToast('⚠️', 'Preencha os campos obrigatórios.'); return; }
+
+  const today = new Date();
+  const dataStr = String(today.getDate()).padStart(2,'0') + '/' + String(today.getMonth()+1).padStart(2,'0') + '/' + today.getFullYear();
+  const num = String(PROTOCOLS.length + 1).padStart(4, '0');
+  const id = `PRO-2025-${num}`;
+  const newP = {
+    id, sistema,
+    ambiente: sistema === 'webrepresentantes' ? 'PROD' : 'AMBOS',
+    data: dataStr, responsavel: resp,
+    statusHom: sistema === 'webrepresentantes' ? '—' : 'Pendente',
+    statusProd: 'Pendente',
+    desc, ajustes: document.getElementById('np-ajustes').value || '—',
+    obsHom: '—', obsProd: '—',
+    obs: document.getElementById('np-obs').value || '—'
+  };
+  PROTOCOLS.unshift(newP);
+  filtered = [...PROTOCOLS];
+  document.getElementById('nav-pending').textContent = PROTOCOLS.filter(p => p.statusProd === 'Pendente').length;
+  showToast('✓', `Protocolo ${id} criado com sucesso!`);
+  showView('protocols');
+}
+
+/* ═══════════════════════════════════════════════════
+   RELATÓRIO / EXPORT
+═══════════════════════════════════════════════════ */
+function updateRelPreview() {
+  const id = document.getElementById('rel-protocolo').value;
+  const tipo = document.querySelector('input[name="rel-tipo"]:checked').value;
+  const prev = document.getElementById('rel-preview');
+  if (!id) { prev.textContent = 'Selecione um protocolo para visualizar o preview do documento.'; return; }
+  const p = PROTOCOLS.find(x => x.id === id);
+  const sis = SISTEMAS[p.sistema];
+  prev.innerHTML = `<strong style="color:var(--text)">${id}</strong><br>
+    Sistema: ${sis.nome}<br>
+    Responsável: ${p.responsavel}<br>
+    Data: ${p.data}<br>
+    Tipo: ${tipo === 'homologacao' ? 'Homologação' : tipo === 'producao' ? 'Produção' : 'Completo (Hom + Prod)'}<br>
+    <span style="color:var(--accent2)">→ Documento Word será gerado no padrão BigCard</span>`;
+}
+
+function exportWord() {
+  const id = document.getElementById('rel-protocolo').value;
+  if (!id) { showToast('⚠️', 'Selecione um protocolo.'); return; }
+  const tipo = document.querySelector('input[name="rel-tipo"]:checked').value;
+  exportWordById(id, tipo);
+}
+
+function exportWordFromModal() {
+  if (activeModalId) exportWordById(activeModalId, 'completo');
+}
+
+function exportCSV() {
+  const headers = ['Protocolo','Sistema','Ambiente','Data','Status Hom.','Status Prod.','Responsável'];
+  const rows = filtered.map(p => [p.id, SISTEMAS[p.sistema].nome, p.ambiente, p.data, p.statusHom, p.statusProd, p.responsavel]);
+  const csv = [headers, ...rows].map(r => r.join(';')).join('\n');
+  download('protocolos.csv', csv, 'text/csv');
+  showToast('↓', 'CSV exportado com sucesso!');
+}
+
+function exportWordById(id, tipo = 'completo') {
+  const p = PROTOCOLS.find(x => x.id === id);
+  if (!p) return;
+  const sis = SISTEMAS[p.sistema];
+
+  // Generate Word XML (simplified OOXML)
+  const hoje = new Date().toLocaleDateString('pt-BR');
+  let content = wordTemplate(p, sis, tipo, hoje);
+  const blob = new Blob([content], {type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+
+  // Since we can't run Node.js in the browser, we generate a styled HTML as .doc (opens in Word)
+  const html = generateWordHTML(p, sis, tipo);
+  const b = new Blob([html], {type:'application/msword'});
+  const url = URL.createObjectURL(b);
+  const a = document.createElement('a');
+  a.href = url; a.download = `${id}_relatorio.doc`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('↓', `Relatório ${id} exportado!`);
+}
+
+function generateWordHTML(p, sis, tipo) {
+  const hoje = new Date().toLocaleDateString('pt-BR');
+  const homChecked = tipo !== 'producao' ? '☑' : '☐';
+  const prodChecked = tipo === 'producao' ? '☑' : '☐';
+
+  let homBlock = '';
+  if (tipo !== 'producao') {
+    const valHom = p.statusHom === 'Validado';
+    const nvalHom = p.statusHom === 'Não validado';
+    homBlock = `
+      <p><b>RESULTADO:</b></p>
+      <p>${valHom?'☑':'☐'} VALIDADO &nbsp;&nbsp; ☐ VALIDADO COM RESSALVAS &nbsp;&nbsp; ${nvalHom?'☑':'☐'} NÃO VALIDADO</p>
+      <p><b>OBSERVAÇÕES:</b><br>${p.obsHom}</p>`;
+  }
+
+  let prodBlock = '';
+  if (tipo !== 'homologacao') {
+    const valProd = p.statusProd === 'Validado';
+    const nvalProd = p.statusProd === 'Não validado';
+    prodBlock = `
+      <hr>
+      <h2>VALIDAÇÃO EM PRODUÇÃO</h2>
+      <p><b>DATA:</b> ${p.data}</p>
+      <p><b>SISTEMA:</b> ${sis.nome} (${sis.url})</p>
+      <p><b>AMBIENTE:</b><br>☐ HOMOLOGAÇÃO &nbsp;&nbsp; ☑ PRODUÇÃO</p>
+      <p><b>RESULTADO:</b></p>
+      <p>${valProd?'☑':'☐'} VALIDADO &nbsp;&nbsp; ☐ VALIDADO COM RESSALVAS &nbsp;&nbsp; ${nvalProd?'☑':'☐'} NÃO VALIDADO</p>
+      <p><b>OBSERVAÇÕES:</b><br>${p.obsProd}</p>`;
+  }
+
+  return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="UTF-8"><style>
+body{font-family:Arial,sans-serif;font-size:11pt;margin:2cm}
+h1{font-size:13pt;text-align:center;border-bottom:2pt solid #000;padding-bottom:6pt}
+h2{font-size:12pt;margin-top:18pt}
+p{margin:4pt 0}
+hr{border:1pt solid #ccc;margin:16pt 0}
+</style></head><body>
+<h1>CENTRAL DE VALIDAÇÕES — BigCard<br><span style="font-size:10pt;font-weight:normal">${p.id}</span></h1>
+<p><b>DATA:</b> ${p.data}</p>
+<p><b>PROTOCOLO:</b> ${p.id}</p>
+<p><b>SISTEMA:</b> ${sis.nome}</p>
+<p><b>AMBIENTE:</b><br>${tipo !== 'producao' ? '☑' : '☐'} HOMOLOGAÇÃO &nbsp;&nbsp; ${tipo === 'producao' ? '☑' : '☐'} PRODUÇÃO</p>
+<p><b>AJUSTES REALIZADOS:</b><br>${p.ajustes}</p>
+${homBlock}
+${prodBlock}
+<p style="margin-top:40pt;font-size:9pt;color:#666">Documento gerado pela Central de Validações BigCard — ${new Date().toLocaleString('pt-BR')}</p>
+</body></html>`;
+}
+
+function wordTemplate(p, sis, tipo, hoje) { return ''; } // placeholder
+
+/* ═══════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════ */
+function download(name, content, mime) {
+  const b = new Blob([content], {type: mime});
+  const url = URL.createObjectURL(b);
+  const a = document.createElement('a');
+  a.href = url; a.download = name; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function showToast(icon, msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<span class="toast-icon">${icon}</span>${msg}`;
+  c.appendChild(t);
+  setTimeout(() => { t.classList.add('removing'); setTimeout(() => t.remove(), 300); }, 3000);
+}
+
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
+(function init() {
+  document.getElementById('np-data').value = new Date().toISOString().split('T')[0];
+  filtered = [...PROTOCOLS];
+  renderTable();
+})();
+</script>
+</body>
+</html>
