@@ -1617,6 +1617,7 @@
   <div id="login-screen">
     <div class="login-card">
       <div class="login-logo">
+        <div class="login-logo-mark">BC</div>
         <div>
           <div class="login-logo-text">Central de Validações</div>
           <div class="login-logo-sub">Sistemas BigCard</div>
@@ -1644,9 +1645,10 @@
     <header>
       <div class="header-brand">
         <div class="header-logo">
+          <div class="logo-mark">BC</div>
           <div>
             <div class="logo-text">Central de Validações</div>
-            <div class="logo-sub">Sistemas Bigcard</div>
+            <div class="logo-sub">BigCard Sistemas</div>
           </div>
         </div>
       </div>
@@ -1884,8 +1886,8 @@
                 <th>Protocolo</th>
                 <th>Sistema</th>
                 <th>Data</th>
-                <th>Responsável</th>
                 <th>Retornos</th>
+                <th>Responsável</th>
                 <th>Fase · Status</th>
                 <th>Ações</th>
               </tr>
@@ -1967,38 +1969,78 @@
       <!-- RELATÓRIO -->
       <div class="view" id="view-relatorio">
         <div class="page-title">
-          <div>
-            <h1>Exportar Relatório</h1>
-            <p>Gere documentos Word no padrão BigCard</p>
-          </div>
+          <div><h1>Exportar Relatórios</h1><p>Gere documentos Word individuais, por período ou exportação completa</p></div>
         </div>
-        <div class="table-card" style="padding:28px;max-width:600px">
-          <div style="margin-bottom:20px">
-            <div class="detail-label" style="margin-bottom:8px">Selecione o Protocolo</div>
-            <select class="filter-select" style="width:100%;padding:9px 12px" id="rel-protocolo"></select>
-          </div>
-          <div style="margin-bottom:20px">
-            <div class="detail-label" style="margin-bottom:8px">Tipo de Relatório</div>
-            <div style="display:flex;gap:10px">
-              <label
-                style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;color:var(--text2)"><input
-                  type="radio" name="rel-tipo" value="homologacao" checked> Homologação</label>
-              <label
-                style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;color:var(--text2)"><input
-                  type="radio" name="rel-tipo" value="producao"> Produção</label>
-              <label
-                style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;color:var(--text2)"><input
-                  type="radio" name="rel-tipo" value="completo"> Completo</label>
+
+        <!-- CARDS DE MODO -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px">
+
+          <!-- Individual -->
+          <div class="table-card" style="padding:22px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Protocolo individual</div>
+            <div style="font-size:12px;color:var(--text3);margin-bottom:16px">Exporta um protocolo específico</div>
+            <div class="detail-field" style="margin-bottom:12px">
+              <label class="detail-label" style="margin-bottom:6px">Protocolo</label>
+              <select class="filter-select" style="width:100%;padding:9px 12px" id="rel-protocolo" onchange="updateRelPreview()">
+                <option value="">Selecione…</option>
+              </select>
             </div>
+            <div id="rel-preview" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px;margin-bottom:14px;font-size:11px;color:var(--text3);min-height:54px">
+              Selecione um protocolo.
+            </div>
+            <button class="btn btn-primary" style="width:100%" onclick="exportWord()">↓ Exportar .doc</button>
           </div>
-          <div id="rel-preview"
-            style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:20px;font-size:12px;color:var(--text3);min-height:80px">
-            Selecione um protocolo para visualizar o preview.
+
+          <!-- Por período -->
+          <div class="table-card" style="padding:22px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Por período</div>
+            <div style="font-size:12px;color:var(--text3);margin-bottom:16px">Exporta todos os protocolos de um intervalo de datas</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+              <div class="detail-field">
+                <label class="detail-label" style="margin-bottom:6px">De</label>
+                <input type="date" class="filter-select" style="width:100%;padding:8px 10px" id="rel-de" oninput="atualizarInfoPeriodo()">
+              </div>
+              <div class="detail-field">
+                <label class="detail-label" style="margin-bottom:6px">Até</label>
+                <input type="date" class="filter-select" style="width:100%;padding:8px 10px" id="rel-ate" oninput="atualizarInfoPeriodo()">
+              </div>
+            </div>
+            <div class="detail-field" style="margin-bottom:14px">
+              <label class="detail-label" style="margin-bottom:6px">Sistema (opcional)</label>
+              <select class="filter-select" style="width:100%;padding:8px 10px" id="rel-sistema" onchange="atualizarInfoPeriodo()">
+                <option value="">Todos os sistemas</option>
+                <option value="webempresas">webempresas.bigcard.com.br</option>
+                <option value="webcartoes">webcartoes.bigcard.com.br</option>
+                <option value="bigcash">web.bigcash.com.br</option>
+                <option value="webusuarios">webusuarios.bigcard.com.br</option>
+                <option value="webredes">webredes.bigcard.com.br</option>
+                <option value="webrepresentantes">webrepresentantes.bigcard.com.br</option>
+                <option value="websuporte">websuporte.bigcard.com.br</option>
+              </select>
+            </div>
+            <div id="rel-periodo-info" style="font-size:11px;color:var(--text3);margin-bottom:12px"></div>
+            <button class="btn btn-primary" style="width:100%" onclick="exportPeriodo()">↓ Exportar período</button>
           </div>
-          <div style="display:flex;gap:10px">
-            <button class="btn btn-primary" onclick="exportWord()">↓ Exportar .docx</button>
-            <button class="btn btn-outline" onclick="showView('dashboard')">Cancelar</button>
+
+          <!-- Todos -->
+          <div class="table-card" style="padding:22px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">Exportação completa</div>
+            <div style="font-size:12px;color:var(--text3);margin-bottom:16px">Exporta todos os protocolos cadastrados em um único documento</div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:14px">
+              <div style="font-size:12px;color:var(--text2)">Total de protocolos: <strong id="rel-total" style="color:var(--accent2);font-family:'IBM Plex Mono',monospace">—</strong></div>
+              <div style="font-size:11px;color:var(--text3);margin-top:4px">Aprovados em HOM e/ou PROD</div>
+            </div>
+            <div class="detail-field" style="margin-bottom:14px">
+              <label class="detail-label" style="margin-bottom:6px">Filtrar por resultado</label>
+              <select class="filter-select" style="width:100%;padding:8px 10px" id="rel-filtro-todos">
+                <option value="todos">Todos os protocolos</option>
+                <option value="aprovados">Somente Aprovados</option>
+                <option value="reprovados">Somente Reprovados</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" style="width:100%" onclick="exportTodos()">↓ Exportar todos</button>
           </div>
+
         </div>
       </div>
 
@@ -2254,10 +2296,27 @@
       if (idx[name] !== undefined && items[idx[name]]) items[idx[name]].classList.add('active');
       if (name === 'protocols') filterProtocols();
       if (name === 'relatorio') {
+        // Preenche select individual
         const sel = document.getElementById('rel-protocolo');
-        sel.innerHTML = '<option value="">Selecione um protocolo…</option>';
-        PROTOCOLS.forEach(p => { sel.innerHTML += `<option value="${p.id}">${p.id} — ${SISTEMAS[p.sistema].url}</option>`; });
-        sel.onchange = updateRelPreview;
+        sel.innerHTML = '<option value="">Selecione…</option>';
+        PROTOCOLS.forEach(p => {
+          const fase = getFase(p);
+          const icone = fase==='done'?'✓ ':fase==='rep'?'✕ ':'⏳ ';
+          sel.innerHTML += `<option value="${p.id}">${icone}${p.id} — ${SISTEMAS[p.sistema].url}</option>`;
+        });
+        // Total no card completo
+        const tot = document.getElementById('rel-total');
+        if (tot) tot.textContent = PROTOCOLS.length;
+        // Datas padrão: mês atual
+        const hoje = new Date();
+        const ini = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+        const fmtDate = d => d.toISOString().split('T')[0];
+        const deEl = document.getElementById('rel-de');
+        const ateEl = document.getElementById('rel-ate');
+        if (deEl && !deEl.value) deEl.value = fmtDate(ini);
+        if (ateEl && !ateEl.value) ateEl.value = fmtDate(hoje);
+        // Info do período
+        atualizarInfoPeriodo();
       }
       if (name === 'new') {
         document.getElementById('np-data').value = new Date().toISOString().split('T')[0];
@@ -2709,18 +2768,71 @@
     function updateRelPreview() {
       const id = document.getElementById('rel-protocolo').value;
       const prev = document.getElementById('rel-preview');
-      if (!id) { prev.textContent = 'Selecione um protocolo para visualizar.'; return; }
+      if (!id) { prev.textContent = 'Selecione um protocolo.'; return; }
       const p = PROTOCOLS.find(x => x.id === id);
+      if (!p) return;
       const sis = SISTEMAS[p.sistema];
-      const tipo = document.querySelector('input[name="rel-tipo"]:checked').value;
-      prev.innerHTML = `<strong style="color:var(--text)">${id}</strong> — ${sis.url}<br>Responsável: ${p.responsavel} · Data: ${p.data}<br>Tipo: ${tipo}<br><span style="color:var(--accent2)">→ Exportar como .doc padrão BigCard</span>`;
+      const homLabel = { 'Aprovado': '✓ Aprovado', 'Reprovado': '✕ Reprovado', 'AguardandoTeste': '⏳ Aguardando' };
+      prev.innerHTML = `
+        <div style="font-size:12px;color:var(--text);font-weight:600">${p.id}</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:2px">${sis.url} · ${p.data} · ${p.responsavel}</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <span style="font-size:11px;color:var(--text2)">HOM: <strong>${homLabel[p.statusHom]||p.statusHom}</strong></span>
+          <span style="font-size:11px;color:var(--text2)">PROD: <strong>${homLabel[p.statusProd]||p.statusProd}</strong></span>
+        </div>`;
     }
+
     function exportWord() {
       const id = document.getElementById('rel-protocolo').value;
       if (!id) { showToast('⚠️', 'Selecione um protocolo.'); return; }
-      exportWordById(id, document.querySelector('input[name="rel-tipo"]:checked').value);
+      exportWordById(id);
+      showToast('↓', `Protocolo ${id} exportado!`);
     }
-    function exportWordFromModal() { if (activeModalId) exportWordById(activeModalId, 'completo'); }
+
+    function exportWordFromModal() { if (activeModalId) exportWordById(activeModalId); }
+
+    /* Exporta protocolos de um período, com filtro opcional de sistema */
+    function exportPeriodo() {
+      const de  = document.getElementById('rel-de').value;
+      const ate = document.getElementById('rel-ate').value;
+      if (!de || !ate) { showToast('⚠️', 'Defina data inicial e final.'); return; }
+      const sis = document.getElementById('rel-sistema').value;
+
+      // Converte DD/MM/YYYY para comparação
+      const toTs = str => {
+        const [d,m,y] = str.split('/');
+        return new Date(`${y}-${m}-${d}`).getTime();
+      };
+      const deTs  = new Date(de).getTime();
+      const ateTs = new Date(ate + 'T23:59:59').getTime();
+
+      const lista = PROTOCOLS.filter(p => {
+        const ts = toTs(p.data);
+        if (isNaN(ts)) return false;
+        if (ts < deTs || ts > ateTs) return false;
+        if (sis && p.sistema !== sis) return false;
+        return true;
+      });
+
+      if (lista.length === 0) { showToast('⚠️', 'Nenhum protocolo encontrado no período.'); return; }
+
+      const fmtDe  = new Date(de).toLocaleDateString('pt-BR');
+      const fmtAte = new Date(ate).toLocaleDateString('pt-BR');
+      const nome   = sis ? SISTEMAS[sis].url : 'todos os sistemas';
+      exportWordLote(lista, `Período ${fmtDe} a ${fmtAte} — ${nome}`, `periodo_${de}_${ate}`);
+      showToast('↓', `${lista.length} protocolo(s) exportado(s)!`);
+    }
+
+    /* Exporta todos (com filtro opcional de resultado) */
+    function exportTodos() {
+      const filtro = document.getElementById('rel-filtro-todos').value;
+      let lista = [...PROTOCOLS];
+      if (filtro === 'aprovados')  lista = lista.filter(p => p.statusHom === 'Aprovado' || p.statusProd === 'Aprovado');
+      if (filtro === 'reprovados') lista = lista.filter(p => p.statusHom === 'Reprovado' || p.statusProd === 'Reprovado');
+      if (lista.length === 0) { showToast('⚠️', 'Nenhum protocolo com esse filtro.'); return; }
+      exportWordLote(lista, `Exportação completa — ${new Date().toLocaleDateString('pt-BR')}`, `todos_${Date.now()}`);
+      showToast('↓', `${lista.length} protocolo(s) exportado(s)!`);
+    }
     function exportCSV() {
       const headers = ['Protocolo', 'Sistema', 'Data', 'Retornos', 'Status Hom.', 'Status Prod.', 'Responsável'];
       const rows = filtered.map(p => [p.id, SISTEMAS[p.sistema].url, p.data, p.retornos, p.statusHom, p.statusProd, p.responsavel]);
@@ -2728,35 +2840,113 @@
       download('protocolos.csv', csv, 'text/csv');
       showToast('↓', 'CSV exportado!');
     }
-    function exportWordById(id, tipo = 'completo') {
-      const p = PROTOCOLS.find(x => x.id === id); if (!p) return;
+    /* Gera o bloco Word de um único protocolo */
+    function gerarBlocoProtocolo(p) {
       const sis = SISTEMAS[p.sistema];
-      const valHom = p.statusHom === 'Aprovado', nvalHom = p.statusHom === 'Reprovado';
-      const valProd = p.statusProd === 'Aprovado', nvalProd = p.statusProd === 'Reprovado';
+      const aprHom = p.statusHom === 'Aprovado', repHom = p.statusHom === 'Reprovado';
+      const aprProd = p.statusProd === 'Aprovado', repProd = p.statusProd === 'Reprovado';
       const retInfo = p.retornos > 0 ? `<p><b>RETORNOS AO DESENVOLVEDOR:</b> ${p.retornos}x</p>` : '';
-      let homBlock = '';
-      if (tipo !== 'producao') homBlock = `<h2>RESULTADO — HOMOLOGAÇÃO</h2><p><b>AMBIENTE:</b> ☑ HOMOLOGAÇÃO &nbsp; ☐ PRODUÇÃO</p><p><b>RESULTADO:</b><br>${valHom ? '☑' : '☐'} VALIDADO &nbsp; ☐ VALIDADO COM RESSALVAS &nbsp; ${nvalHom ? '☑' : '☐'} NÃO VALIDADO</p>`;
-      let prodBlock = '';
-      if (tipo !== 'homologacao') prodBlock = `<hr><h2>VALIDAÇÃO EM PRODUÇÃO</h2><p><b>DATA:</b> ${p.data}</p><p><b>SISTEMA:</b> ${sis.url}</p><p><b>AMBIENTE:</b> ☐ HOMOLOGAÇÃO &nbsp; ☑ PRODUÇÃO</p><p><b>RESULTADO:</b><br>${valProd ? '☑' : '☐'} VALIDADO &nbsp; ☐ VALIDADO COM RESSALVAS &nbsp; ${nvalProd ? '☑' : '☐'} NÃO VALIDADO</p>`;
-      const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:11pt;margin:2cm}h1{font-size:13pt;text-align:center;border-bottom:2pt solid #000;padding-bottom:6pt}h2{font-size:12pt;margin-top:18pt}p{margin:4pt 0}pre{font-family:Courier New,monospace;font-size:9pt;background:#f5f5f5;padding:10pt;border:1pt solid #ccc;white-space:pre-wrap}hr{border:1pt solid #ccc;margin:16pt 0}</style></head>
+
+      // Log da timeline
+      const logHtml = (p.log && p.log.length > 0)
+        ? `<p><b>HISTÓRICO DE AÇÕES:</b></p><ul>${p.log.map(e=>`<li>${e.ts} · ${e.user} — ${e.msg}</li>`).join('')}</ul>`
+        : '';
+
+      const homBlock = `
+        <h2>HOMOLOGAÇÃO</h2>
+        <p><b>RESULTADO:</b><br>
+          ${aprHom ? '☑' : '☐'} APROVADO &nbsp;&nbsp;
+          ${repHom ? '☑' : '☐'} REPROVADO
+        </p>`;
+
+      const prodBlock = `
+        <h2>PRODUÇÃO</h2>
+        <p><b>RESULTADO:</b><br>
+          ${aprProd ? '☑' : '☐'} APROVADO &nbsp;&nbsp;
+          ${repProd ? '☑' : '☐'} REPROVADO
+        </p>`;
+
+      return `
+        <div style="page-break-inside:avoid">
+          <h1 style="font-size:13pt;border-bottom:2pt solid #000;padding-bottom:6pt;margin-top:20pt">
+            ${sis.url}<br><span style="font-size:10pt;font-weight:normal">${p.id}</span>
+          </h1>
+          <p><b>DATA:</b> ${p.data}</p>
+          <p><b>PROTOCOLO:</b> ${p.id}</p>
+          <p><b>SISTEMA:</b> ${sis.url}</p>
+          <p><b>RESPONSÁVEL:</b> ${p.responsavel}</p>
+          ${retInfo}
+          <p><b>ANOTAÇÃO:</b></p>
+          <pre style="font-family:Courier New,monospace;font-size:9pt;background:#f5f5f5;padding:10pt;border:1pt solid #ccc;white-space:pre-wrap">${escHtml(p.anotacao)}</pre>
+          ${homBlock}
+          ${prodBlock}
+          ${logHtml}
+        </div>
+        <hr style="border:1pt solid #ccc;margin:16pt 0">`;
+    }
+
+    /* Exporta um único protocolo */
+    function exportWordById(id) {
+      const p = PROTOCOLS.find(x => x.id === id); if (!p) return;
+      const corpo = gerarBlocoProtocolo(p);
+      const doc = montarDocWord(`Protocolo ${id}`, corpo);
+      download(`${id}_relatorio.doc`, doc, 'application/msword');
+    }
+
+    /* Exporta um lote de protocolos num único .doc */
+    function exportWordLote(lista, titulo, nomeArquivo) {
+      const corpo = lista.map(p => gerarBlocoProtocolo(p)).join('');
+      const doc = montarDocWord(titulo, corpo);
+      download(`${nomeArquivo}.doc`, doc, 'application/msword');
+    }
+
+    /* Monta o documento Word completo com cabeçalho e rodapé */
+    function montarDocWord(titulo, corpo) {
+      return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="UTF-8"><style>
+  body{font-family:Arial,sans-serif;font-size:11pt;margin:2cm}
+  h1{font-size:13pt;text-align:center}
+  h2{font-size:11pt;margin-top:14pt;border-bottom:1pt solid #ddd;padding-bottom:4pt}
+  p{margin:4pt 0} ul{margin:4pt 0 4pt 20pt} li{margin:2pt 0}
+  pre{font-family:Courier New,monospace;font-size:9pt;background:#f5f5f5;padding:8pt;border:1pt solid #ccc;white-space:pre-wrap}
+  hr{border:none;border-top:1pt solid #ccc;margin:16pt 0}
+  .capa{text-align:center;padding:40pt 0 30pt}
+</style></head>
 <body>
-<h1>CENTRAL DE VALIDAÇÕES — BigCard<br><span style="font-size:10pt;font-weight:normal">${p.id}</span></h1>
-<p><b>DATA:</b> ${p.data}</p>
-<p><b>PROTOCOLO:</b> ${p.id}</p>
-<p><b>SISTEMA:</b> ${sis.url}</p>
-<p><b>RESPONSÁVEL:</b> ${p.responsavel}</p>
-${retInfo}
-<p><b>ANOTAÇÃO:</b></p>
-<pre>${escHtml(p.anotacao)}</pre>
-${homBlock}
-${prodBlock}
-<p style="margin-top:40pt;font-size:9pt;color:#666">Gerado pela Central de Validações BigCard — ${new Date().toLocaleString('pt-BR')}</p>
+<div class="capa">
+  <p style="font-size:18pt;font-weight:700">CENTRAL DE VALIDAÇÕES</p>
+  <p style="font-size:12pt;color:#666">BigCard Tecnologia e Serviços</p>
+  <p style="font-size:11pt;margin-top:12pt">${titulo}</p>
+  <p style="font-size:10pt;color:#888">Gerado em ${new Date().toLocaleString('pt-BR')}</p>
+</div>
+<hr style="border:2pt solid #000;margin:0 0 20pt">
+${corpo}
+<p style="margin-top:40pt;font-size:9pt;color:#aaa;text-align:center">
+  Central de Validações BigCard — ${new Date().toLocaleDateString('pt-BR')}
+</p>
 </body></html>`;
-      const b = new Blob([html], { type: 'application/msword' });
-      const url = URL.createObjectURL(b);
-      const a = document.createElement('a'); a.href = url; a.download = `${id}_relatorio.doc`; a.click(); URL.revokeObjectURL(url);
-      showToast('↓', `Relatório ${id} exportado!`);
+    }
+
+    /* Atualiza contagem do período selecionado */
+    function atualizarInfoPeriodo() {
+      const de  = document.getElementById('rel-de')?.value;
+      const ate = document.getElementById('rel-ate')?.value;
+      const sis = document.getElementById('rel-sistema')?.value;
+      const info = document.getElementById('rel-periodo-info');
+      if (!info || !de || !ate) return;
+      const toTs = str => { const [d,m,y] = str.split('/'); return new Date(`${y}-${m}-${d}`).getTime(); };
+      const deTs  = new Date(de).getTime();
+      const ateTs = new Date(ate + 'T23:59:59').getTime();
+      const count = PROTOCOLS.filter(p => {
+        const ts = toTs(p.data);
+        if (isNaN(ts) || ts < deTs || ts > ateTs) return false;
+        if (sis && p.sistema !== sis) return false;
+        return true;
+      }).length;
+      info.textContent = count > 0
+        ? `${count} protocolo(s) encontrado(s) no período`
+        : 'Nenhum protocolo neste período';
+      info.style.color = count > 0 ? 'var(--accent2)' : 'var(--text3)';
     }
 
     /* ═══ UTILS ═══ */
