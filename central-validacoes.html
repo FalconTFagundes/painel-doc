@@ -1334,13 +1334,11 @@
       text-align: center;
       display: inline-block;
     }
-
     .retorno-desc {
       font-size: 11px;
       color: var(--text3);
       margin-left: 6px;
     }
-
     .retorno-btn {
       width: 28px;
       height: 28px;
@@ -1357,13 +1355,11 @@
       line-height: 1;
       flex-shrink: 0;
     }
-
     .retorno-btn:hover {
       background: var(--accent-dim);
       border-color: var(--accent);
       color: var(--accent2);
     }
-
     .retorno-editor {
       display: flex;
       align-items: center;
@@ -1660,7 +1656,8 @@
       <div class="header-center">
         <div class="search-box">
           <span class="search-icon">⌕</span>
-          <input type="text" id="globalSearch" oninput="filterProtocols()">
+          <input type="text" id="globalSearch"
+            oninput="filterProtocols()">
         </div>
       </div>
       <div class="header-right">
@@ -1707,7 +1704,7 @@
         <div class="nav-label">Relatórios</div>
         <div class="nav-item" onclick="showView('relatorio')"><span class="nav-icon">↓</span> Exportar Relatório</div>
       </div>
-
+  
     </nav>
 
     <main>
@@ -1728,8 +1725,8 @@
             <div class="kpi-sub">↑ 8 este mês</div>
             <div class="kpi-icon">≡</div>
           </div>
-          <div class="kpi-card yellow" onclick="filterByStatus('pendente');showView('protocols')">
-            <div class="kpi-label">Pendentes</div>
+          <div class="kpi-card yellow" onclick="setFaseFilter('hom');showView('protocols')">
+            <div class="kpi-label">Em Homologação</div>
             <div class="kpi-num">5</div>
             <div class="kpi-sub">Aguardando ação</div>
             <div class="kpi-icon">◷</div>
@@ -1740,10 +1737,10 @@
             <div class="kpi-sub">Em produção</div>
             <div class="kpi-icon">✓</div>
           </div>
-          <div class="kpi-card purple" onclick="filterByStatus('aguardando');showView('protocols')">
+          <div class="kpi-card purple" onclick="setFaseFilter('prod');showView('protocols')">
             <div class="kpi-label">Aguard. Prod.</div>
             <div class="kpi-num">5</div>
-            <div class="kpi-sub">Publicados</div>
+            <div class="kpi-sub">Aguardando teste</div>
             <div class="kpi-icon">↑</div>
           </div>
           <div class="kpi-card red" onclick="filterByStatus('nao_validado');showView('protocols')">
@@ -1774,7 +1771,7 @@
                     class="legend-val">19</span></div>
                 <div class="legend-item"><span class="legend-dot" style="background:#9b72f5"></span>Aguardando<span
                     class="legend-val">5</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#f5a623"></span>Pendentes<span
+                <div class="legend-item"><span class="legend-dot" style="background:#f5a623"></span>Aguardando teste<span
                     class="legend-val">5</span></div>
                 <div class="legend-item"><span class="legend-dot" style="background:#e8455a"></span>Reprovados<span
                     class="legend-val">3</span></div>
@@ -1826,12 +1823,11 @@
             <div class="timeline-chart">
               <div class="tl-item"><span class="tl-date">28/05 14:32</span><span class="tl-sys">webcartoes — Validado em
                   prod.</span><span class="badge badge-green">Validado</span></div>
-              <div class="tl-item"><span class="tl-date">28/05 11:10</span><span class="tl-sys">web.bigcash —
-                  Publicado</span><span class="badge badge-purple">Aguardando</span></div>
+              <div class="tl-item"><span class="tl-date">28/05 11:10</span><span class="tl-sys">web.bigcash — Em Produção</span><span class="badge badge-purple" style="font-size:10px">Aguardando teste</span></div>
               <div class="tl-item"><span class="tl-date">27/05 17:45</span><span class="tl-sys">webempresas — Hom.
                   reprovada</span><span class="badge badge-red">Não valid.</span></div>
               <div class="tl-item"><span class="tl-date">27/05 09:00</span><span class="tl-sys">webusuarios —
-                  Criado</span><span class="badge badge-yellow">Pendente</span></div>
+                  Criado</span><span class="badge badge-yellow" style="font-size:10px">Aguardando teste</span></div>
               <div class="tl-item"><span class="tl-date">26/05 16:20</span><span class="tl-sys">websuporte — Validado em
                   prod.</span><span class="badge badge-green">Validado</span></div>
             </div>
@@ -1849,13 +1845,7 @@
           <button class="btn btn-primary" onclick="showView('new')">＋ Novo Registro</button>
         </div>
         <div class="filters-bar">
-          <select class="filter-select" id="f-fase" onchange="filterProtocols()" style="margin-right:4px">
-            <option value="">Todas as Fases</option>
-            <option value="hom">Em Homologação</option>
-            <option value="prod">Em Produção</option>
-            <option value="done">Aprovados</option>
-            <option value="rep">Reprovados</option>
-          </select>
+          <select class="filter-select" id="f-fase" onchange="filterProtocols()" style="margin-right:4px"><option value="">Todas as Fases</option><option value="hom">Em Homologação</option><option value="prod">Em Produção (aguardando teste)</option><option value="done">Aprovados</option><option value="rep">Reprovados</option></select>
           <select class="filter-select" id="f-sistema" onchange="filterProtocols()">
             <option value="">Todos os Sistemas</option>
             <option value="webempresas">webempresas.bigcard.com.br</option>
@@ -1868,14 +1858,14 @@
           </select>
           <select class="filter-select" id="f-status-hom" onchange="filterProtocols()">
             <option value="">Status Hom.</option>
-            <option value="Pendente">Hom. Pendente</option>
+            <option value="AguardandoTeste">Aguardando teste</option>
             <option value="Aprovado">Hom. Validado</option>
             <option value="Reprovado">Hom. Reprovado</option>
           </select>
           <select class="filter-select" id="f-status-prod" onchange="filterProtocols()">
             <option value="">Status Prod.</option>
-            <option value="Pendente">Prod. Pendente</option>
-            <option value="EmProducao">Prod. Aguardando</option>
+            <option value="AguardandoTeste">Aguardando teste</option>
+            
             <option value="Aprovado">Prod. Validado</option>
             <option value="Reprovado">Prod. Reprovado</option>
           </select>
@@ -1938,7 +1928,8 @@
             </div>
             <div class="detail-field">
               <label class="detail-label">Responsável</label>
-              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp">
+              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp"
+               >
             </div>
           </div>
 
@@ -1948,7 +1939,8 @@
                 do sistema de testes (ID, Painel, Cartão, Caminho, Detalhamento, Resposta…)</span>
             </label>
             <div class="anotacao-wrap">
-              <textarea class="anotacao-paste" id="np-anotacao"></textarea>
+              <textarea class="anotacao-paste" id="np-anotacao"
+               ></textarea>
               <div class="anotacao-hint">
                 <span>📋</span>
                 <span>Ctrl+V para colar — o texto será armazenado como está, sem reinterpretação de campos.</span>
@@ -1959,7 +1951,8 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
             <div class="detail-field">
               <label class="detail-label">Obs. internas (opcional)</label>
-              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-obs">
+              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-obs"
+               >
             </div>
             <div class="detail-field">
               <label class="detail-label">Data</label>
@@ -2013,27 +2006,27 @@
       </div>
 
     </main>
-  </div><!-- /app -->
+</div><!-- /app -->
 
-  <!-- MODAL e TOAST fora do #app -->
-  <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
-    <div class="modal">
-      <div class="modal-head">
-        <div>
-          <h2 id="m-title">—</h2>
-          <div class="modal-protocol" id="m-num">—</div>
+<!-- MODAL e TOAST fora do #app -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+      <div class="modal">
+        <div class="modal-head">
+          <div>
+            <h2 id="m-title">—</h2>
+            <div class="modal-protocol" id="m-num">—</div>
+          </div>
+          <button class="modal-close" onclick="closeModalBtn()">✕</button>
         </div>
-        <button class="modal-close" onclick="closeModalBtn()">✕</button>
-      </div>
-      <div class="modal-body" id="m-body"></div>
-      <div class="modal-foot">
-        <button class="btn btn-outline btn-sm" onclick="exportWordFromModal()">↓ Exportar .docx</button>
-        <button class="btn btn-primary btn-sm" onclick="saveModalChanges()">Salvar alterações</button>
+        <div class="modal-body" id="m-body"></div>
+        <div class="modal-foot">
+          <button class="btn btn-outline btn-sm" onclick="exportWordFromModal()">↓ Exportar .docx</button>
+          <button class="btn btn-primary btn-sm" onclick="saveModalChanges()">Salvar alterações</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="toast-container" id="toast-container"></div>
+    <div class="toast-container" id="toast-container"></div>
 
   <script>
     /* ═══ USUÁRIOS ═══ */
@@ -2091,96 +2084,128 @@
     /*
       Schema:
       { id, sistema, data, responsavel,
-        statusHom: 'Pendente'|'Validado'|'Reprovado',
-        statusProd: 'Pendente'|'EmProducao'|'Validado'|'Reprovado',
+        statusHom: 'AguardandoTeste'|'Validado'|'Reprovado',
+        statusProd: 'AguardandoTeste'|'Aprovado'|'Reprovado',
         retornos: number,
         anotacao: string (texto livre colado do sistema externo),
         obs: string
       }
-      REGRA: statusProd só avança se statusHom==='Validado'
+      REGRA: statusProd só avança se statusHom==='Aprovado'
     */
     let PROTOCOLS = [
       {
-        id: '25.05.28.32.14', sistema: 'webcartoes', data: '28/05/2025', responsavel: 'Patrick', statusHom: 'Aprovado', statusProd: 'EmProducao', retornos: 0,
+        id: '25.05.28.32.14', sistema: 'webcartoes', data: '28/05/2025', responsavel: 'Patrick', statusHom: 'Aprovado', statusProd: 'AguardandoTeste', retornos: 0, log: [],
         anotacao: `14.72.00.04.64\nPatrick,\n- Painel: Aplicativo Novo (webcartoes)\n- Código ou cartão usado para testes: 6271127425817365\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Na aba lateral > Serviços > Saque\n- Detalhamento:\nNa resolução de celular ao acessar a aba lateral, serviços em saque, o redirecionamento da página ao invés de ir para /saque_especie ele redireciona para /saque_espicie\nR: Ajuste validado com sucesso.`,
         obs: 'Typo na rota causava 404 em dispositivos mobile.'
       },
       {
-        id: '25.05.28.31.07', sistema: 'webempresas', data: '28/05/2025', responsavel: 'Renan', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 1,
+        id: '25.05.28.31.07', sistema: 'webempresas', data: '28/05/2025', responsavel: 'Renan', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 1, log: [],
         anotacao: `25.05.28.31.07\nRenan,\n- Painel: WebEmpresas — Crédito PJ\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Empresas > Crédito > Limite\n- Detalhamento:\nCampo CPF_ESTRANGEIRO não era tratado corretamente na procedure sp_calcular_limite_pj.\nR: Ajuste validado com sucesso.`,
         obs: 'Solicitado pelo setor de crédito — ticket #4821.'
       },
       {
-        id: '25.05.27.30.22', sistema: 'bigcash', data: '27/05/2025', responsavel: 'Marcos', statusHom: 'Aprovado', statusProd: 'EmProducao', retornos: 0,
+        id: '25.05.27.30.22', sistema: 'bigcash', data: '27/05/2025', responsavel: 'Marcos', statusHom: 'Aprovado', statusProd: 'AguardandoTeste', retornos: 0, log: [],
         anotacao: `25.05.27.30.22\nMarcos,\n- Painel: BigCash — TEF\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Financeiro > TEF > Transações\n- Detalhamento:\nTimeout em transações TEF acima de R$10.000. Parâmetro TEF_TIMEOUT estava em 30s.\nR: Deploy realizado. Aguardando confirmação financeiro.`,
         obs: 'Reportado por 3 PDVs no Vale do Aço.'
       },
       {
-        id: '25.05.27.29.88', sistema: 'webusuarios', data: '27/05/2025', responsavel: 'Ana', statusHom: 'Reprovado', statusProd: 'Pendente', retornos: 2,
+        id: '25.05.27.29.88', sistema: 'webusuarios', data: '27/05/2025', responsavel: 'Ana', statusHom: 'Reprovado', statusProd: 'AguardandoTeste', retornos: 2, log: [],
         anotacao: `25.05.27.29.88\nAna,\n- Painel: WebUsuários — Listagem\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Administração > Usuários > Listar\n- Detalhamento:\nErro 500 ao filtrar usuários com departamento nulo. Query não trata NULL no campo DEP_ID.\nR: Pendente — necessária nova correção.`,
         obs: 'Bug reportado pelo RH em 26/05. Alta prioridade.'
       },
       {
-        id: '25.05.26.28.53', sistema: 'webempresas', data: '26/05/2025', responsavel: 'Renan', statusHom: 'Aprovado', statusProd: 'Reprovado', retornos: 1,
+        id: '25.05.26.28.53', sistema: 'webempresas', data: '26/05/2025', responsavel: 'Renan', statusHom: 'Aprovado', statusProd: 'Reprovado', retornos: 1, log: [],
         anotacao: `25.05.26.28.53\nRenan,\n- Painel: WebEmpresas — Extrato Consolidado\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Empresas > Relatórios > Extrato\n- Detalhamento:\nPDF não gerado em produção — encoding UTF-8 divergente entre hom e prod.\nR: Reprovado — reverter.`,
         obs: 'Pendente correção de encoding.'
       },
       {
-        id: '25.05.26.27.41', sistema: 'webredes', data: '26/05/2025', responsavel: 'Carlos', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.26.27.41', sistema: 'webredes', data: '26/05/2025', responsavel: 'Carlos', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.26.27.41\nCarlos,\n- Painel: WebRedes — Monitoramento\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Redes > Dashboard > Equipamentos\n- Detalhamento:\nDashboard de monitoramento com alertas Zabbix via webhook.\nR: Validado em produção às 16:20.`,
         obs: 'Módulo solicitado pela gerência de infra.'
       },
       {
-        id: '25.05.25.26.19', sistema: 'websuporte', data: '25/05/2025', responsavel: 'Juliana', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.25.26.19', sistema: 'websuporte', data: '25/05/2025', responsavel: 'Juliana', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.25.26.19\nJuliana,\n- Painel: WebSuporte — Chat\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Suporte > Atendimento > Chat\n- Detalhamento:\nIntegração chat com sistema de tickets. Botão "Abrir Ticket" implementado.\nR: Validado. Usuários reportando positivo.`,
         obs: 'Reduz tempo de atendimento ~30%.'
       },
       {
-        id: '25.05.24.25.37', sistema: 'webcartoes', data: '24/05/2025', responsavel: 'Carla', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.24.25.37', sistema: 'webcartoes', data: '24/05/2025', responsavel: 'Carla', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.24.25.37\nCarla,\n- Painel: Aplicativo Novo (webcartoes) — Bloqueio de Cartão\n- Código ou cartão usado para testes: 4111111111111111\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Meu Cartão > Segurança > Bloquear\n- Detalhamento:\nBotão de bloqueio não respondia em iOS 17. Problema no WKWebView bridge.\nR: Validado. Reclamações cessaram após deploy.`,
         obs: 'Afetava ~15% dos usuários iOS.'
       },
       {
-        id: '25.05.23.24.62', sistema: 'bigcash', data: '23/05/2025', responsavel: 'Marcos', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.23.24.62', sistema: 'bigcash', data: '23/05/2025', responsavel: 'Marcos', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.23.24.62\nMarcos,\n- Painel: BigCash — Conciliação Diária\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Caminho para reproduzir o erro: Financeiro > Conciliação > Diária\n- Detalhamento:\ndata_repasse gravando em UTC ao invés de BRT. Diferença de R$0,01 em ~200 transações/dia.\nR: Ajuste validado. Diferença eliminada.`,
         obs: 'Job SQL Agent ajustado.'
       },
       {
-        id: '25.05.22.23.81', sistema: 'webempresas', data: '22/05/2025', responsavel: 'Renan', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.22.23.81', sistema: 'webempresas', data: '22/05/2025', responsavel: 'Renan', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.22.23.81\nRenan,\n- Painel: WebEmpresas — Consulta de Faturas\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Empresas > Financeiro > Faturas\n- Detalhamento:\nQueries com 8s de resposta. Adição de índice e refatoração de procedure.\nR: Validado. Tempo caiu de 8s para 0.3s.`,
         obs: 'Aprovado pelo gerente.'
       },
       {
-        id: '25.05.21.22.55', sistema: 'webusuarios', data: '21/05/2025', responsavel: 'Ana', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.21.22.55', sistema: 'webusuarios', data: '21/05/2025', responsavel: 'Ana', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.21.22.55\nAna,\n- Painel: WebUsuários — 2FA\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Admin > Segurança > 2FA\n- Detalhamento:\nImplementação de 2FA por TOTP para administradores. Integração Google Authenticator e Authy.\nR: Validado. 12 admins configurados.`,
         obs: 'Requisito LGPD.'
       },
       {
-        id: '25.05.19.20.33', sistema: 'webredes', data: '19/05/2025', responsavel: 'Carlos', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.19.20.33', sistema: 'webredes', data: '19/05/2025', responsavel: 'Carlos', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.19.20.33\nCarlos,\n- Painel: WebRedes — PRTG\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Redes > Monitoramento > Banda\n- Detalhamento:\nIntegração API PRTG para alertas de banda. Polling a cada 5 min.\nR: Validado. Alertas chegando no Teams.`,
         obs: 'Reduz acesso manual ao PRTG.'
       },
       {
-        id: '25.05.18.19.72', sistema: 'websuporte', data: '18/05/2025', responsavel: 'Juliana', statusHom: 'Reprovado', statusProd: 'Pendente', retornos: 1,
+        id: '25.05.18.19.72', sistema: 'websuporte', data: '18/05/2025', responsavel: 'Juliana', statusHom: 'Reprovado', statusProd: 'AguardandoTeste', retornos: 1, log: [],
         anotacao: `25.05.18.19.72\nJuliana,\n- Painel: WebSuporte — Pesquisa de Satisfação\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Não\n- Caminho para reproduzir o erro: Suporte > Pós-atendimento > Pesquisa\n- Detalhamento:\nE-mail de pesquisa não enviado em homologação. SMTP hom. divergente.\nR: Pendente — configuração SMTP pendente.`,
         obs: 'SMTP hom. precisa configurar.'
       },
       {
-        id: '25.05.17.18.91', sistema: 'bigcash', data: '17/05/2025', responsavel: 'Marcos', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.17.18.91', sistema: 'bigcash', data: '17/05/2025', responsavel: 'Marcos', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.17.18.91\nMarcos,\n- Painel: BigCash — Fluxo de Caixa\n- Código ou cartão usado para testes: N/A\n- Detalhamento:\nRelatório de fluxo de caixa semanal em Excel. Template EPPlus.\nR: Validado. Agendado toda segunda-feira.`,
         obs: 'Solicitado pela diretoria financeira.'
       },
       {
-        id: '25.05.16.17.28', sistema: 'webcartoes', data: '16/05/2025', responsavel: 'Carla', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.16.17.28', sistema: 'webcartoes', data: '16/05/2025', responsavel: 'Carla', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.16.17.28\nCarla,\n- Painel: Aplicativo Novo (webcartoes) — Push Fatura\n- Código ou cartão usado para testes: N/A\n- A situação afetou mais de uma empresa/Usuários? Sim\n- Detalhamento:\nPush notification 5 dias antes do vencimento via Firebase.\nR: Validado. ~2.400 pushes/dia. Taxa abertura: 34%.`,
         obs: ''
       },
       {
-        id: '25.05.15.16.64', sistema: 'webempresas', data: '15/05/2025', responsavel: 'Renan', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0,
+        id: '25.05.15.16.64', sistema: 'webempresas', data: '15/05/2025', responsavel: 'Renan', statusHom: 'Aprovado', statusProd: 'Aprovado', retornos: 0, log: [],
         anotacao: `25.05.15.16.64\nRenan,\n- Painel: WebEmpresas — Permissões\n- Código ou cartão usado para testes: N/A\n- Detalhamento:\nRegressão: gerente não conseguia aprovar faturas. Permissão APROVAR_FATURA ausente no perfil GERENTE.\nR: Corrigido. Usuários notificados.`,
         obs: 'Regressão do protocolo anterior.'
       },
     ];
+
+    // Inicializa log simulado nos protocolos mockados (sem log real)
+    (function seedLogs() {
+      const statusLabel = { 'AguardandoTeste': 'Aguardando teste', 'Aprovado': 'Aprovado', 'Reprovado': 'Reprovado' };
+      PROTOCOLS.forEach(p => {
+        if (!p.log) p.log = [];
+        if (p.log.length === 0) {
+          // Entrada de criação
+          p.log.push({ ts: p.data + ' 08:00', user: p.responsavel, msg: p.responsavel + ' criou o protocolo' });
+          // Se hom não está aguardando, simula log de hom
+          if (p.statusHom !== 'AguardandoTeste') {
+            const hora = p.statusHom === 'Aprovado' ? '10:30' : '11:15';
+            p.log.push({ ts: p.data + ' ' + hora, user: p.responsavel, msg: p.responsavel + ' marcou Homologação como ' + statusLabel[p.statusHom] });
+          }
+          // Se foi copiado para prod, simula log
+          if (p.statusHom === 'Aprovado') {
+            p.log.push({ ts: p.data + ' 13:00', user: p.responsavel, msg: p.responsavel + ' enviou o protocolo para Produção' });
+          }
+          // Se prod tem status diferente de aguardando, simula log de prod
+          if (p.statusHom === 'Aprovado' && p.statusProd !== 'AguardandoTeste') {
+            const hora = p.statusProd === 'Aprovado' ? '15:45' : '16:20';
+            p.log.push({ ts: p.data + ' ' + hora, user: p.responsavel, msg: p.responsavel + ' marcou Produção como ' + statusLabel[p.statusProd] });
+          }
+          // Se tem retornos, simula entradas de reprovação
+          if (p.retornos > 0) {
+            for (let i = 0; i < p.retornos; i++) {
+              p.log.splice(2 + i, 0, { ts: p.data + ' 09:' + String(15 + i * 20).padStart(2,'0'), user: p.responsavel, msg: p.responsavel + ' marcou Homologação como Reprovado' });
+            }
+          }
+        }
+      });
+    })();
 
     let filtered = [...PROTOCOLS];
     let currentPage = 1;
@@ -2208,10 +2233,10 @@
     }
 
     /* ═══ FILTROS ═══ */
-    let faseAtiva = "";
-    function setFaseFilter(fase) { faseAtiva = fase; const s = document.getElementById("f-fase"); if (s) s.value = fase; filterProtocols(); }
+    let faseAtiva="";
+    function setFaseFilter(fase){faseAtiva=fase;const s=document.getElementById("f-fase");if(s)s.value=fase;filterProtocols();}
     function filterProtocols() {
-      const search = (document.getElementById('globalSearch').value || '').toLowerCase();
+      const search = (document.getElementById('globalSearch').value||'').toLowerCase();
       const fSis = document.getElementById('f-sistema').value;
       const fFaseEl = document.getElementById('f-fase');
       const fFase = (fFaseEl ? fFaseEl.value : '') || faseAtiva;
@@ -2225,14 +2250,14 @@
     }
     function filterByEnv(env) {
       // "HOM" → só mostra onde hom ainda não validado | "PROD" → hom validado
-      if (env === 'HOM') { document.getElementById('f-status-hom').value = 'Pendente'; }
-      if (env === 'PROD') { document.getElementById('f-status-prod').value = 'EmProducao'; }
+      if (env === 'HOM') { setFaseFilter('hom'); }
+      if (env === 'PROD') { setFaseFilter('prod'); }
       filterProtocols();
     }
     function filterBySys(sys) { document.getElementById('f-sistema').value = sys; filterProtocols(); }
     function filterByStatus(status) {
-      const m = { pendente: 'Pendente', validado: 'Validado', aguardando: 'EmProducao', nao_validado: 'Reprovado' };
-      document.getElementById('f-status-prod').value = m[status] || ''; filterProtocols();
+      const m = { hom: 'hom', validado: 'done', aguardando: 'prod', nao_validado: 'rep' };
+      setFaseFilter(m[status] || ''); if(m[status]) showView('protocols');
     }
     function clearFilters() {
       ['f-sistema', 'f-status-hom', 'f-status-prod'].forEach(id => document.getElementById(id).value = '');
@@ -2245,7 +2270,7 @@
       if (fSis) chips.innerHTML += `<div class="filter-chip" onclick="document.getElementById('f-sistema').value='';filterProtocols()">${SISTEMAS[fSis]?.url} ✕</div>`;
     }
     function updateNavPending() {
-      document.getElementById('nav-pending').textContent = PROTOCOLS.filter(p => p.statusProd === 'Pendente' || p.statusHom === 'Pendente').length;
+      document.getElementById('nav-pending').textContent = PROTOCOLS.filter(p => p.statusHom === 'AguardandoTeste' || (p.statusHom === 'Aprovado' && p.statusProd === 'AguardandoTeste')).length;
     }
 
     /* ═══ TABELA ═══ */
@@ -2270,8 +2295,9 @@
         // Status sem chip de fase
         const statusCell = buildStatusCell(p, fase);
 
-        // Botão aparece só quando hom foi aprovado e prod ainda está pendente
-        const copiarBtn = (p.statusHom === 'Aprovado' && p.statusProd === 'Pendente')
+        // Botão aparece APENAS na fase 'hom' (aba Homologação) quando aprovado
+        // Na aba Produção (fase 'prod') o botão NÃO existe
+        const copiarBtn = (fase === 'hom' && p.statusHom === 'Aprovado')
           ? `<button class="btn btn-sm" style="background:var(--green-dim);border:1px solid rgba(39,196,131,.3);color:var(--green);white-space:nowrap;font-size:11px" onclick="event.stopPropagation();copiarParaProd('${p.id}')">↑ Copiar para Prod.</button>`
           : '';
 
@@ -2293,7 +2319,7 @@
       // Click delegado nas linhas — ignora cliques em botões
       tbody.querySelectorAll('.proto-row').forEach(row => {
         row.style.cursor = 'pointer';
-        row.addEventListener('click', function (e) {
+        row.addEventListener('click', function(e) {
           if (e.target.closest('button')) return;
           openModal(this.dataset.id);
         });
@@ -2302,37 +2328,37 @@
       renderPagination(total);
     }
 
-    /* getFase: hom=em hom, prod=aguardando prod, done=aprovado, rep=reprovado */
-    function getFase(p) {
-      if (p.statusProd === 'Aprovado') return 'done';
-      if (p.statusHom === 'Aprovado' && (p.statusProd === 'Pendente' || p.statusProd === 'EmProducao')) return 'prod';
-      if (p.statusHom === 'Reprovado' || p.statusProd === 'Reprovado') return 'rep';
+        /* getFase: hom=em hom, prod=aguardando prod, done=aprovado, rep=reprovado */
+    function getFase(p){
+      if(p.statusProd==='Aprovado')return 'done';
+      if(p.statusHom==='Aprovado')return 'prod';
+      if(p.statusHom==='Reprovado'||p.statusProd==='Reprovado')return 'rep';
       return 'hom';
     }
-    function buildAndamentoInline(p) {
-      const fase = getFase(p);
-      const faseMap = {
-        hom: { bg: 'var(--yellow-dim)', border: 'rgba(245,166,35,.25)', color: 'var(--yellow)', icon: '◈', label: 'Homologação' },
-        prod: { bg: 'var(--purple-dim)', border: 'rgba(155,114,245,.25)', color: 'var(--purple)', icon: '◉', label: 'Em Produção' },
-        done: { bg: 'var(--green-dim)', border: 'rgba(39,196,131,.25)', color: 'var(--green)', icon: '✓', label: 'Concluído' },
-        rep: { bg: 'var(--red-dim)', border: 'rgba(232,69,90,.25)', color: 'var(--red)', icon: '✕', label: 'Reprovado' },
+    function buildAndamentoInline(p){
+      const fase=getFase(p);
+      const faseMap={
+        hom: {bg:'var(--yellow-dim)',border:'rgba(245,166,35,.25)',color:'var(--yellow)',icon:'◈',label:'Homologação'},
+        prod:{bg:'var(--purple-dim)',border:'rgba(155,114,245,.25)',color:'var(--purple)',icon:'◉',label:'Produção'},
+        done:{bg:'var(--green-dim)', border:'rgba(39,196,131,.25)', color:'var(--green)', icon:'✓',label:'Concluído'},
+        rep: {bg:'var(--red-dim)',   border:'rgba(232,69,90,.25)',  color:'var(--red)',   icon:'✕',label:'Reprovado'},
       };
-      const fc = faseMap[fase];
-      const faseChip = `<span style="display:inline-flex;align-items:center;gap:5px;background:${fc.bg};border:1px solid ${fc.border};border-radius:20px;padding:3px 9px;font-size:11px;color:${fc.color};font-weight:600;white-space:nowrap">${fc.icon} ${fc.label}</span>`;
-      let stLabel, dotColor, stStyle = '';
-      if (fase === 'hom') {
-        stLabel = p.statusHom;
-        dotColor = p.statusHom === 'Aprovado' ? '#27c483' : p.statusHom === 'Reprovado' ? '#e8455a' : '#f5a623';
-        if (p.statusHom === 'Reprovado') stStyle = 'color:var(--red);font-weight:700';
-      } else if (fase === 'prod') {
-        stLabel = 'Aguardando validação'; dotColor = '#9b72f5';
-      } else if (fase === 'done') {
-        stLabel = 'Aprovado'; dotColor = '#27c483';
-      } else {
-        const qual = p.statusProd === 'Reprovado' ? 'Prod.' : 'Hom.';
-        stLabel = 'Reprovado (' + qual + ')'; dotColor = '#e8455a'; stStyle = 'color:var(--red);font-weight:700';
+      const fc=faseMap[fase];
+      const faseChip=`<span style="display:inline-flex;align-items:center;gap:5px;background:${fc.bg};border:1px solid ${fc.border};border-radius:20px;padding:3px 9px;font-size:11px;color:${fc.color};font-weight:600;white-space:nowrap">${fc.icon} ${fc.label}</span>`;
+      let stLabel,dotColor,stStyle='';
+      if(fase==='hom'){
+        stLabel=p.statusHom;
+        dotColor=p.statusHom==='Aprovado'?'#27c483':p.statusHom==='Reprovado'?'#e8455a':'#f5a623';
+        if(p.statusHom==='Reprovado')stStyle='color:var(--red);font-weight:700';
+      }else if(fase==='prod'){
+        stLabel='Aguardando validação'; dotColor='#9b72f5';
+      }else if(fase==='done'){
+        stLabel='Aprovado'; dotColor='#27c483';
+      }else{
+        const qual=p.statusProd==='Reprovado'?'Prod.':'Hom.';
+        stLabel='Reprovado ('+qual+')'; dotColor='#e8455a'; stStyle='color:var(--red);font-weight:700';
       }
-      const dotExtra = dotColor === '#e8455a' ? 'width:9px;height:9px;box-shadow:0 0 0 3px rgba(232,69,90,.2)' : '';
+      const dotExtra=dotColor==='#e8455a'?'width:9px;height:9px;box-shadow:0 0 0 3px rgba(232,69,90,.2)':'';
       return `<div style="display:flex;flex-direction:column;gap:4px">
         ${faseChip}
         <div style="display:flex;align-items:center;gap:5px;padding-left:2px">
@@ -2345,12 +2371,24 @@
     /* buildStatusCell — mostra só o dot+label do status relevante para a fase */
     function buildStatusCell(p, fase) {
       let label, dotColor, textStyle = '';
+      const statusHomLabel = {
+        'AguardandoTeste': 'Aguardando teste',
+        'Aprovado':        'Aprovado',
+        'Reprovado':       'Reprovado',
+      };
+      const statusProdLabel = {
+        'AguardandoTeste': 'Aguardando teste',
+        'Aprovado':        'Aprovado',
+        'Reprovado':       'Reprovado',
+      };
       if (fase === 'hom') {
-        label = p.statusHom;
+        label = statusHomLabel[p.statusHom] || p.statusHom;
         dotColor = p.statusHom === 'Aprovado' ? '#27c483' : p.statusHom === 'Reprovado' ? '#e8455a' : '#f5a623';
         if (p.statusHom === 'Reprovado') textStyle = 'color:var(--red);font-weight:700';
       } else if (fase === 'prod') {
-        label = 'Aguardando validação'; dotColor = '#9b72f5';
+        label = statusProdLabel[p.statusProd] || p.statusProd;
+        dotColor = p.statusProd === 'Aprovado' ? '#27c483' : p.statusProd === 'Reprovado' ? '#e8455a' : '#9b72f5';
+        if (p.statusProd === 'Reprovado') textStyle = 'color:var(--red);font-weight:700';
       } else if (fase === 'done') {
         label = 'Aprovado'; dotColor = '#27c483';
       } else {
@@ -2368,12 +2406,23 @@
     function copiarParaProd(id) {
       const p = PROTOCOLS.find(x => x.id === id); if (!p) return;
       if (p.statusHom !== 'Aprovado') { showToast('⚠️', 'Hom. precisa estar Aprovado.'); return; }
-      p.statusProd = 'EmProducao';
+      const agora = (() => {
+        const d = new Date();
+        return String(d.getDate()).padStart(2,'0') + '/' +
+               String(d.getMonth()+1).padStart(2,'0') + '/' +
+               d.getFullYear() + ' ' +
+               String(d.getHours()).padStart(2,'0') + ':' +
+               String(d.getMinutes()).padStart(2,'0');
+      })();
+      const quem = currentUser ? currentUser.nome : 'Sistema';
+      if (!p.log) p.log = [];
+      p.log.push({ ts: agora, user: quem, msg: quem + ' copiou o protocolo para Produção' });
+      p.statusProd = 'AguardandoTeste';
       renderTable(); updateNavPending();
       showToast('↑', `${id} enviado para Produção!`);
     }
 
-    function renderPagination(total) {
+        function renderPagination(total) {
       const pages = Math.ceil(total / PAGE_SIZE) || 1;
       const btns = document.getElementById('page-btns'); btns.innerHTML = '';
       const prev = document.createElement('button');
@@ -2397,30 +2446,27 @@
       document.getElementById('m-title').textContent = sis.url;
       document.getElementById('m-num').textContent = p.id + ' · ' + p.data + ' · ' + p.responsavel;
 
-      const retHtml = p.retornos > 0 ? `<div class="retorno-badge">⟳ Retornou ao desenvolvedor ${p.retornos}x</div>` : '';
-
       // Status editors: HOM e PROD com seta de fluxo entre eles
-      // PROD só habilita se HOM === Validado
-      const prodDisabled = p.statusHom !== 'Aprovado' ? 'disabled title="Defina Homologação como Validado primeiro"' : '';
+      // PROD só habilita se HOM === Aprovado
+      const prodDisabled = p.statusHom !== 'Aprovado' ? 'disabled' : '';
+
+      // Retornos: só exibe contador informativo (automático via Reprovado)
+      const retornosInfo = p.retornos > 0
+        ? `<div data-retornos-display style="display:inline-flex;align-items:center;gap:8px;background:var(--yellow-dim);border:1px solid rgba(245,166,35,.25);border-radius:var(--radius);padding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--yellow);font-weight:600">
+            <span>⟳</span>
+            <span>Retornou ao desenvolvedor <strong style="font-family:'IBM Plex Mono',monospace;font-size:15px">${p.retornos}x</strong></span>
+           </div>`
+        : '';
 
       document.getElementById('m-body').innerHTML = `
-    ${retHtml}
-
-    <!-- editor retornos -->
-    <div class="retorno-editor">
-      <span>Retornos ao desenvolvedor:</span>
-      <button class="retorno-btn" onclick="adjustRetornos('${p.id}',-1)">−</button>
-      <span class="retorno-num" id="ret-val-${p.id}">${p.retornos}</span>
-      <button class="retorno-btn" onclick="adjustRetornos('${p.id}',+1)">＋</button>
-      <span class="retorno-desc">ajuste manual</span>
-    </div>
+    ${retornosInfo}
 
     <!-- editor status com fluxo HOM → PROD -->
     <div class="status-editor">
       <div class="status-edit-block">
         <div class="status-edit-label">Homologação</div>
         <select class="status-edit-select" id="se-hom-${p.id}" onchange="onHomChange('${p.id}')">
-          <option value="Pendente" ${p.statusHom === 'Pendente' ? 'selected' : ''}>Pendente</option>
+          <option value="AguardandoTeste" ${p.statusHom === 'AguardandoTeste' ? 'selected' : ''}>Aguardando teste</option>
           <option value="Aprovado" ${p.statusHom === 'Aprovado' ? 'selected' : ''}>Aprovado</option>
           <option value="Reprovado" ${p.statusHom === 'Reprovado' ? 'selected' : ''}>Reprovado</option>
         </select>
@@ -2429,8 +2475,7 @@
       <div class="status-edit-block">
         <div class="status-edit-label">Produção <span id="prod-lock-hint-${p.id}" style="color:var(--red);font-size:9px">${p.statusHom !== 'Aprovado' ? '(aguardando hom.)' : ''}</span></div>
         <select class="status-edit-select" id="se-prod-${p.id}" ${prodDisabled}>
-          <option value="Pendente" ${p.statusProd === 'Pendente' ? 'selected' : ''}>Pendente</option>
-          <option value="EmProducao" ${p.statusProd === 'EmProducao' ? 'selected' : ''}>Em Produção (aguard.)</option>
+          <option value="AguardandoTeste" ${p.statusProd === 'AguardandoTeste' ? 'selected' : ''}>Aguardando teste</option>
           <option value="Aprovado" ${p.statusProd === 'Aprovado' ? 'selected' : ''}>Aprovado</option>
           <option value="Reprovado" ${p.statusProd === 'Reprovado' ? 'selected' : ''}>Reprovado</option>
         </select>
@@ -2457,27 +2502,17 @@
     function escHtml(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
     function onHomChange(id) {
-      const p = PROTOCOLS.find(x => x.id === id); if (!p) return;
       const newHom = document.getElementById(`se-hom-${id}`).value;
       const prodSel = document.getElementById(`se-prod-${id}`);
       const hint = document.getElementById(`prod-lock-hint-${id}`);
       if (newHom === 'Aprovado') {
-        prodSel.disabled = false; prodSel.removeAttribute('title');
+        prodSel.disabled = false;
         hint.textContent = '';
       } else {
-        prodSel.disabled = true; prodSel.title = 'Defina Homologação como Validado primeiro';
-        prodSel.value = 'Pendente';
+        prodSel.disabled = true;
+        prodSel.value = 'AguardandoTeste';
         hint.textContent = '(aguardando hom.)';
       }
-    }
-
-    function adjustRetornos(id, delta) {
-      const p = PROTOCOLS.find(x => x.id === id); if (!p) return;
-      p.retornos = Math.max(0, p.retornos + delta);
-      const el = document.getElementById(`ret-val-${id}`);
-      if (el) el.textContent = p.retornos;
-      renderTable();
-      showToast('⟳', `Retornos de ${id}: ${p.retornos}x`);
     }
 
     function saveModalChanges() {
@@ -2485,43 +2520,108 @@
       const p = PROTOCOLS.find(x => x.id === activeModalId); if (!p) return;
       const newHom = document.getElementById(`se-hom-${p.id}`).value;
       const newProd = document.getElementById(`se-prod-${p.id}`).value;
-      // Regra: PROD só avança se HOM === Validado
-      if (newProd !== 'Pendente' && newHom !== 'Aprovado') {
-        showToast('⚠️', 'Homologação precisa estar Validado antes de avançar em Produção.'); return;
+
+      // Regra: PROD só avança se HOM === Aprovado
+      if (newProd !== 'AguardandoTeste' && newHom !== 'Aprovado') {
+        showToast('⚠️', 'Homologação precisa estar Aprovado antes de avançar em Produção.'); return;
       }
-      // Se statusHom mudou para Reprovado, incrementa retornos automaticamente
-      if (newHom === 'Reprovado' && p.statusHom !== 'Reprovado') {
-        p.retornos = p.retornos + 1;
-        showToast('⟳', 'Retorno ao desenvolvedor contabilizado: ' + p.retornos + 'x');
+
+      // Auto-incremento: cada vez que mudar PARA Reprovado (hom ou prod) = +1 retorno
+      let novosRetornos = 0;
+      if (newHom === 'Reprovado' && p.statusHom !== 'Reprovado') novosRetornos++;
+      if (newProd === 'Reprovado' && p.statusProd !== 'Reprovado') novosRetornos++;
+      if (novosRetornos > 0) {
+        p.retornos += novosRetornos;
       }
-      // Se statusProd mudou para Reprovado, incrementa retornos automaticamente
-      if (newProd === 'Reprovado' && p.statusProd !== 'Reprovado') {
-        p.retornos = p.retornos + 1;
-        showToast('⟳', 'Retorno ao desenvolvedor contabilizado: ' + p.retornos + 'x');
+
+      // Registrar mudanças de status no log do protocolo
+      const agora = (() => {
+        const d = new Date();
+        return String(d.getDate()).padStart(2,'0') + '/' +
+               String(d.getMonth()+1).padStart(2,'0') + '/' +
+               d.getFullYear() + ' ' +
+               String(d.getHours()).padStart(2,'0') + ':' +
+               String(d.getMinutes()).padStart(2,'0');
+      })();
+      const quem = currentUser ? currentUser.nome : 'Sistema';
+      if (!p.log) p.log = [];
+
+      const statusLabel = { 'AguardandoTeste': 'Aguardando teste', 'Aprovado': 'Aprovado', 'Reprovado': 'Reprovado' };
+
+      if (newHom !== p.statusHom) {
+        p.log.push({ ts: agora, user: quem, msg: quem + ' marcou Homologação como ' + (statusLabel[newHom] || newHom) });
       }
+      if (newProd !== p.statusProd) {
+        p.log.push({ ts: agora, user: quem, msg: quem + ' marcou Produção como ' + (statusLabel[newProd] || newProd) });
+      }
+
       p.statusHom = newHom;
       p.statusProd = newProd;
+
       const anotEl = document.getElementById(`ae-anotacao-${p.id}`);
       if (anotEl) p.anotacao = anotEl.value;
-      // Atualiza timeline no modal
+
+      // Atualiza retornos e timeline dentro do modal sem fechar
+      const retEl = document.querySelector('#m-body [data-retornos-display]');
+      if (retEl) {
+        retEl.outerHTML = p.retornos > 0
+          ? `<div data-retornos-display style="display:inline-flex;align-items:center;gap:8px;background:var(--yellow-dim);border:1px solid rgba(245,166,35,.25);border-radius:var(--radius);padding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--yellow);font-weight:600"><span>⟳</span><span>Retornou ao desenvolvedor <strong style="font-family:'IBM Plex Mono',monospace;font-size:15px">${p.retornos}x</strong></span></div>`
+          : `<div data-retornos-display></div>`;
+      }
       const tlEl = document.getElementById(`tl-${p.id}`);
       if (tlEl) tlEl.innerHTML = buildTimelineHtml(p);
-      // Atualiza retorno badge
+
       renderTable(); updateNavPending();
-      showToast('✓', 'Protocolo atualizado com sucesso!');
+      if (novosRetornos > 0) showToast('⟳', `Reprovado — retorno #${p.retornos} contabilizado`);
+      showToast('✓', 'Protocolo atualizado!');
     }
 
     function buildTimelineHtml(p) {
-      const steps = [];
-      steps.push({ dot: 'done', title: 'Registro criado', meta: p.data + ' · ' + p.responsavel });
-      const homDone = p.statusHom === 'Aprovado', homFail = p.statusHom === 'Reprovado', homPend = p.statusHom === 'Pendente';
-      steps.push({ dot: homDone ? 'done' : homFail ? 'error' : 'pending', title: 'Homologação — ' + (homDone ? 'Aprovado ✓' : homFail ? 'Reprovado' : 'Pendente'), meta: homDone || homFail ? (SISTEMAS[p.sistema].hom || '—') : 'Aguardando teste…' });
-      if (p.retornos > 0) steps.push({ dot: 'error', title: `Retorno ao desenvolvedor (${p.retornos}x)`, meta: 'Correção necessária antes de avançar' });
-      const pubDone = p.statusProd !== 'Pendente';
-      steps.push({ dot: homDone && pubDone ? 'done' : 'inactive', title: 'Publicação em produção', meta: homDone && pubDone ? SISTEMAS[p.sistema].url : 'Aguardando aprovação em hom…' });
-      const prodVal = p.statusProd === 'Aprovado', prodFail = p.statusProd === 'Reprovado', prodAg = p.statusProd === 'EmProducao';
-      steps.push({ dot: prodVal ? 'done' : prodFail ? 'error' : prodAg ? 'pending' : 'inactive', title: 'Validação em produção — ' + (prodVal ? 'Aprovado ✓' : prodFail ? 'Reprovado' : prodAg ? 'Aguardando' : 'Pendente'), meta: prodVal ? 'Concluído' : prodFail ? 'Reprovado' : prodAg ? 'Em produção — aguardando validação' : 'Aguardando publicação…' });
-      return steps.map(s => `<div class="tl-step"><div class="tl-dot ${s.dot}"></div><div class="tl-step-title">${s.title}</div><div class="tl-step-meta">${s.meta}</div></div>`).join('');
+      // Entradas fixas de estado (criação + publicação se aplicável)
+      const entries = [];
+
+      // 1. Criação do protocolo
+      entries.push({ dot: 'done', title: 'Protocolo criado', meta: p.data + ' · ' + p.responsavel });
+
+      // 2. Log de ações registradas pelo sistema (quem fez o quê e quando)
+      const log = p.log || [];
+      log.forEach(entry => {
+        const isRep = entry.msg.toLowerCase().includes('reprovado');
+        const isAprov = entry.msg.toLowerCase().includes('aprovado');
+        const dot = isRep ? 'error' : isAprov ? 'done' : 'pending';
+        entries.push({ dot, title: entry.msg, meta: entry.ts + ' · ' + entry.user });
+      });
+
+      // 3. Estado atual de HOM (se não há log de hom ainda, mostra estado genérico)
+      const temLogHom = log.some(e => e.msg.toLowerCase().includes('hom'));
+      if (!temLogHom) {
+        const homDone = p.statusHom === 'Aprovado', homFail = p.statusHom === 'Reprovado';
+        entries.push({
+          dot: homDone ? 'done' : homFail ? 'error' : 'pending',
+          title: 'Homologação — ' + (homDone ? 'Aguardando envio para produção' : homFail ? 'Aguardando correção' : 'Aguardando teste'),
+          meta: SISTEMAS[p.sistema].hom || '—'
+        });
+      }
+
+      // 4. Estado atual de PROD (se não há log de prod ainda)
+      const temLogProd = log.some(e => e.msg.toLowerCase().includes('prod'));
+      if (!temLogProd) {
+        const prodVal = p.statusProd === 'Aprovado', prodFail = p.statusProd === 'Reprovado';
+        const homOk = p.statusHom === 'Aprovado';
+        entries.push({
+          dot: prodVal ? 'done' : prodFail ? 'error' : homOk ? 'pending' : 'inactive',
+          title: 'Produção — ' + (prodVal ? 'Aprovado ✓' : prodFail ? 'Reprovado' : homOk ? 'Aguardando teste' : 'Aguardando aprovação em hom.'),
+          meta: homOk ? SISTEMAS[p.sistema].url : '—'
+        });
+      }
+
+      return entries.map(s =>
+        `<div class="tl-step">
+          <div class="tl-dot ${s.dot}"></div>
+          <div class="tl-step-title">${s.title}</div>
+          <div class="tl-step-meta">${s.meta}</div>
+        </div>`
+      ).join('');
     }
 
     function closeModalOutside(e) { if (e.target === document.getElementById('modal-overlay')) closeModalBtn(); }
@@ -2540,10 +2640,20 @@
       const dataStr = String(today.getDate()).padStart(2, '0') + '/' + String(today.getMonth() + 1).padStart(2, '0') + '/' + today.getFullYear();
       const seq = PROTOCOLS.length + 1;
       const id = gerarId(seq);
+      const criadoEm = (() => {
+        const d = new Date();
+        return String(d.getDate()).padStart(2,'0') + '/' +
+               String(d.getMonth()+1).padStart(2,'0') + '/' +
+               d.getFullYear() + ' ' +
+               String(d.getHours()).padStart(2,'0') + ':' +
+               String(d.getMinutes()).padStart(2,'0');
+      })();
+      const quemCriou = currentUser ? currentUser.nome : resp;
       PROTOCOLS.unshift({
         id, sistema, data: dataStr, responsavel: resp,
-        statusHom: 'Pendente', statusProd: 'Pendente', retornos: 0,
-        anotacao, obs: document.getElementById('np-obs').value.trim()
+        statusHom: 'AguardandoTeste', statusProd: 'AguardandoTeste', retornos: 0,
+        anotacao, obs: document.getElementById('np-obs').value.trim(),
+        log: [{ ts: criadoEm, user: quemCriou, msg: quemCriou + ' criou o protocolo' }]
       });
       filtered = [...PROTOCOLS];
       updateNavPending();
