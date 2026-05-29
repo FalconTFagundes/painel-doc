@@ -1334,11 +1334,13 @@
       text-align: center;
       display: inline-block;
     }
+
     .retorno-desc {
       font-size: 11px;
       color: var(--text3);
       margin-left: 6px;
     }
+
     .retorno-btn {
       width: 28px;
       height: 28px;
@@ -1355,11 +1357,13 @@
       line-height: 1;
       flex-shrink: 0;
     }
+
     .retorno-btn:hover {
       background: var(--accent-dim);
       border-color: var(--accent);
       color: var(--accent2);
     }
+
     .retorno-editor {
       display: flex;
       align-items: center;
@@ -1656,8 +1660,7 @@
       <div class="header-center">
         <div class="search-box">
           <span class="search-icon">⌕</span>
-          <input type="text" id="globalSearch"
-            oninput="filterProtocols()">
+          <input type="text" id="globalSearch" oninput="filterProtocols()">
         </div>
       </div>
       <div class="header-right">
@@ -1704,7 +1707,7 @@
         <div class="nav-label">Relatórios</div>
         <div class="nav-item" onclick="showView('relatorio')"><span class="nav-icon">↓</span> Exportar Relatório</div>
       </div>
-  
+
     </nav>
 
     <main>
@@ -1725,8 +1728,8 @@
             <div class="kpi-sub">↑ 8 este mês</div>
             <div class="kpi-icon">≡</div>
           </div>
-          <div class="kpi-card yellow" onclick="setFaseFilter('hom');showView('protocols')">
-            <div class="kpi-label">Em Homologação</div>
+          <div class="kpi-card purple" onclick="setFaseFilter('hom');showView('protocols')">
+            <div class="kpi-label">Aguard. HOM</div>
             <div class="kpi-num">5</div>
             <div class="kpi-sub">Aguardando ação</div>
             <div class="kpi-icon">◷</div>
@@ -1734,19 +1737,19 @@
           <div class="kpi-card green" onclick="filterByStatus('validado');showView('protocols')">
             <div class="kpi-label">Validados</div>
             <div class="kpi-num">19</div>
-            <div class="kpi-sub">Em produção</div>
+            <div class="kpi-sub">Prod. aprovado</div>
             <div class="kpi-icon">✓</div>
           </div>
           <div class="kpi-card purple" onclick="setFaseFilter('prod');showView('protocols')">
-            <div class="kpi-label">Aguard. Prod.</div>
+            <div class="kpi-label">Aguard. PROD</div>
             <div class="kpi-num">5</div>
             <div class="kpi-sub">Aguardando teste</div>
             <div class="kpi-icon">↑</div>
           </div>
           <div class="kpi-card red" onclick="filterByStatus('nao_validado');showView('protocols')">
-            <div class="kpi-label">Não Validados</div>
+            <div class="kpi-label">Reprovados</div>
             <div class="kpi-num">3</div>
-            <div class="kpi-sub">Requer revisão</div>
+            <div class="kpi-sub">Hom. ou Prod.</div>
             <div class="kpi-icon">✕</div>
           </div>
         </div>
@@ -1756,12 +1759,12 @@
             <div class="donut-wrap">
               <svg class="donut-svg" width="100" height="100" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="38" fill="none" stroke="#1e2330" stroke-width="14" />
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#27c483" stroke-width="14" stroke-dasharray="142 239"
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#27c483" stroke-width="14" stroke-dasharray="107 239"
                   stroke-dashoffset="60" stroke-linecap="round" />
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#9b72f5" stroke-width="14" stroke-dasharray="37 239"
-                  stroke-dashoffset="-82" stroke-linecap="round" />
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#e8455a" stroke-width="14" stroke-dasharray="22 239"
-                  stroke-dashoffset="-119" stroke-linecap="round" />
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#9b72f5" stroke-width="14" stroke-dasharray="74 239"
+                  stroke-dashoffset="-51" stroke-linecap="round" />
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#e8455a" stroke-width="14" stroke-dasharray="21 239"
+                  stroke-dashoffset="-129" stroke-linecap="round" />
                 <text x="50" y="46" text-anchor="middle" fill="#e2e8f7" font-size="14" font-weight="700"
                   font-family="IBM Plex Mono">32</text>
                 <text x="50" y="58" text-anchor="middle" fill="#5a6480" font-size="7">Total</text>
@@ -1769,10 +1772,10 @@
               <div class="donut-legend">
                 <div class="legend-item"><span class="legend-dot" style="background:#27c483"></span>Validados<span
                     class="legend-val">19</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#9b72f5"></span>Aguardando<span
+                <div class="legend-item"><span class="legend-dot" style="background:#9b72f5"></span>Aguardando HOM<span
                     class="legend-val">5</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#f5a623"></span>Aguardando teste<span
-                    class="legend-val">5</span></div>
+                <div class="legend-item"><span class="legend-dot"
+                    style="background:#9b72f5;opacity:.55"></span>Aguardando PROD<span class="legend-val">5</span></div>
                 <div class="legend-item"><span class="legend-dot" style="background:#e8455a"></span>Reprovados<span
                     class="legend-val">3</span></div>
               </div>
@@ -1822,14 +1825,15 @@
             <h3>Atividade Recente</h3>
             <div class="timeline-chart">
               <div class="tl-item"><span class="tl-date">28/05 14:32</span><span class="tl-sys">webcartoes — Validado em
-                  prod.</span><span class="badge badge-green">Validado</span></div>
-              <div class="tl-item"><span class="tl-date">28/05 11:10</span><span class="tl-sys">web.bigcash — Em Produção</span><span class="badge badge-purple" style="font-size:10px">Aguardando teste</span></div>
+                  prod.</span><span class="badge badge-green" style="font-size:10px">Aprovado</span></div>
+              <div class="tl-item"><span class="tl-date">28/05 11:10</span><span class="tl-sys">web.bigcash — Em
+                  Produção</span><span class="badge badge-purple" style="font-size:10px">Aguardando teste</span></div>
               <div class="tl-item"><span class="tl-date">27/05 17:45</span><span class="tl-sys">webempresas — Hom.
-                  reprovada</span><span class="badge badge-red">Não valid.</span></div>
+                  reprovada</span><span class="badge badge-red" style="font-size:10px">Reprovado</span></div>
               <div class="tl-item"><span class="tl-date">27/05 09:00</span><span class="tl-sys">webusuarios —
-                  Criado</span><span class="badge badge-yellow" style="font-size:10px">Aguardando teste</span></div>
+                  Criado</span><span class="badge badge-purple" style="font-size:10px">Aguardando teste</span></div>
               <div class="tl-item"><span class="tl-date">26/05 16:20</span><span class="tl-sys">websuporte — Validado em
-                  prod.</span><span class="badge badge-green">Validado</span></div>
+                  prod.</span><span class="badge badge-green" style="font-size:10px">Aprovado</span></div>
             </div>
           </div>
         </div>
@@ -1845,7 +1849,13 @@
           <button class="btn btn-primary" onclick="showView('new')">＋ Novo Registro</button>
         </div>
         <div class="filters-bar">
-          <select class="filter-select" id="f-fase" onchange="filterProtocols()" style="margin-right:4px"><option value="">Todas as Fases</option><option value="hom">Em Homologação</option><option value="prod">Em Produção (aguardando teste)</option><option value="done">Aprovados</option><option value="rep">Reprovados</option></select>
+          <select class="filter-select" id="f-fase" onchange="filterProtocols()" style="margin-right:4px">
+            <option value="">Todas as Fases</option>
+            <option value="hom">Em Homologação</option>
+            <option value="prod">Em Produção (aguardando teste)</option>
+            <option value="done">Aprovados</option>
+            <option value="rep">Reprovados</option>
+          </select>
           <select class="filter-select" id="f-sistema" onchange="filterProtocols()">
             <option value="">Todos os Sistemas</option>
             <option value="webempresas">webempresas.bigcard.com.br</option>
@@ -1865,7 +1875,7 @@
           <select class="filter-select" id="f-status-prod" onchange="filterProtocols()">
             <option value="">Status Prod.</option>
             <option value="AguardandoTeste">Aguardando teste</option>
-            
+
             <option value="Aprovado">Prod. Validado</option>
             <option value="Reprovado">Prod. Reprovado</option>
           </select>
@@ -1928,8 +1938,7 @@
             </div>
             <div class="detail-field">
               <label class="detail-label">Responsável</label>
-              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp"
-               >
+              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp">
             </div>
           </div>
 
@@ -1939,8 +1948,7 @@
                 do sistema de testes (ID, Painel, Cartão, Caminho, Detalhamento, Resposta…)</span>
             </label>
             <div class="anotacao-wrap">
-              <textarea class="anotacao-paste" id="np-anotacao"
-               ></textarea>
+              <textarea class="anotacao-paste" id="np-anotacao"></textarea>
               <div class="anotacao-hint">
                 <span>📋</span>
                 <span>Ctrl+V para colar — o texto será armazenado como está, sem reinterpretação de campos.</span>
@@ -1951,8 +1959,7 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
             <div class="detail-field">
               <label class="detail-label">Obs. internas (opcional)</label>
-              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-obs"
-               >
+              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-obs">
             </div>
             <div class="detail-field">
               <label class="detail-label">Data</label>
@@ -2006,27 +2013,27 @@
       </div>
 
     </main>
-</div><!-- /app -->
+  </div><!-- /app -->
 
-<!-- MODAL e TOAST fora do #app -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
-      <div class="modal">
-        <div class="modal-head">
-          <div>
-            <h2 id="m-title">—</h2>
-            <div class="modal-protocol" id="m-num">—</div>
-          </div>
-          <button class="modal-close" onclick="closeModalBtn()">✕</button>
+  <!-- MODAL e TOAST fora do #app -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="m-title">—</h2>
+          <div class="modal-protocol" id="m-num">—</div>
         </div>
-        <div class="modal-body" id="m-body"></div>
-        <div class="modal-foot">
-          <button class="btn btn-outline btn-sm" onclick="exportWordFromModal()">↓ Exportar .docx</button>
-          <button class="btn btn-primary btn-sm" onclick="saveModalChanges()">Salvar alterações</button>
-        </div>
+        <button class="modal-close" onclick="closeModalBtn()">✕</button>
+      </div>
+      <div class="modal-body" id="m-body"></div>
+      <div class="modal-foot">
+        <button class="btn btn-outline btn-sm" onclick="exportWordFromModal()">↓ Exportar .docx</button>
+        <button class="btn btn-primary btn-sm" onclick="saveModalChanges()">Salvar alterações</button>
       </div>
     </div>
+  </div>
 
-    <div class="toast-container" id="toast-container"></div>
+  <div class="toast-container" id="toast-container"></div>
 
   <script>
     /* ═══ USUÁRIOS ═══ */
@@ -2200,7 +2207,7 @@
           // Se tem retornos, simula entradas de reprovação
           if (p.retornos > 0) {
             for (let i = 0; i < p.retornos; i++) {
-              p.log.splice(2 + i, 0, { ts: p.data + ' 09:' + String(15 + i * 20).padStart(2,'0'), user: p.responsavel, msg: p.responsavel + ' reprovou o ajuste em Homologação' });
+              p.log.splice(2 + i, 0, { ts: p.data + ' 09:' + String(15 + i * 20).padStart(2, '0'), user: p.responsavel, msg: p.responsavel + ' reprovou o ajuste em Homologação' });
             }
           }
         }
@@ -2233,10 +2240,10 @@
     }
 
     /* ═══ FILTROS ═══ */
-    let faseAtiva="";
-    function setFaseFilter(fase){faseAtiva=fase;const s=document.getElementById("f-fase");if(s)s.value=fase;filterProtocols();}
+    let faseAtiva = "";
+    function setFaseFilter(fase) { faseAtiva = fase; const s = document.getElementById("f-fase"); if (s) s.value = fase; filterProtocols(); }
     function filterProtocols() {
-      const search = (document.getElementById('globalSearch').value||'').toLowerCase();
+      const search = (document.getElementById('globalSearch').value || '').toLowerCase();
       const fSis = document.getElementById('f-sistema').value;
       const fFaseEl = document.getElementById('f-fase');
       const fFase = (fFaseEl ? fFaseEl.value : '') || faseAtiva;
@@ -2257,7 +2264,7 @@
     function filterBySys(sys) { document.getElementById('f-sistema').value = sys; filterProtocols(); }
     function filterByStatus(status) {
       const m = { hom: 'hom', validado: 'done', aguardando: 'prod', nao_validado: 'rep' };
-      setFaseFilter(m[status] || ''); if(m[status]) showView('protocols');
+      setFaseFilter(m[status] || ''); if (m[status]) showView('protocols');
     }
     function clearFilters() {
       ['f-sistema', 'f-status-hom', 'f-status-prod'].forEach(id => document.getElementById(id).value = '');
@@ -2319,7 +2326,7 @@
       // Click delegado nas linhas — ignora cliques em botões
       tbody.querySelectorAll('.proto-row').forEach(row => {
         row.style.cursor = 'pointer';
-        row.addEventListener('click', function(e) {
+        row.addEventListener('click', function (e) {
           if (e.target.closest('button')) return;
           openModal(this.dataset.id);
         });
@@ -2328,37 +2335,37 @@
       renderPagination(total);
     }
 
-        /* getFase: hom=em hom, prod=aguardando prod, done=aprovado, rep=reprovado */
-    function getFase(p){
-      if(p.statusProd==='Aprovado')return 'done';
-      if(p.statusHom==='Aprovado')return 'prod';
-      if(p.statusHom==='Reprovado'||p.statusProd==='Reprovado')return 'rep';
+    /* getFase: hom=em hom, prod=aguardando prod, done=aprovado, rep=reprovado */
+    function getFase(p) {
+      if (p.statusProd === 'Aprovado') return 'done';
+      if (p.statusHom === 'Aprovado') return 'prod';
+      if (p.statusHom === 'Reprovado' || p.statusProd === 'Reprovado') return 'rep';
       return 'hom';
     }
-    function buildAndamentoInline(p){
-      const fase=getFase(p);
-      const faseMap={
-        hom: {bg:'var(--yellow-dim)',border:'rgba(245,166,35,.25)',color:'var(--yellow)',icon:'◈',label:'Homologação'},
-        prod:{bg:'var(--purple-dim)',border:'rgba(155,114,245,.25)',color:'var(--purple)',icon:'◉',label:'Produção'},
-        done:{bg:'var(--green-dim)', border:'rgba(39,196,131,.25)', color:'var(--green)', icon:'✓',label:'Concluído'},
-        rep: {bg:'var(--red-dim)',   border:'rgba(232,69,90,.25)',  color:'var(--red)',   icon:'✕',label:'Reprovado'},
+    function buildAndamentoInline(p) {
+      const fase = getFase(p);
+      const faseMap = {
+        hom: { bg: 'var(--yellow-dim)', border: 'rgba(245,166,35,.25)', color: 'var(--yellow)', icon: '◈', label: 'Homologação' },
+        prod: { bg: 'var(--purple-dim)', border: 'rgba(155,114,245,.25)', color: 'var(--purple)', icon: '◉', label: 'Produção' },
+        done: { bg: 'var(--green-dim)', border: 'rgba(39,196,131,.25)', color: 'var(--green)', icon: '✓', label: 'Concluído' },
+        rep: { bg: 'var(--red-dim)', border: 'rgba(232,69,90,.25)', color: 'var(--red)', icon: '✕', label: 'Reprovado' },
       };
-      const fc=faseMap[fase];
-      const faseChip=`<span style="display:inline-flex;align-items:center;gap:5px;background:${fc.bg};border:1px solid ${fc.border};border-radius:20px;padding:3px 9px;font-size:11px;color:${fc.color};font-weight:600;white-space:nowrap">${fc.icon} ${fc.label}</span>`;
-      let stLabel,dotColor,stStyle='';
-      if(fase==='hom'){
-        stLabel=p.statusHom;
-        dotColor=p.statusHom==='Aprovado'?'#27c483':p.statusHom==='Reprovado'?'#e8455a':'#f5a623';
-        if(p.statusHom==='Reprovado')stStyle='color:var(--red);font-weight:700';
-      }else if(fase==='prod'){
-        stLabel='Aguardando validação'; dotColor='#9b72f5';
-      }else if(fase==='done'){
-        stLabel='Aprovado'; dotColor='#27c483';
-      }else{
-        const qual=p.statusProd==='Reprovado'?'Prod.':'Hom.';
-        stLabel='Reprovado ('+qual+')'; dotColor='#e8455a'; stStyle='color:var(--red);font-weight:700';
+      const fc = faseMap[fase];
+      const faseChip = `<span style="display:inline-flex;align-items:center;gap:5px;background:${fc.bg};border:1px solid ${fc.border};border-radius:20px;padding:3px 9px;font-size:11px;color:${fc.color};font-weight:600;white-space:nowrap">${fc.icon} ${fc.label}</span>`;
+      let stLabel, dotColor, stStyle = '';
+      if (fase === 'hom') {
+        stLabel = p.statusHom;
+        dotColor = p.statusHom === 'Aprovado' ? '#27c483' : p.statusHom === 'Reprovado' ? '#e8455a' : '#9b72f5';
+        if (p.statusHom === 'Reprovado') stStyle = 'color:var(--red);font-weight:700';
+      } else if (fase === 'prod') {
+        stLabel = 'Aguardando teste'; dotColor = '#9b72f5';
+      } else if (fase === 'done') {
+        stLabel = 'Aprovado'; dotColor = '#27c483';
+      } else {
+        const qual = p.statusProd === 'Reprovado' ? 'Prod.' : 'Hom.';
+        stLabel = 'Reprovado (' + qual + ')'; dotColor = '#e8455a'; stStyle = 'color:var(--red);font-weight:700';
       }
-      const dotExtra=dotColor==='#e8455a'?'width:9px;height:9px;box-shadow:0 0 0 3px rgba(232,69,90,.2)':'';
+      const dotExtra = dotColor === '#e8455a' ? 'width:9px;height:9px;box-shadow:0 0 0 3px rgba(232,69,90,.2)' : '';
       return `<div style="display:flex;flex-direction:column;gap:4px">
         ${faseChip}
         <div style="display:flex;align-items:center;gap:5px;padding-left:2px">
@@ -2373,21 +2380,21 @@
       let label, dotColor, textStyle = '';
       const statusHomLabel = {
         'AguardandoTeste': 'Aguardando teste',
-        'Aprovado':        'Aprovado',
-        'Reprovado':       'Reprovado',
+        'Aprovado': 'Aprovado',
+        'Reprovado': 'Reprovado',
       };
       const statusProdLabel = {
         'AguardandoTeste': 'Aguardando teste',
-        'Aprovado':        'Aprovado',
-        'Reprovado':       'Reprovado',
+        'Aprovado': 'Aprovado',
+        'Reprovado': 'Reprovado',
       };
       if (fase === 'hom') {
         label = statusHomLabel[p.statusHom] || p.statusHom;
-        dotColor = p.statusHom === 'Aprovado' ? '#27c483' : p.statusHom === 'Reprovado' ? '#e8455a' : '#f5a623';
+        dotColor = p.statusHom === 'Aprovado' ? '#27c483' : p.statusHom === 'Reprovado' ? '#e8455a' : '#9b72f5';
         if (p.statusHom === 'Reprovado') textStyle = 'color:var(--red);font-weight:700';
       } else if (fase === 'prod') {
         label = statusProdLabel[p.statusProd] || p.statusProd;
-        dotColor = p.statusProd === 'Aprovado' ? '#27c483' : p.statusProd === 'Reprovado' ? '#e8455a' : '#f5a623';
+        dotColor = p.statusProd === 'Aprovado' ? '#27c483' : p.statusProd === 'Reprovado' ? '#e8455a' : '#9b72f5';
         if (p.statusProd === 'Reprovado') textStyle = 'color:var(--red);font-weight:700';
       } else if (fase === 'done') {
         label = 'Aprovado'; dotColor = '#27c483';
@@ -2408,11 +2415,11 @@
       if (p.statusHom !== 'Aprovado') { showToast('⚠️', 'Hom. precisa estar Aprovado.'); return; }
       const agora = (() => {
         const d = new Date();
-        return String(d.getDate()).padStart(2,'0') + '/' +
-               String(d.getMonth()+1).padStart(2,'0') + '/' +
-               d.getFullYear() + ' ' +
-               String(d.getHours()).padStart(2,'0') + ':' +
-               String(d.getMinutes()).padStart(2,'0');
+        return String(d.getDate()).padStart(2, '0') + '/' +
+          String(d.getMonth() + 1).padStart(2, '0') + '/' +
+          d.getFullYear() + ' ' +
+          String(d.getHours()).padStart(2, '0') + ':' +
+          String(d.getMinutes()).padStart(2, '0');
       })();
       const quem = currentUser ? currentUser.nome : 'Sistema';
       if (!p.log) p.log = [];
@@ -2422,7 +2429,7 @@
       showToast('↑', `${id} enviado para Produção!`);
     }
 
-        function renderPagination(total) {
+    function renderPagination(total) {
       const pages = Math.ceil(total / PAGE_SIZE) || 1;
       const btns = document.getElementById('page-btns'); btns.innerHTML = '';
       const prev = document.createElement('button');
@@ -2537,11 +2544,11 @@
       // Registrar mudanças de status no log do protocolo
       const agora = (() => {
         const d = new Date();
-        return String(d.getDate()).padStart(2,'0') + '/' +
-               String(d.getMonth()+1).padStart(2,'0') + '/' +
-               d.getFullYear() + ' ' +
-               String(d.getHours()).padStart(2,'0') + ':' +
-               String(d.getMinutes()).padStart(2,'0');
+        return String(d.getDate()).padStart(2, '0') + '/' +
+          String(d.getMonth() + 1).padStart(2, '0') + '/' +
+          d.getFullYear() + ' ' +
+          String(d.getHours()).padStart(2, '0') + ':' +
+          String(d.getMinutes()).padStart(2, '0');
       })();
       const quem = currentUser ? currentUser.nome : 'Sistema';
       if (!p.log) p.log = [];
@@ -2652,11 +2659,11 @@
       const id = gerarId(seq);
       const criadoEm = (() => {
         const d = new Date();
-        return String(d.getDate()).padStart(2,'0') + '/' +
-               String(d.getMonth()+1).padStart(2,'0') + '/' +
-               d.getFullYear() + ' ' +
-               String(d.getHours()).padStart(2,'0') + ':' +
-               String(d.getMinutes()).padStart(2,'0');
+        return String(d.getDate()).padStart(2, '0') + '/' +
+          String(d.getMonth() + 1).padStart(2, '0') + '/' +
+          d.getFullYear() + ' ' +
+          String(d.getHours()).padStart(2, '0') + ':' +
+          String(d.getMinutes()).padStart(2, '0');
       })();
       const quemCriou = currentUser ? currentUser.nome : resp;
       PROTOCOLS.unshift({
