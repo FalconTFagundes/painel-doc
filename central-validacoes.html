@@ -1334,11 +1334,13 @@
       text-align: center;
       display: inline-block;
     }
+
     .retorno-desc {
       font-size: 11px;
       color: var(--text3);
       margin-left: 6px;
     }
+
     .retorno-btn {
       width: 28px;
       height: 28px;
@@ -1355,11 +1357,13 @@
       line-height: 1;
       flex-shrink: 0;
     }
+
     .retorno-btn:hover {
       background: var(--accent-dim);
       border-color: var(--accent);
       color: var(--accent2);
     }
+
     .retorno-editor {
       display: flex;
       align-items: center;
@@ -1656,8 +1660,7 @@
       <div class="header-center">
         <div class="search-box">
           <span class="search-icon">⌕</span>
-          <input type="text" id="globalSearch"
-            oninput="filterProtocols()">
+          <input type="text" id="globalSearch" oninput="filterProtocols()">
         </div>
       </div>
       <div class="header-right">
@@ -1704,7 +1707,7 @@
         <div class="nav-label">Relatórios</div>
         <div class="nav-item" onclick="showView('relatorio')"><span class="nav-icon">↓</span> Exportar Relatório</div>
       </div>
-  
+
     </nav>
 
     <main>
@@ -1846,7 +1849,13 @@
           <button class="btn btn-primary" onclick="showView('new')">＋ Novo Registro</button>
         </div>
         <div class="filters-bar">
-          <select class="filter-select" id="f-fase" onchange="filterProtocols()" style="margin-right:4px"><option value="">Todas as Fases</option><option value="hom">Em Homologação</option><option value="prod">Em Produção</option><option value="done">Aprovados</option><option value="rep">Reprovados</option></select>
+          <select class="filter-select" id="f-fase" onchange="filterProtocols()" style="margin-right:4px">
+            <option value="">Todas as Fases</option>
+            <option value="hom">Em Homologação</option>
+            <option value="prod">Em Produção</option>
+            <option value="done">Aprovados</option>
+            <option value="rep">Reprovados</option>
+          </select>
           <select class="filter-select" id="f-sistema" onchange="filterProtocols()">
             <option value="">Todos os Sistemas</option>
             <option value="webempresas">webempresas.bigcard.com.br</option>
@@ -1929,8 +1938,7 @@
             </div>
             <div class="detail-field">
               <label class="detail-label">Responsável</label>
-              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp"
-               >
+              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-resp">
             </div>
           </div>
 
@@ -1940,8 +1948,7 @@
                 do sistema de testes (ID, Painel, Cartão, Caminho, Detalhamento, Resposta…)</span>
             </label>
             <div class="anotacao-wrap">
-              <textarea class="anotacao-paste" id="np-anotacao"
-               ></textarea>
+              <textarea class="anotacao-paste" id="np-anotacao"></textarea>
               <div class="anotacao-hint">
                 <span>📋</span>
                 <span>Ctrl+V para colar — o texto será armazenado como está, sem reinterpretação de campos.</span>
@@ -1952,8 +1959,7 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
             <div class="detail-field">
               <label class="detail-label">Obs. internas (opcional)</label>
-              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-obs"
-               >
+              <input type="text" class="filter-select" style="width:100%;padding:9px 12px" id="np-obs">
             </div>
             <div class="detail-field">
               <label class="detail-label">Data</label>
@@ -2007,29 +2013,27 @@
       </div>
 
     </main>
+  </div><!-- /app -->
 
-  </main>
-</div><!-- /app -->
-
-<!-- MODAL e TOAST fora do #app -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
-      <div class="modal">
-        <div class="modal-head">
-          <div>
-            <h2 id="m-title">—</h2>
-            <div class="modal-protocol" id="m-num">—</div>
-          </div>
-          <button class="modal-close" onclick="closeModalBtn()">✕</button>
+  <!-- MODAL e TOAST fora do #app -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="m-title">—</h2>
+          <div class="modal-protocol" id="m-num">—</div>
         </div>
-        <div class="modal-body" id="m-body"></div>
-        <div class="modal-foot">
-          <button class="btn btn-outline btn-sm" onclick="exportWordFromModal()">↓ Exportar .docx</button>
-          <button class="btn btn-primary btn-sm" onclick="saveModalChanges()">Salvar alterações</button>
-        </div>
+        <button class="modal-close" onclick="closeModalBtn()">✕</button>
+      </div>
+      <div class="modal-body" id="m-body"></div>
+      <div class="modal-foot">
+        <button class="btn btn-outline btn-sm" onclick="exportWordFromModal()">↓ Exportar .docx</button>
+        <button class="btn btn-primary btn-sm" onclick="saveModalChanges()">Salvar alterações</button>
       </div>
     </div>
+  </div>
 
-    <div class="toast-container" id="toast-container"></div>
+  <div class="toast-container" id="toast-container"></div>
 
   <script>
     /* ═══ USUÁRIOS ═══ */
@@ -2204,10 +2208,10 @@
     }
 
     /* ═══ FILTROS ═══ */
-    let faseAtiva="";
-    function setFaseFilter(fase){faseAtiva=fase;const s=document.getElementById("f-fase");if(s)s.value=fase;filterProtocols();}
+    let faseAtiva = "";
+    function setFaseFilter(fase) { faseAtiva = fase; const s = document.getElementById("f-fase"); if (s) s.value = fase; filterProtocols(); }
     function filterProtocols() {
-      const search = (document.getElementById('globalSearch').value||'').toLowerCase();
+      const search = (document.getElementById('globalSearch').value || '').toLowerCase();
       const fSis = document.getElementById('f-sistema').value;
       const fFaseEl = document.getElementById('f-fase');
       const fFase = (fFaseEl ? fFaseEl.value : '') || faseAtiva;
@@ -2289,7 +2293,7 @@
       // Click delegado nas linhas — ignora cliques em botões
       tbody.querySelectorAll('.proto-row').forEach(row => {
         row.style.cursor = 'pointer';
-        row.addEventListener('click', function(e) {
+        row.addEventListener('click', function (e) {
           if (e.target.closest('button')) return;
           openModal(this.dataset.id);
         });
@@ -2298,37 +2302,37 @@
       renderPagination(total);
     }
 
-        /* getFase: hom=em hom, prod=aguardando prod, done=aprovado, rep=reprovado */
-    function getFase(p){
-      if(p.statusProd==='Aprovado')return 'done';
-      if(p.statusHom==='Aprovado'&&(p.statusProd==='Pendente'||p.statusProd==='EmProducao'))return 'prod';
-      if(p.statusHom==='Reprovado'||p.statusProd==='Reprovado')return 'rep';
+    /* getFase: hom=em hom, prod=aguardando prod, done=aprovado, rep=reprovado */
+    function getFase(p) {
+      if (p.statusProd === 'Aprovado') return 'done';
+      if (p.statusHom === 'Aprovado' && (p.statusProd === 'Pendente' || p.statusProd === 'EmProducao')) return 'prod';
+      if (p.statusHom === 'Reprovado' || p.statusProd === 'Reprovado') return 'rep';
       return 'hom';
     }
-    function buildAndamentoInline(p){
-      const fase=getFase(p);
-      const faseMap={
-        hom: {bg:'var(--yellow-dim)',border:'rgba(245,166,35,.25)',color:'var(--yellow)',icon:'◈',label:'Homologação'},
-        prod:{bg:'var(--purple-dim)',border:'rgba(155,114,245,.25)',color:'var(--purple)',icon:'◉',label:'Em Produção'},
-        done:{bg:'var(--green-dim)', border:'rgba(39,196,131,.25)', color:'var(--green)', icon:'✓',label:'Concluído'},
-        rep: {bg:'var(--red-dim)',   border:'rgba(232,69,90,.25)',  color:'var(--red)',   icon:'✕',label:'Reprovado'},
+    function buildAndamentoInline(p) {
+      const fase = getFase(p);
+      const faseMap = {
+        hom: { bg: 'var(--yellow-dim)', border: 'rgba(245,166,35,.25)', color: 'var(--yellow)', icon: '◈', label: 'Homologação' },
+        prod: { bg: 'var(--purple-dim)', border: 'rgba(155,114,245,.25)', color: 'var(--purple)', icon: '◉', label: 'Em Produção' },
+        done: { bg: 'var(--green-dim)', border: 'rgba(39,196,131,.25)', color: 'var(--green)', icon: '✓', label: 'Concluído' },
+        rep: { bg: 'var(--red-dim)', border: 'rgba(232,69,90,.25)', color: 'var(--red)', icon: '✕', label: 'Reprovado' },
       };
-      const fc=faseMap[fase];
-      const faseChip=`<span style="display:inline-flex;align-items:center;gap:5px;background:${fc.bg};border:1px solid ${fc.border};border-radius:20px;padding:3px 9px;font-size:11px;color:${fc.color};font-weight:600;white-space:nowrap">${fc.icon} ${fc.label}</span>`;
-      let stLabel,dotColor,stStyle='';
-      if(fase==='hom'){
-        stLabel=p.statusHom;
-        dotColor=p.statusHom==='Aprovado'?'#27c483':p.statusHom==='Reprovado'?'#e8455a':'#f5a623';
-        if(p.statusHom==='Reprovado')stStyle='color:var(--red);font-weight:700';
-      }else if(fase==='prod'){
-        stLabel='Aguardando validação'; dotColor='#9b72f5';
-      }else if(fase==='done'){
-        stLabel='Aprovado'; dotColor='#27c483';
-      }else{
-        const qual=p.statusProd==='Reprovado'?'Prod.':'Hom.';
-        stLabel='Reprovado ('+qual+')'; dotColor='#e8455a'; stStyle='color:var(--red);font-weight:700';
+      const fc = faseMap[fase];
+      const faseChip = `<span style="display:inline-flex;align-items:center;gap:5px;background:${fc.bg};border:1px solid ${fc.border};border-radius:20px;padding:3px 9px;font-size:11px;color:${fc.color};font-weight:600;white-space:nowrap">${fc.icon} ${fc.label}</span>`;
+      let stLabel, dotColor, stStyle = '';
+      if (fase === 'hom') {
+        stLabel = p.statusHom;
+        dotColor = p.statusHom === 'Aprovado' ? '#27c483' : p.statusHom === 'Reprovado' ? '#e8455a' : '#f5a623';
+        if (p.statusHom === 'Reprovado') stStyle = 'color:var(--red);font-weight:700';
+      } else if (fase === 'prod') {
+        stLabel = 'Aguardando validação'; dotColor = '#9b72f5';
+      } else if (fase === 'done') {
+        stLabel = 'Aprovado'; dotColor = '#27c483';
+      } else {
+        const qual = p.statusProd === 'Reprovado' ? 'Prod.' : 'Hom.';
+        stLabel = 'Reprovado (' + qual + ')'; dotColor = '#e8455a'; stStyle = 'color:var(--red);font-weight:700';
       }
-      const dotExtra=dotColor==='#e8455a'?'width:9px;height:9px;box-shadow:0 0 0 3px rgba(232,69,90,.2)':'';
+      const dotExtra = dotColor === '#e8455a' ? 'width:9px;height:9px;box-shadow:0 0 0 3px rgba(232,69,90,.2)' : '';
       return `<div style="display:flex;flex-direction:column;gap:4px">
         ${faseChip}
         <div style="display:flex;align-items:center;gap:5px;padding-left:2px">
@@ -2369,7 +2373,7 @@
       showToast('↑', `${id} enviado para Produção!`);
     }
 
-        function renderPagination(total) {
+    function renderPagination(total) {
       const pages = Math.ceil(total / PAGE_SIZE) || 1;
       const btns = document.getElementById('page-btns'); btns.innerHTML = '';
       const prev = document.createElement('button');
@@ -2446,6 +2450,8 @@
       <h3>Linha do Tempo</h3>
       <div class="timeline" id="tl-${p.id}">${buildTimelineHtml(p)}</div>
     </div>`;
+
+      document.getElementById('modal-overlay').classList.add('open');
     }
 
     function escHtml(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
