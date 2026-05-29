@@ -2182,25 +2182,25 @@
         if (!p.log) p.log = [];
         if (p.log.length === 0) {
           // Entrada de criação
-          p.log.push({ ts: p.data + ' 08:00', user: p.responsavel, msg: p.responsavel + ' criou o protocolo' });
+          p.log.push({ ts: p.data + ' 08:00', user: p.responsavel, msg: p.responsavel + ' registrou o protocolo' });
           // Se hom não está aguardando, simula log de hom
           if (p.statusHom !== 'AguardandoTeste') {
             const hora = p.statusHom === 'Aprovado' ? '10:30' : '11:15';
-            p.log.push({ ts: p.data + ' ' + hora, user: p.responsavel, msg: p.responsavel + ' marcou Homologação como ' + statusLabel[p.statusHom] });
+            p.log.push({ ts: p.data + ' ' + hora, user: p.responsavel, msg: p.statusHom === 'Aprovado' ? p.responsavel + ' aprovou o ajuste em Homologação' : p.responsavel + ' reprovou o ajuste em Homologação' });
           }
           // Se foi copiado para prod, simula log
           if (p.statusHom === 'Aprovado') {
-            p.log.push({ ts: p.data + ' 13:00', user: p.responsavel, msg: p.responsavel + ' enviou o protocolo para Produção' });
+            p.log.push({ ts: p.data + ' 13:00', user: p.responsavel, msg: p.responsavel + ' copiou o ajuste para Produção' });
           }
           // Se prod tem status diferente de aguardando, simula log de prod
           if (p.statusHom === 'Aprovado' && p.statusProd !== 'AguardandoTeste') {
             const hora = p.statusProd === 'Aprovado' ? '15:45' : '16:20';
-            p.log.push({ ts: p.data + ' ' + hora, user: p.responsavel, msg: p.responsavel + ' marcou Produção como ' + statusLabel[p.statusProd] });
+            p.log.push({ ts: p.data + ' ' + hora, user: p.responsavel, msg: p.statusProd === 'Aprovado' ? p.responsavel + ' aprovou o ajuste em Produção' : p.responsavel + ' reprovou o ajuste em Produção' });
           }
           // Se tem retornos, simula entradas de reprovação
           if (p.retornos > 0) {
             for (let i = 0; i < p.retornos; i++) {
-              p.log.splice(2 + i, 0, { ts: p.data + ' 09:' + String(15 + i * 20).padStart(2,'0'), user: p.responsavel, msg: p.responsavel + ' marcou Homologação como Reprovado' });
+              p.log.splice(2 + i, 0, { ts: p.data + ' 09:' + String(15 + i * 20).padStart(2,'0'), user: p.responsavel, msg: p.responsavel + ' reprovou o ajuste em Homologação' });
             }
           }
         }
@@ -2387,7 +2387,7 @@
         if (p.statusHom === 'Reprovado') textStyle = 'color:var(--red);font-weight:700';
       } else if (fase === 'prod') {
         label = statusProdLabel[p.statusProd] || p.statusProd;
-        dotColor = p.statusProd === 'Aprovado' ? '#27c483' : p.statusProd === 'Reprovado' ? '#e8455a' : '#9b72f5';
+        dotColor = p.statusProd === 'Aprovado' ? '#27c483' : p.statusProd === 'Reprovado' ? '#e8455a' : '#f5a623';
         if (p.statusProd === 'Reprovado') textStyle = 'color:var(--red);font-weight:700';
       } else if (fase === 'done') {
         label = 'Aprovado'; dotColor = '#27c483';
@@ -2416,7 +2416,7 @@
       })();
       const quem = currentUser ? currentUser.nome : 'Sistema';
       if (!p.log) p.log = [];
-      p.log.push({ ts: agora, user: quem, msg: quem + ' copiou o protocolo para Produção' });
+      p.log.push({ ts: agora, user: quem, msg: quem + ' copiou o ajuste para Produção' });
       p.statusProd = 'AguardandoTeste';
       renderTable(); updateNavPending();
       showToast('↑', `${id} enviado para Produção!`);
@@ -2549,10 +2549,20 @@
       const statusLabel = { 'AguardandoTeste': 'Aguardando teste', 'Aprovado': 'Aprovado', 'Reprovado': 'Reprovado' };
 
       if (newHom !== p.statusHom) {
-        p.log.push({ ts: agora, user: quem, msg: quem + ' marcou Homologação como ' + (statusLabel[newHom] || newHom) });
+        const msgHom = newHom === 'Aprovado'
+          ? quem + ' aprovou o ajuste em Homologação'
+          : newHom === 'Reprovado'
+            ? quem + ' reprovou o ajuste em Homologação'
+            : quem + ' redefiniu Homologação para Aguardando teste';
+        p.log.push({ ts: agora, user: quem, msg: msgHom });
       }
       if (newProd !== p.statusProd) {
-        p.log.push({ ts: agora, user: quem, msg: quem + ' marcou Produção como ' + (statusLabel[newProd] || newProd) });
+        const msgProd = newProd === 'Aprovado'
+          ? quem + ' aprovou o ajuste em Produção'
+          : newProd === 'Reprovado'
+            ? quem + ' reprovou o ajuste em Produção'
+            : quem + ' redefiniu Produção para Aguardando teste';
+        p.log.push({ ts: agora, user: quem, msg: msgProd });
       }
 
       p.statusHom = newHom;
@@ -2653,7 +2663,7 @@
         id, sistema, data: dataStr, responsavel: resp,
         statusHom: 'AguardandoTeste', statusProd: 'AguardandoTeste', retornos: 0,
         anotacao, obs: document.getElementById('np-obs').value.trim(),
-        log: [{ ts: criadoEm, user: quemCriou, msg: quemCriou + ' criou o protocolo' }]
+        log: [{ ts: criadoEm, user: quemCriou, msg: quemCriou + ' registrou o protocolo' }]
       });
       filtered = [...PROTOCOLS];
       updateNavPending();
